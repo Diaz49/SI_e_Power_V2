@@ -18,3 +18,7 @@ Route::get('/', function () {
     return view('login');
 });
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Master
+Route::get('/data_project', function () {
+    return view('master.data_project_id');
+})->name('data_project');

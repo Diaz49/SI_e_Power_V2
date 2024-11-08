@@ -67,12 +67,12 @@
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+                            <a href="{{ route('dashboard') }}" class="collapsed">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
-                                <span class="caret"></span>
+                                {{-- <span class="caret"></span> --}}
                             </a>
-                            <div class="collapse" id="dashboard">
+                            {{-- <div class="collapse" id="dashboard">
                                 <ul class="nav nav-collapse">
                                     <li>
                                         <a href="../demo1/index.html">
@@ -80,25 +80,25 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </li>
-                        <li class="nav-section">
+                        {{-- <li class="nav-section">
                             <span class="sidebar-mini-icon">
                                 <i class="fa fa-ellipsis-h"></i>
                             </span>
                             <h4 class="text-section">Components</h4>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
-                                <p>Base</p>
+                                <p>Master</p>
                                 <span class="caret"></span>
                             </a>
                             <div class="collapse" id="base">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        <a href="components/avatars.html">
-                                            <span class="sub-item">Avatars</span>
+                                        <a href="{{ route('data_project') }}">
+                                            <span class="sub-item">Data Projects</span>
                                         </a>
                                     </li>
                                     <li>
