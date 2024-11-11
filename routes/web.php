@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Master\ProjectIdController;
 use App\Http\Controllers\MasterController;
 
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,4 @@ Route::get('/', function () {
 });
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 // Master
-Route::get('/data_project', [MasterController::class, 'data_project'])->name('data_project');
-Route::get('/data_client', [MasterController::class, 'data_client'])->name('data_client');
-Route::get('/data_vendor', [MasterController::class, 'data_vendor'])->name('data_vendor');
-Route::get('/data_bank', [MasterController::class, 'data_bank'])->name('data_bank');
+Route::get('project-id', [ProjectIdController::class, 'index'])->name('project-id');

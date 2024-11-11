@@ -77,12 +77,12 @@
                             </a>
                             <div class="collapse" id="base">
                                 <ul class="nav nav-collapse">
-                                    <li class="{{ Route::is('data_project') ? 'active' : '' }}">
-                                        <a href="{{ route('data_project') }}">
+                                    <li class="{{ Route::is('project-id') ? 'active' : '' }}">
+                                        <a href="{{ route('project-id') }}">
                                             <span class="sub-item">Data Projects</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{ route('data_client') }}">
                                             <span class="sub-item">Data Client</span>
                                         </a>
@@ -96,7 +96,7 @@
                                         <a href="{{ route('data_bank') }}">
                                             <span class="sub-item">Data Bank</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </li>
@@ -491,7 +491,7 @@
                 <!-- End Navbar -->
             </div>
             
-            <div class="container">
+            <div class="container p-4   ">
 
                 @yield('content')
             </div>
@@ -587,6 +587,7 @@
             fillColor: "rgba(255, 165, 52, .14)",
         });
     </script>
+    @stack('scripts')
 </body>
 
 </html>
