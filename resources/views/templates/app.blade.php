@@ -45,9 +45,9 @@
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="index.html" class="logo">
-                        <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand"
-                            height="20" />
+                    <a class="logo d-flex align-items-center" style="text-decoration: none;">
+                        <img src="{{ asset('img/logo.png') }}" alt="navbar brand" class="navbar-brand" height="20" />
+                        <h5 style="margin-left: 8px; color: white;">MPA-Group</h5>
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -200,9 +200,13 @@
                 <div class="main-header-logo">
                     <!-- Logo Header -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="index.html" class="logo">
+                        {{-- <a href="index.html" class="logo">
                             <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand"
                                 height="20" />
+                        </a> --}}
+                        <a class="logo d-flex align-items-center" style="text-decoration: none;">
+                            <img src="{{ asset('img/logo.png') }}" alt="navbar brand" class="navbar-brand" height="20" />
+                            <h5 style="margin-left: 8px; color: white;">MPA-Group</h5>
                         </a>
                         <div class="nav-toggle">
                             <button class="btn btn-toggle toggle-sidebar">
@@ -221,7 +225,7 @@
                 <!-- Navbar Header -->
                 <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                     <div class="container-fluid">
-                        <nav
+                        {{-- <nav
                             class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -231,10 +235,10 @@
                                 </div>
                                 <input type="text" placeholder="Search ..." class="form-control" />
                             </div>
-                        </nav>
+                        </nav> --}}
 
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                            <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
+                            {{-- <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                                     role="button" aria-expanded="false" aria-haspopup="true">
                                     <i class="fa fa-search"></i>
@@ -315,8 +319,8 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="nav-item topbar-icon dropdown hidden-caret">
+                            </li> --}}
+                            {{-- <li class="nav-item topbar-icon dropdown hidden-caret">
                                 <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-bell"></i>
@@ -445,7 +449,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </li>
+                            </li> --}}
 
                             <li class="nav-item topbar-user dropdown hidden-caret">
                                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
