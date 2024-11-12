@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Projectid;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +19,14 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        Projectid::create([
+            'project_id' => 'FNB-00001',
+            'nama_project' => 'test',
+            'nama_client' => 'gua',
+            'alamat' => 'sumenep',
+            'hpp' => 19000,
+            'rab' => 20000,
+        ]);
     }
 }
