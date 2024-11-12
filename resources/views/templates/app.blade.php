@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>@yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="img/logo.png" type="image/x-icon" />
 
     <!-- Fonts and icons -->
     <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
-    <script>
+    {{-- <script>
         WebFont.load({
             google: {
                 families: ["Public Sans:300,400,500,600,700"]
@@ -27,12 +27,15 @@
                 sessionStorage.fonts = true;
             },
         });
-    </script>
+    </script> --}}
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }} " />
     <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }} " />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="assets/css/demo.css" />
 </head>
 
 <body>
@@ -451,10 +454,10 @@
                             <li class="nav-item topbar-user dropdown hidden-caret">
                                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                                     aria-expanded="false">
-                                    <div class="avatar-sm">
+                                    {{-- <div class="avatar-sm">
                                         <img src="assets/img/profile.jpg" alt="..."
                                             class="avatar-img rounded-circle" />
-                                    </div>
+                                    </div> --}}
                                     <span class="profile-username">
                                         <span class="op-7">Hi,</span>
                                         <span class="fw-bold">Hizrian</span>
@@ -464,26 +467,26 @@
                                     <div class="dropdown-user-scroll scrollbar-outer">
                                         <li>
                                             <div class="user-box">
-                                                <div class="avatar-lg">
+                                                {{-- <div class="avatar-lg">
                                                     <img src="assets/img/profile.jpg" alt="image profile"
                                                         class="avatar-img rounded" />
-                                                </div>
+                                                </div> --}}
                                                 <div class="u-text">
                                                     <h4>Hizrian</h4>
                                                     <p class="text-muted">hello@example.com</p>
                                                     <a href="profile.html"
-                                                        class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                                                        class="btn btn-xs btn-secondary btn-sm">Account Setting</a>
                                                 </div>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">My Profile</a>
+                                            {{-- <a class="dropdown-item" href="#">My Profile</a>
                                             <a class="dropdown-item" href="#">My Balance</a>
                                             <a class="dropdown-item" href="#">Inbox</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="#">Account Setting</a>
-                                            <div class="dropdown-divider"></div>
+                                            <div class="dropdown-divider"></div> --}}
                                             <a class="dropdown-item" href="#">Logout</a>
                                         </li>
                                     </div>
@@ -503,27 +506,27 @@
                 <div class="container-fluid d-flex justify-content-between">
                     <nav class="pull-left">
                         <ul class="nav">
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="http://www.themekita.com">
                                     ThemeKita
                                 </a>
-                            </li>
-                            <li class="nav-item">
+                            </li> --}}
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="#"> Help </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"> Licenses </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </nav>
                     <div class="copyright">
                         2024, made with <i class="fa fa-heart heart text-danger"></i> by
-                        <a href="http://www.themekita.com">ThemeKita</a>
+                        <a>Mahasiswa Magang Polije</a>
                     </div>
-                    <div>
+                    {{-- <div>
                         Distributed by
-                        <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
-                    </div>
+                        <a target="_blank" >ThemeWagon</a>.
+                    </div> --}}
                 </div>
             </footer>
         </div>
@@ -556,12 +559,15 @@
     <script src="{{ asset('assets/js/plugin/jsvectormap/jsvectormap.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jsvectormap/world.js') }}"></script>
 
-    <!-- Sweet Alert -->
-    <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
+    {{-- <!-- Sweet Alert -->
+    <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script> --}}
 
     <!-- Kaiadmin JS -->
     <script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>
 
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="assets/js/setting-demo.js"></script>
+    <script src="assets/js/demo.js"></script>
    
     <script>
         $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
