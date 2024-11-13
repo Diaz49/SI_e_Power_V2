@@ -43,7 +43,7 @@
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        <div class="sidebar sidebar-style-2" data-background-color="dark">
+        <div class="sidebar sidebar-style-2" data-background-color="light">
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">

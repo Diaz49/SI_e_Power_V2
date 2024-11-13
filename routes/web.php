@@ -25,10 +25,10 @@ Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard'
 // Master
 Route::get('project-id', [ProjectIdController::class, 'index'])->name('project-id');
 Route::post('project-id', [ProjectIdController::class, 'store'])->name('project-id.store');
+Route::get('project-id/{id}/edit', [ProjectIdController::class, 'edit'])->name('project-id.edit');
+Route::put('project-id/{id}', [ProjectIdController::class, 'update'])->name('project-id.update');
 Route::delete('project-id/delete/{id}', [ProjectIdController::class, 'delete'])->name('project-id.delete');
 
 Route::get('data-client', [DataClientController::class, 'index'])->name('data-client');
 Route::post('data-client', [DataClientController::class, 'store'])->name('data-client.store');
 Route::delete('data-client/delete/{id}', [DataClientController::class, 'destroy'])->name('data-client.delete');
-
-
