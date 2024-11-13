@@ -23,3 +23,6 @@ Route::get('/', function () {
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 // Master
 Route::get('project-id', [ProjectIdController::class, 'index'])->name('project-id');
+Route::post('project-id', [ProjectIdController::class, 'store'])->name('project-id.store');
+Route::delete('project-id/delete/{id}', [ProjectIdController::class, 'delete'])->name('project-id.delete');
+

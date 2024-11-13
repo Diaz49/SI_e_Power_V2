@@ -24,8 +24,11 @@ class DataProjectIdDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->addColumn('action', 'dataprojectid.action')
-            ->setRowId('id');
+            ->addColumn('action', function(Projectid $projectid){
+                return view('master.data-project-id.action', ['projectid'=> $projectid]);
+            })
+            ->setRowId('id')
+            ->rawColumns(['action']);
     }
 
     /**
