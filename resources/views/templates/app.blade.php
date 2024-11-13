@@ -33,7 +33,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }} " />
     <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }} " />
-
+    
+    @stack('styles')
+    
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="assets/css/demo.css" />
 </head>
@@ -498,12 +500,12 @@
                 <!-- End Navbar -->
             </div>
             
-            <div class="container p-4   ">
+            <div class=" container p-4 ">
 
                 @yield('content')
             </div>
             <footer class="footer">
-                <div class="container-fluid d-flex justify-content-between">
+                {{-- <div class="container-fluid d-flex justify-content-between">
                     <nav class="pull-left">
                         <ul class="nav">
                             {{-- <li class="nav-item">
@@ -564,6 +566,7 @@
 
     <!-- Kaiadmin JS -->
     <script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>
+    @stack('scripts')
 
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
@@ -597,7 +600,6 @@
             fillColor: "rgba(255, 165, 52, .14)",
         });
     </script>
-    @stack('scripts')
 </body>
 
 </html>

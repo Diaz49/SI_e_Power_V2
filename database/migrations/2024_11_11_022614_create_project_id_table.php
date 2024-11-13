@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('project_id', function (Blueprint $table) {
             $table->id();
             $table->string('project_id')->unique();
-            $table->string('nama_project');
-            $table->string('nama_client');
+            $table->string('nama_project', 100);
+            $table->string('nama_client', 100);
             $table->text('alamat');
-            $table->decimal('hpp');
-            $table->decimal('rab');
+            $table->bigInteger('hpp');
+            $table->bigInteger('rab');
             $table->timestamps();
         });
     }

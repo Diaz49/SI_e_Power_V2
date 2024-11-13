@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('vendor', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_vendor', 100);
+            $table->text('alamat_vendor');
+            $table->string('kota', 50);
+            $table->string('no_tlp');
+            $table->string('email');
+            $table->string('up', 50);
             $table->timestamps();
         });
     }
