@@ -9,7 +9,7 @@
 
     <!-- Fonts and icons -->
     <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
-    {{-- <script>
+    <script>
         WebFont.load({
             google: {
                 families: ["Public Sans:300,400,500,600,700"]
@@ -27,7 +27,7 @@
                 sessionStorage.fonts = true;
             },
         });
-    </script> --}}
+    </script>
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }} " />
     
     @stack('styles')
-    
+
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="assets/css/demo.css" />
 </head>
@@ -87,12 +87,12 @@
                                             <span class="sub-item">Data Projects</span>
                                         </a>
                                     </li>
-                                    {{-- <li>
-                                        <a href="{{ route('data_client') }}">
+                                    <li class="{{ Route::is('data-client') ? 'active' : '' }}">
+                                        <a href="{{ route('data-client') }}">
                                             <span class="sub-item">Data Client</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{ route('data_vendor') }}">
                                             <span class="sub-item">Data Vendor</span>
                                         </a>

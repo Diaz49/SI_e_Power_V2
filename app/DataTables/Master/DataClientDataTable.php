@@ -22,8 +22,12 @@ class DataClientDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'dataclient.action')
-            ->setRowId('id');
+            ->addIndexColumn()
+            ->addColumn('action', function(DataClient $dataclient){
+                return view('master.data-client.action', ['dataclient'=> $dataclient]);
+            })
+            ->setRowId('id')
+            ->rawColumns(['action']);
     }
 
     /**
@@ -62,15 +66,22 @@ class DataClientDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::computed('DT_RowIndex')
+                ->title('No.') // Ubah judul kolom menjadi "No."
+                ->searchable(false)
+                ->orderable(false)
+                ->width(30)
+                ->addClass('text-center')
+                ->searchable(false),
+            Column::make('nama_client'),
+            Column::make('alamat'),
+            Column::make('up_invoice'),
+            Column::make('up_sph'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
