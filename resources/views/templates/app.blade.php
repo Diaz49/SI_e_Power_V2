@@ -40,10 +40,10 @@
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        <div class="sidebar sidebar-style-2" data-background-color="dark">
+        <div class="sidebar sidebar-style-2" data-background-color="light">
             <div class="sidebar-logo">
                 <!-- Logo Header -->
-                <div class="logo-header" data-background-color="dark">
+                <div class="logo-header" data-background-color="light">
                     <a href="index.html" class="logo">
                         <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand"
                             height="20" />
