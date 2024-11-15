@@ -81,20 +81,20 @@
                                 <ul class="nav nav-collapse">
                                     <li class="{{ Route::is('project-id') ? 'active' : '' }}">
                                         <a href="{{ route('project-id') }}">
-                                            <span class="sub-item">Data Projects</span>
+                                            <span class="sub-item">Data Project ID</span>
                                         </a>
                                     </li>
                                     {{-- <li>
                                         <a href="{{ route('data_client') }}">
                                             <span class="sub-item">Data Client</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li>
-                                        <a href="{{ route('data_vendor') }}">
+                                        <a href="">
                                             <span class="sub-item">Data Vendor</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="{{ route('data_bank') }}">
                                             <span class="sub-item">Data Bank</span>
                                         </a>

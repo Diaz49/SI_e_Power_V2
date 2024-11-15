@@ -320,7 +320,7 @@
                         $('#dataprojectid-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
-                            text: 'Project berhasil diubah',
+                            text: 'Project berhasil ditambah',
                             icon: 'success',
                             button: 'OK'
                         });

@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Projectid;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,13 +22,19 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Projectid::create([
-            'project_id' => 'FNB-00001',
-            'nama_project' => 'test',
-            'nama_client' => 'gua',
-            'alamat' => 'sumenep',
-            'hpp' => 19000,
-            'rab' => 20000,
+    // Projectid::create([
+    //     'project_id' => 'FNB-00001',
+    //     'nama_project' => 'test',
+    //     'nama_client' => 'gua',
+    //     'alamat' => 'sumenep',
+    //     'hpp' => 19000,
+    //     'rab' => 20000,
+    // ]);
+
+        User::create([
+            'name' => 'fagil nuril',
+            'username' => 'fagiln',
+            'password' => Hash::make('123456')
         ]);
     }
 }
