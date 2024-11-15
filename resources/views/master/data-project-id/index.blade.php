@@ -172,7 +172,7 @@
 
                 // Tampilkan SweetAlert konfirmasi
                 swal({
-                    text: 'Apa kamu yakin ingin menghapus Project ini ' + name + '?',
+                    text: 'Apa kamu yakin ingin menghapus Project ' + name + '?',
                     icon: 'warning',
                     buttons: {
                         cancel: 'Batal',
