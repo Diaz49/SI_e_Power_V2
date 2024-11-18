@@ -31,4 +31,6 @@ Route::delete('project-id/delete/{id}', [ProjectIdController::class, 'delete'])-
 
 Route::get('data-client', [DataClientController::class, 'index'])->name('data-client');
 Route::post('data-client', [DataClientController::class, 'store'])->name('data-client.store');
+Route::get('data-client/{id}/edit', [DataClientController::class, 'edit'])->name('data-client.edit');
+Route::put('data-client/{id}', [DataClientController::class, 'update'])->name('data-client.update');
 Route::delete('data-client/delete/{id}', [DataClientController::class, 'destroy'])->name('data-client.delete');

@@ -46,10 +46,10 @@
         <div class="sidebar sidebar-style-2" data-background-color="light">
             <div class="sidebar-logo">
                 <!-- Logo Header -->
-                <div class="logo-header" data-background-color="dark">
+                <div class="logo-header" data-background-color="light">
                     <a class="logo d-flex align-items-center" style="text-decoration: none;">
                         <img src="{{ asset('img/logo.png') }}" alt="navbar brand" class="navbar-brand" height="20" />
-                        <h5 style="margin-left: 8px; color: white;">MPA-Group</h5>
+                        <h5 style="margin-left: 8px; color: black;">MPA-Group</h5>
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -561,8 +561,8 @@
     <script src="{{ asset('assets/js/plugin/jsvectormap/jsvectormap.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jsvectormap/world.js') }}"></script>
 
-    {{-- <!-- Sweet Alert -->
-    <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script> --}}
+    <!-- Sweet Alert -->
+    <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
     <!-- Kaiadmin JS -->
     <script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>

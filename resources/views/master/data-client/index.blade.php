@@ -39,7 +39,7 @@
                     <div class="modal-body">
                         <div class="mb-1 label">Nama Client</div>
                         <input type="text" class="form-control" name="nama_client" value="{{ old('') }}"
-                            placeholder="Masukkan Project ID">
+                            placeholder="Masukkan Nama Client">
                         {{-- @error('')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror --}}
@@ -53,14 +53,14 @@
 
                         <div class="mb-1 mt-2 label">Invoice</div>
                         <input type="text" class="form-control" name="up_invoice" value="{{ old('') }}"
-                            placeholder="Masukkan HPP">
+                            placeholder="Masukkan Invoice">
                         {{-- @error('')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror --}}
 
                         <div class="mb-1 mt-2 label">SPH</div>
                         <input type="text" class="form-control" name="up_sph" value="{{ old('') }}"
-                            placeholder="Masukkan RAB">
+                            placeholder="Masukkan SPH">
                         {{-- @error('rab')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror --}}
@@ -76,67 +76,55 @@
     </form>
 
    <!-- Modal Edit -->
-   {{-- <form action="{{ route('project-id.store') }}" method="POST">
-    @csrf
-    <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Project ID</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-1 label">Project ID</div>
-                    <input type="text" class="form-control" name="project_id" value=""
-                        placeholder="Masukkan Project ID">
-                    @error('project_id')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+   <form action="" method="POST" id="formEdit">
+        @method('PUT')
+        @csrf
+        <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Client</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
-                    <div class="mb-1 mt-2 label">Nama Project</div>
-                    <input type="text" class="form-control" name="nama_project" value=""
-                        placeholder="Masukkan Nama Project">
-                    @error('nama_project')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                        <div class="mb-1 mt-2 label">Nama Client</div>
+                        <input type="text" class="form-control" name="nama_client_edit" id="nama_client_edit"
+                            value="" placeholder="Masukkan Nama Client">
+                        @error('nama_client_edit')
+                            <div class="text-danger error ">{{ $message }}</div>
+                        @enderror
 
-                    <div class="mb-1 mt-2 label">Nama Client</div>
-                    <input type="text" class="form-control" name="nama_client" value=""
-                        placeholder="Masukkan Nama Client">
-                    @error('nama_client')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                        <div class="mb-1 mt-2 label">Alamat</div>
+                        <textarea type="text" class="form-control" name="alamat_edit" id="alamat_edit" value=""
+                            placeholder="Masukkan Alamat"></textarea>
+                        @error('alamat_edit')
+                            <div class="text-danger error ">{{ $message }}</div>
+                        @enderror
 
-                    <div class="mb-1 mt-2 label">Alamat</div>
-                    <input type="text" class="form-control" name="alamat" value=""
-                        placeholder="Masukkan Alamat">
-                    @error('alamat')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                        <div class="mb-1 mt-2 label">Invoice</div>
+                        <input type="text" class="form-control" name="up_invoice_edit" id="up_invoice_edit" value=""
+                            placeholder="Masukkan Invoice">
+                        @error('up_invoice_edit')
+                            <div class="text-danger error ">{{ $message }}</div>
+                        @enderror
 
-                    <div class="mb-1 mt-2 label">HPP</div>
-                    <input type="text" class="form-control" name="hpp" value=""
-                        placeholder="Masukkan HPP">
-                    @error('hpp')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                        <div class="mb-1 mt-2 label">SPH</div>
+                        <input type="text" class="form-control" name="up_sph_edit" id="up_sph_edit" value=""
+                            placeholder="Masukkan SPH">
+                        @error('up_sph_edit')
+                            <div class="text-danger error ">{{ $message }}</div>
+                        @enderror
 
-                    <div class="mb-1 mt-2 label">RAB</div>
-                    <input type="text" class="form-control" name="rab" value=""
-                        placeholder="Masukkan RAB">
-                    @error('rab')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Tambah Data</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit Data</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form> --}}
+    </form>
 
     @push('scripts')
         {{ $dataTable->scripts() }}
@@ -154,7 +142,7 @@
 
                 // Tampilkan SweetAlert konfirmasi
                 swal({
-                    text: 'Apa kamu yakin ingin menghapus Project ini ' + name + '?',
+                    text: 'Apa kamu yakin ingin menghapus Data Client ini ' + name + '?',
                     icon: 'warning',
                     buttons: {
                         cancel: 'Batal',
@@ -181,7 +169,7 @@
                                 // Menampilkan SweetAlert sukses
                                 swal({
                                     title: 'Berhasil!',
-                                    text: 'Project ' + name + ' berhasil dihapus',
+                                    text: 'Data Client ' + name + ' berhasil dihapus',
                                     icon: 'success',
                                     button: 'OK'
                                 });
@@ -190,7 +178,7 @@
                                 // Menampilkan SweetAlert error jika gagal
                                 swal({
                                     title: 'Gagal!',
-                                    text: 'Gagal menghapus project',
+                                    text: 'Gagal menghapus Data Client',
                                     icon: 'error',
                                     button: 'OK'
                                 });
@@ -199,6 +187,150 @@
                     }
                 });
             });
+            $(document).on('click', 'a[data-bs-toggle="modal"]', function() {
+                $('.error').remove(); // Hapus error sebelumnya
+                var dataclient = $(this).data('id'); // Ambil ID dari tombol edit
+                var url = '/data-client/' + dataclient + '/edit'; // URL untuk ambil data
+                var updateUrl = '/data-client/' + dataclient; // URL untuk update data
+
+                console.log('Client ID:', dataclient);
+
+                // Request AJAX untuk mendapatkan data project berdasarkan ID
+                $.get(url, function(data) {
+                    // Isi field modal dengan data yang didapat dari server
+                    $('#nama_client_edit').val(data.nama_client);
+                    $('#alamat_edit').val(data.alamat);
+                    $('#up_invoice_edit').val(data.up_invoice);
+                    $('#up_sph_edit').val(data.up_sph);
+
+                    // Set URL action form pada modal
+                    $('#formEdit').attr('action', updateUrl);
+                });
+            });
+
+            $('#formEdit').on('submit', function(event) {
+                event.preventDefault();
+                var updateUrl = $(this).attr('action');
+                console.log($(this).serialize()); // Debug data yang dikirim
+                $.ajax({
+                    url: updateUrl,
+                    type: 'PUT',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        $('#dataclient-table').DataTable().ajax.reload();
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Data CLient berhasil diubah',
+                            icon: 'success',
+                            button: 'OK'
+                        });
+                        $('#modalEdit').modal('hide');
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
+
+                            // Kosongkan pesan error lama sebelum menampilkan yang baru
+                            $('.error').remove(); // Hapus error sebelumnya
+
+                            // Menampilkan pesan error untuk masing-masing field
+                            if (errors.nama_client_edit) {
+                                $('#nama_client_edit').after('<div class="text-danger error">' + errors
+                                    .nama_client_edit[
+                                        0] + '</div>');
+                            }
+                            if (errors.alamat_edit) {
+                                $('#alamat_edit').after('<div class="text-danger error">' + errors
+                                    .alamat_edit[
+                                        0] +
+                                    '</div>');
+                            }
+                            if (errors.up_invoice_edit) {
+                                $('#up_invoice_edit').after('<div class="text-danger error">' + errors.up_invoice_edit[
+                                        0] +
+                                    '</div>');
+                            }
+                            if (errors.up_sph_edit) {
+                                $('#up_sph_edit').after('<div class="text-danger error">' + errors.up_sph_edit[
+                                        0] +
+                                    '</div>');
+                            }
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Gagal mengedit project',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
+                });
+            });
+
+            $('#formTambah').on('submit', function(event) {
+                event.preventDefault();
+                console.log('hai');
+                var createUrl = '/data-client';
+
+                $.ajax({
+                    url: createUrl,
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        $('#dataclient-table').DataTable().ajax.reload();
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Project berhasil diubah',
+                            icon: 'success',
+                            button: 'OK'
+                        });
+                        $('#modalTambah').modal('hide');
+                        $('#formTambah')[0].reset();
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
+                            console.log(errors);
+                            // Kosongkan pesan error lama sebelum menampilkan yang baru
+                            $('.error').remove(); // Hapus error sebelumnya
+
+                            // Menampilkan pesan error untuk masing-masing field
+                            if (errors.nama_client) {
+                                $('#nama_client').after('<div class="text-danger error">' + errors
+                                    .nama_client[
+                                        0] + '</div>');
+                            }
+                            if (errors.alamat) {
+                                $('#alamat').after('<div class="text-danger error">' + errors
+                                    .alamat[
+                                        0] +
+                                    '</div>');
+                            }
+                            if (errors.up_invoice) {
+                                $('#up_invoice').after('<div class="text-danger error">' + errors.up_invoice[
+                                        0] +
+                                    '</div>');
+                            }
+                            if (errors.up_sph) {
+                                $('#up_sph').after('<div class="text-danger error">' + errors.up_sph[
+                                        0] +
+                                    '</div>');
+                            }
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Gagal mengedit project',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
+                });
+            });
+            $('#btn-tambah').on('click', function() {
+                $('.error').remove();
+                // $('#formTambah')[0].reset();
+            })
         </script>
     @endpush
 @endsection

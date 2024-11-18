@@ -60,7 +60,9 @@ class DataClientController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dataclient = DataClient::find($id);
+        // dd($projectid);
+        return response()->json($dataclient);
     }
 
     /**
@@ -68,7 +70,38 @@ class DataClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $dataclient = DataClient::findOrFail($id); // tambahkan fail jika id tidak ditemukan
+        $request->validate([
+            'nama_client_edit' => 'required|string|max:100',
+            'alamat_edit' => 'required|string|max:255',
+            'up_invoice_edit' => 'required|numeric|min:0',
+            'up_sph_edit' => 'required|numeric|min:0',
+        ], [
+            'alamat_edit.required' => 'Alamat harus diisi.',
+            'alamat_edit.string' => 'Alamat harus berupa teks.',
+
+            'up_invoice_edit.required' => 'HPP harus diisi.',
+            'up_invoice_edit.numeric' => 'HPP harus berupa angka.',
+            'up_invoice_edit.min' => 'HPP tidak boleh kurang dari 0.',
+
+            'up_sph_edit.required' => 'RAB harus diisi.',
+            'up_sph_edit.numeric' => 'RAB harus berupa angka.',
+            'up_sph_edit.min' => 'RAB tidak boleh kurang dari 0.',
+        ]);
+
+        // Update data dengan input yang sesuai
+        $dataclient->update([
+            'nama_client' => $request->nama_client_edit,
+            'alamat' => $request->alamat_edit,
+            'up_invoice' => $request->up_invoice_edit,
+            'up_sph' => $request->up_sph_edit,
+        ]);
+
+        return response()->json([
+            'success' => 'Data Client berhasil di edit!'
+        ], 200);
+
+        // return redirect()->back();
     }
 
     /**
