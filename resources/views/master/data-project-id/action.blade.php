@@ -1,5 +1,6 @@
 <div class="dropdown">
-    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+        style="--bs-btn-active-border-color:transparent;">
         <i class="fas fa-ellipsis-h"></i>
     </button>
     <ul class="dropdown-menu">
