@@ -32,9 +32,9 @@ class DatabaseSeeder extends Seeder
     // ]);
 
         User::create([
-            'name' => 'fagil nuril',
-            'username' => 'fagiln',
-            'password' => Hash::make('123456')
+            'name' => 'LALALALALA',
+            'username' => 'admin',
+            'password' => Hash::make('test')
         ]);
     }
 }
