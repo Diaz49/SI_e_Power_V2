@@ -2,18 +2,18 @@
 @section('content')
     @push('style')
     @endpush
-    <h4 class="text-primary fw-bolder fs-2 m-4">Data Client</h4>
+    <h4 class="text-primary fw-bolder fs-2 m-4">Data Bank</h4>
     <div class="d-flex justify-content-end">
         <div class="row ">
             <div class="col-12 d-flex justify-content-end mb-3 ">
                 <button class="btn btn-outline-secondary btn-sm me-4" data-bs-target="#modalTambah" data-bs-toggle="modal"><i
-                        class="fas fa-plus"></i> Tambah Data Client</button>
+                        class="fas fa-plus"></i> Tambah Data Bank</button>
             </div>
-            <div class="col-12 d-flex justify-content-end">
+            {{-- <div class="col-12 d-flex justify-content-end">
                 <button class="btn btn-outline-secondary btn-sm " onclick="return swal('Title', 'Text', 'success')"><i
                         class="fas fa-filter"></i> Filter</button>
                 <button class="btn btn-outline-secondary btn-sm ms-3 me-4"><i class="fas fa-download"></i> Export</button>
-            </div>
+            </div> --}}
 
         </div>
     </div>
@@ -27,43 +27,36 @@
     </div>
 
     <!-- Modal Tambah -->
-    <form action="{{ route('data-client.store') }}" method="POST">
+    <form action="{{ route('bank.store') }}" method="POST">
         @csrf
         <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Client</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Bank</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-1 label">Nama Client</div>
-                        <input type="text" class="form-control" name="nama_client" value="{{ old('') }}"
-                            placeholder="Masukkan Nama Client">
-                        {{-- @error('')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror --}}
-
-                        <div class="mb-1 mt-2 label">Alamat</div>
-                        <input type="text" class="form-control" name="alamat" value="{{ old('alamat') }}"
-                            placeholder="Masukkan Alamat">
-                        @error('alamat')
+                        <div class="mb-1 label">Nama Bank</div>
+                        <input type="text" class="form-control" name="nama_bank" value="{{ old('') }}"
+                            placeholder="Masukkan Nama Bank">
+                        @error('nama_bank')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Invoice</div>
-                        <input type="text" class="form-control" name="up_invoice" value="{{ old('') }}"
-                            placeholder="Masukkan Invoice">
-                        {{-- @error('')
+                        <div class="mb-1 mt-2 label">Nama Rek.</div>
+                        <input type="text" class="form-control" name="nama_rek" value="{{ old('') }}"
+                            placeholder="Masukkan Nama Rekening">
+                        @error('nama_rek')
                             <div class="text-danger">{{ $message }}</div>
-                        @enderror --}}
+                        @enderror
 
-                        <div class="mb-1 mt-2 label">SPH</div>
-                        <input type="text" class="form-control" name="up_sph" value="{{ old('') }}"
-                            placeholder="Masukkan SPH">
-                        {{-- @error('rab')
+                        <div class="mb-1 mt-2 label">Nomer Rek.</div>
+                        <input type="text" class="form-control" name="nomer_rek" value="{{ old('') }}"
+                            placeholder="Masukkan Nomer Rekening">
+                        @error('nomer_rek')
                             <div class="text-danger">{{ $message }}</div>
-                        @enderror --}}
+                        @enderror
 
                     </div>
                     <div class="modal-footer">
@@ -83,37 +76,39 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Client</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Bank</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
-                        <div class="mb-1 mt-2 label">Nama Client</div>
-                        <input type="text" class="form-control" name="nama_client_edit" id="nama_client_edit"
-                            value="" placeholder="Masukkan Nama Client">
-                        @error('nama_client_edit')
+                        <div class="mb-1 mt-2 label">Nama Bank</div>
+                        <input type="text" class="form-control" name="nama_bank_edit" id="nama_bank_edit"
+                            value="" placeholder="Masukkan Nama Bank">
+                        @error('nama_bank_edit')
                             <div class="text-danger error ">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Alamat</div>
-                        <textarea type="text" class="form-control" name="alamat_edit" id="alamat_edit" value=""
-                            placeholder="Masukkan Alamat"></textarea>
-                        @error('alamat_edit')
+                        <div class="mb-1 mt-2 label">Nama Rek.</div>
+                        <input type="text" class="form-control" name="nama_rek_edit" id="nama_rek_edit" value=""
+                            placeholder="Masukkan Nomer Rekening">
+                        @error('nama_rek_edit')
                             <div class="text-danger error ">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Invoice</div>
-                        <input type="text" class="form-control" name="up_invoice_edit" id="up_invoice_edit" value=""
-                            placeholder="Masukkan Invoice">
-                        @error('up_invoice_edit')
+                        <div class="mb-1 mt-2 label">Nomer Rek.</div>
+                        <input type="text" class="form-control" name="nomer_rek_edit" id="nomer_rek_edit" value=""
+                            placeholder="Masukkan Nomer Rekening">
+                        @error('nomer_rek_edit')
                             <div class="text-danger error ">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">SPH</div>
-                        <input type="text" class="form-control" name="up_sph_edit" id="up_sph_edit" value=""
-                            placeholder="Masukkan SPH">
-                        @error('up_sph_edit')
-                            <div class="text-danger error ">{{ $message }}</div>
+                        <div class="mb-1 mt-2 label">Status</div>
+                        <select class="form-control status-select" name="status_edit" id="status_edit">
+                            <option value="use" {{ (isset($bank) && $bank->status === 'use') ? 'selected' : '' }}>Use</option>
+                            <option value="not_use" {{ (isset($bank) && $bank->status === 'not_use') ? 'selected' : '' }}>Not Use</option>
+                        </select>
+                        @error('status_edit')
+                            <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
                     </div>
@@ -126,7 +121,7 @@
         </div>
     </form>
 
-    @push('scripts')
+@push('scripts')
         {{ $dataTable->scripts() }}
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -142,7 +137,7 @@
 
                 // Tampilkan SweetAlert konfirmasi
                 swal({
-                    text: 'Apa kamu yakin ingin menghapus Data Client ini ' + name + '?',
+                    text: 'Apa kamu yakin ingin menghapus Data Bank ini ' + name + '?',
                     icon: 'warning',
                     buttons: {
                         cancel: 'Batal',
@@ -169,7 +164,7 @@
                                 // Menampilkan SweetAlert sukses
                                 swal({
                                     title: 'Berhasil!',
-                                    text: 'Data Client ' + name + ' berhasil dihapus',
+                                    text: 'Data Bank ' + name + ' berhasil dihapus',
                                     icon: 'success',
                                     button: 'OK'
                                 });
@@ -178,7 +173,7 @@
                                 // Menampilkan SweetAlert error jika gagal
                                 swal({
                                     title: 'Gagal!',
-                                    text: 'Gagal menghapus Data Client',
+                                    text: 'Gagal menghapus Data Bank',
                                     icon: 'error',
                                     button: 'OK'
                                 });
@@ -189,19 +184,19 @@
             });
             $(document).on('click', 'a[data-bs-toggle="modal"]', function() {
                 $('.error').remove(); // Hapus error sebelumnya
-                var dataclient = $(this).data('id'); // Ambil ID dari tombol edit
-                var url = '/data-client/' + dataclient + '/edit'; // URL untuk ambil data
-                var updateUrl = '/data-client/' + dataclient; // URL untuk update data
+                var databank = $(this).data('id'); // Ambil ID dari tombol edit
+                var url = '/bank/' + databank + '/edit'; // URL untuk ambil data
+                var updateUrl = '/bank/' + databank; // URL untuk update data
 
-                console.log('Client ID:', dataclient);
+                console.log('Client ID:', databank);
 
                 // Request AJAX untuk mendapatkan data project berdasarkan ID
                 $.get(url, function(data) {
                     // Isi field modal dengan data yang didapat dari server
-                    $('#nama_client_edit').val(data.nama_client);
-                    $('#alamat_edit').val(data.alamat);
-                    $('#up_invoice_edit').val(data.up_invoice);
-                    $('#up_sph_edit').val(data.up_sph);
+                    $('#nama_bank_edit').val(data.nama_bank);
+                    $('#nama_rek_edit').val(data.nama_rek);
+                    $('#nomer_rek_edit').val(data.nomer_rek);
+                    $('#status_edit').val(data.status);
 
                     // Set URL action form pada modal
                     $('#formEdit').attr('action', updateUrl);
@@ -217,10 +212,10 @@
                     type: 'PUT',
                     data: $(this).serialize(),
                     success: function(result) {
-                        $('#dataclient-table').DataTable().ajax.reload();
+                        $('#bank-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
-                            text: 'Data CLient berhasil diubah',
+                            text: 'Data Bank berhasil diubah',
                             icon: 'success',
                             button: 'OK'
                         });
@@ -234,31 +229,33 @@
                             $('.error').remove(); // Hapus error sebelumnya
 
                             // Menampilkan pesan error untuk masing-masing field
-                            if (errors.nama_client_edit) {
-                                $('#nama_client_edit').after('<div class="text-danger error">' + errors
-                                    .nama_client_edit[
+                            if (errors.nama_bank_edit) {
+                                $('#nama_bank_edit').after('<div class="text-danger error">' + errors
+                                    .nama_bank_edit[
                                         0] + '</div>');
                             }
-                            if (errors.alamat_edit) {
-                                $('#alamat_edit').after('<div class="text-danger error">' + errors
-                                    .alamat_edit[
+                            if (errors.nama_rek_edit) {
+                                $('#nama_rek_edit').after('<div class="text-danger error">' + errors
+                                    .nama_rek_edit[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.up_invoice_edit) {
-                                $('#up_invoice_edit').after('<div class="text-danger error">' + errors.up_invoice_edit[
+                            if (errors.nomer_rek_edit) {
+                                $('#nomer_rek_edit').after('<div class="text-danger error">' + errors
+                                    .nomer_rek_edit[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.up_sph_edit) {
-                                $('#up_sph_edit').after('<div class="text-danger error">' + errors.up_sph_edit[
+                            if (errors.status_edit) {
+                                $('#status_edit').after('<div class="text-danger error">' + errors
+                                    .status_edit[
                                         0] +
                                     '</div>');
                             }
                         } else {
                             swal({
                                 title: 'Gagal!',
-                                text: 'Gagal mengedit project',
+                                text: 'Gagal mengedit data bank',
                                 icon: 'error',
                                 button: 'OK'
                             });
@@ -269,18 +266,18 @@
 
             $('#formTambah').on('submit', function(event) {
                 event.preventDefault();
-                console.log('hai');
-                var createUrl = '/data-client';
+                // console.log('hai');
+                var createUrl = '/bank';
 
                 $.ajax({
                     url: createUrl,
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(result) {
-                        $('#dataclient-table').DataTable().ajax.reload();
+                        $('#bank-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
-                            text: 'Project berhasil diubah',
+                            text: 'Data Bank berhasil diubah',
                             icon: 'success',
                             button: 'OK'
                         });
@@ -295,31 +292,26 @@
                             $('.error').remove(); // Hapus error sebelumnya
 
                             // Menampilkan pesan error untuk masing-masing field
-                            if (errors.nama_client) {
-                                $('#nama_client').after('<div class="text-danger error">' + errors
-                                    .nama_client[
+                            if (errors.nama_bank) {
+                                $('#nama_bank').after('<div class="text-danger error">' + errors
+                                    .nama_bank[
                                         0] + '</div>');
                             }
-                            if (errors.alamat) {
-                                $('#alamat').after('<div class="text-danger error">' + errors
-                                    .alamat[
+                            if (errors.nama_rek) {
+                                $('#nama_rek').after('<div class="text-danger error">' + errors
+                                    .nama_rek[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.up_invoice) {
-                                $('#up_invoice').after('<div class="text-danger error">' + errors.up_invoice[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.up_sph) {
-                                $('#up_sph').after('<div class="text-danger error">' + errors.up_sph[
+                            if (errors.nomer_rek) {
+                                $('#nomer_rek').after('<div class="text-danger error">' + errors.nomer_rek[
                                         0] +
                                     '</div>');
                             }
                         } else {
                             swal({
                                 title: 'Gagal!',
-                                text: 'Gagal mengedit project',
+                                text: 'Gagal mengedit data bank',
                                 icon: 'error',
                                 button: 'OK'
                             });
@@ -332,5 +324,5 @@
                 // $('#formTambah')[0].reset();
             })
         </script>
-    @endpush
+@endpush
 @endsection

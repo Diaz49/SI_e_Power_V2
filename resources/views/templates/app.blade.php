@@ -96,12 +96,12 @@
                                         <a href="{{ route('data_vendor') }}">
                                             <span class="sub-item">Data Vendor</span>
                                         </a>
-                                    </li>
-                                    {{-- <li>
-                                        <a href="{{ route('data_bank') }}">
+                                    </li> --}}
+                                    <li  class="{{ Route::is('bank') ? 'active' : '' }}">
+                                        <a href="{{ route('bank') }}">
                                             <span class="sub-item">Data Bank</span>
                                         </a>
-                                    </li> --}}
+                                    </li>
                                 </ul>
                             </div>
                         </li>

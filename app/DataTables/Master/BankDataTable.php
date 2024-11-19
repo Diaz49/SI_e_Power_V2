@@ -22,8 +22,20 @@ class BankDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'bank.action')
-            ->setRowId('id');
+        ->addIndexColumn()
+        ->addColumn('status_display', function (Bank $bank) {
+            if ($bank->status === 'use') {
+                return '<span class="badge bg-primary">Use</span>'; // Biru untuk 'use'
+            } elseif ($bank->status === 'not_use') {
+                return '<span class="badge bg-danger">Not Use</span>'; // Merah untuk 'not_use'
+            }
+            return '<span class="badge bg-secondary">Unknown</span>'; // Abu-abu untuk status lainnya
+        })
+        ->addColumn('action', function (Bank $bank) {
+            return view('master.data-bank.action', ['bank' => $bank]);
+        })
+        ->setRowId('id')
+        ->rawColumns(['status_display', 'action']); // Pastikan kolom ini di-raw untuk HTML
     }
 
     /**
@@ -72,7 +84,10 @@ class BankDataTable extends DataTable
             Column::make('nama_bank'),
             Column::make('nama_rek'),
             Column::make('nomer_rek'),
-            Column::make('status'),
+            Column::computed('status_display') // Kolom baru untuk status
+                ->title('Status') // Ubah nama kolom menjadi "Status"
+                ->searchable(false)
+                ->addClass('text-center'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

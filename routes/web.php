@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\ProjectIdController;
 use App\Http\Controllers\Master\DataClientController;
+use App\Http\Controllers\Master\BankController;
 use App\Http\Controllers\MasterController;
 
 use Illuminate\Support\Facades\Route;
@@ -44,5 +45,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('data-client/{id}/edit', [DataClientController::class, 'edit'])->name('data-client.edit');
     Route::put('data-client/{id}', [DataClientController::class, 'update'])->name('data-client.update');
     Route::delete('data-client/delete/{id}', [DataClientController::class, 'destroy'])->name('data-client.delete');
+
+    Route::get('bank', [BankController::class, 'index'])->name('bank');
+    Route::post('bank', [BankController::class, 'store'])->name('bank.store');
+    Route::get('bank/{id}/edit', [BankController::class, 'edit'])->name('bank.edit');
+    Route::put('bank/{id}', [BankController::class, 'update'])->name('bank.update');
+    Route::delete('bank/delete/{id}', [BankController::class, 'destroy'])->name('bank.delete');
 });
 
