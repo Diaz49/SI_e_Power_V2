@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\ProjectIdController;
 use App\Http\Controllers\Master\DataClientController;
 use App\Http\Controllers\Master\BankController;
+use App\Http\Controllers\Master\DataVendorController;
 use App\Http\Controllers\MasterController;
 
 use Illuminate\Support\Facades\Route;
@@ -51,5 +52,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('bank/{id}/edit', [BankController::class, 'edit'])->name('bank.edit');
     Route::put('bank/{id}', [BankController::class, 'update'])->name('bank.update');
     Route::delete('bank/delete/{id}', [BankController::class, 'destroy'])->name('bank.delete');
+
+    Route::get('data-vendor', [DataVendorController::class, 'index'])->name('data-vendor');
+    Route::post('data-vendor', [DataVendorController::class, 'store'])->name('data-vendor.store');
+    Route::get('data-vendor/{id}/edit', [DataVendorController::class, 'edit'])->name('data-vendor.edit');
+    Route::put('data-vendor/{id}', [DataVendorController::class, 'update'])->name('data-vendor.update');
+    Route::delete('data-vendor/delete/{id}', [DataVendorController::class, 'delete'])->name('data-vendor.delete');
 });
 

@@ -92,11 +92,11 @@
                                             <span class="sub-item">Data Client</span>
                                         </a>
                                     </li>
-                                    {{-- <li>
-                                        <a href="{{ route('data_vendor') }}">
+                                    <li>
+                                        <a href="{{ route('data-vendor') }}">
                                             <span class="sub-item">Data Vendor</span>
                                         </a>
-                                    </li> --}}
+                                    </li>
                                     <li  class="{{ Route::is('bank') ? 'active' : '' }}">
                                         <a href="{{ route('bank') }}">
                                             <span class="sub-item">Data Bank</span>
