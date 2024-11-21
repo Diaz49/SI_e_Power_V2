@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }} " />
     <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }} " />
-    
+
     @stack('styles')
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -74,13 +74,13 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ Route::is('project-id') ? 'active' : ''}}{{ Route::is('data-client') ? 'active' : ''}} {{ Route::is('data-vendor') ? 'active' :''}} {{ Route::is('bank') ? 'active' : '' }}">
                             <a data-bs-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
                                 <p>Master</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="base">
+                            <div class="collapse {{ Route::is('project-id') ? 'show' : ''}}{{ Route::is('data-client') ? 'show' : ''}} {{ Route::is('data-vendor') ? 'show' :''}} {{ Route::is('bank') ? 'show' : '' }}" id="base">
                                 <ul class="nav nav-collapse">
                                     <li class="{{ Route::is('project-id') ? 'active' : '' }}">
                                         <a href="{{ route('project-id') }}">
@@ -92,12 +92,12 @@
                                             <span class="sub-item">Data Client</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="{{ Route::is('data-vendor') ? 'active' :''}}">
                                         <a href="{{ route('data-vendor') }}">
                                             <span class="sub-item">Data Vendor</span>
                                         </a>
                                     </li>
-                                    <li  class="{{ Route::is('bank') ? 'active' : '' }}">
+                                    <li class="{{ Route::is('bank') ? 'active' : '' }}">
                                         <a href="{{ route('bank') }}">
                                             <span class="sub-item">Data Bank</span>
                                         </a>
@@ -157,34 +157,26 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item"
-                        {{-- {{ Route::is('bast') ? 'active' : '' }}  --}}
-                        >
+                        <li class="nav-item" {{-- {{ Route::is('bast') ? 'active' : '' }}  --}}>
                             <a href="#tables" class="collapsed">
                                 <i class="fas fa-table"></i>
                                 <p>BAST</p>
                             </a>
                         </li>
-                        <li class="nav-item"
-                        {{-- {{ Route::is('bakn') ? 'active' : '' }}  --}}
-                        >
+                        <li class="nav-item" {{-- {{ Route::is('bakn') ? 'active' : '' }}  --}}>
                             <a href="#maps" class="collapsed">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <p>BAKN</p>
                             </a>
                         </li>
-                        <li class="nav-item"
-                        {{-- {{ Route::is('purchase_order') ? 'active' : '' }}  --}}
-                        >
-                            <a href="#charts" class="collapsed">
+                        <li class="nav-item {{ Route::is('po') ? 'active' : '' }}"">
+                            <a href="{{ route('po') }}" class="collapsed">
                                 <i class="far fa-chart-bar"></i>
                                 <p>Purchase Order</p>
                                 {{-- <span class="caret"></span> --}}
                             </a>
                         </li>
-                        <li class="nav-item"
-                        {{-- {{ Route::is('sph') ? 'active' : '' }}  --}}
-                        >
+                        <li class="nav-item" {{-- {{ Route::is('sph') ? 'active' : '' }}  --}}>
                             <a href="widgets.html">
                                 <i class="fas fa-desktop"></i>
                                 <p>SPH</p>
@@ -207,7 +199,8 @@
                                 height="20" />
                         </a> --}}
                         <a class="logo d-flex align-items-center" style="text-decoration: none;">
-                            <img src="{{ asset('img/logo.png') }}" alt="navbar brand" class="navbar-brand" height="20" />
+                            <img src="{{ asset('img/logo.png') }}" alt="navbar brand" class="navbar-brand"
+                                height="20" />
                             <h5 style="margin-left: 8px; color: white;">MPA-Group</h5>
                         </a>
                         <div class="nav-toggle">
@@ -499,7 +492,7 @@
                 </nav>
                 <!-- End Navbar -->
             </div>
-            
+
             <div class=" container p-4 ">
 
                 @yield('content')
@@ -513,25 +506,25 @@
                                     ThemeKita
                                 </a>
                             </li> --}}
-                            {{-- <li class="nav-item">
+                {{-- <li class="nav-item">
                                 <a class="nav-link" href="#"> Help </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"> Licenses </a>
                             </li> --}}
-                        </ul>
-                    </nav>
-                    <div class="copyright">
-                        2024, made with <i class="fa fa-heart heart text-danger"></i> by
-                        <a>Mahasiswa Magang Polije</a>
-                    </div>
-                    {{-- <div>
+                </ul>
+                </nav>
+                <div class="copyright">
+                    2024, made with <i class="fa fa-heart heart text-danger"></i> by
+                    <a>Mahasiswa Magang Polije</a>
+                </div>
+                {{-- <div>
                         Distributed by
                         <a target="_blank" >ThemeWagon</a>.
                     </div> --}}
-                </div>
-            </footer>
         </div>
+        </footer>
+    </div>
 
     </div>
     <!--   Core JS Files   -->
@@ -571,7 +564,7 @@
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
-   
+
     <script>
         $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
             type: "line",
