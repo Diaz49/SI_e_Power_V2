@@ -14,9 +14,16 @@ class Po extends Model
         'kode_po',
         'tanggal_po',
         'vendor_id',
-        'buyer_id',
+        'buyer',
+        'perihal',
         'catatan',
         'catatan_2',
         'diskon',
     ];
+
+    public function vendor()
+    {
+        return $this->belongsTo(DataVendor::class, 'vendor_id');
+    }
+   
 }

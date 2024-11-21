@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('kode_po')->unique(); // Kode unik untuk setiap purchase order
             $table->date('tanggal_po'); // Tanggal purchase
             $table->unsignedBigInteger('vendor_id'); // Relasi ke tabel vendor
-            $table->unsignedBigInteger('buyer_id'); // Relasi ke tabel buyer
+            $table->string('buyer'); // Kode unik untuk setiap purchase order
+            $table->text('perihal')->nullable(); // Catatan pertama
             $table->text('catatan')->nullable(); // Catatan pertama
             $table->text('catatan_2')->nullable(); // Catatan kedua
             $table->decimal('diskon', 10, 2)->nullable(); // Diskon
@@ -24,7 +25,6 @@ return new class extends Migration
 
             // Foreign key constraints
             $table->foreign('vendor_id')->references('id')->on('vendor')->onDelete('cascade');
-            $table->foreign('buyer_id')->references('id')->on('vendor')->onDelete('cascade');
         });
     }
 

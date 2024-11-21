@@ -25,6 +25,18 @@ class PurchaseOrderDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->addColumn('action', 'po.action')
+            ->editColumn('vendor_id', function (Po $po) {
+                return $po->vendor->nama_vendor;
+            })
+            ->addColumn('up_vendor', function (Po $po) {
+                return $po->vendor->up;
+            })
+            ->addColumn('kota_vendor', function (Po $po) {
+                return $po->vendor->kota;
+            })
+            ->addColumn('tlp_vendor', function (Po $po) {
+                return $po->vendor->no_tlp;
+            })
             ->setRowId('id');
     }
 
@@ -73,11 +85,11 @@ class PurchaseOrderDataTable extends DataTable
                 ->searchable(false),
             Column::make('kode_po'),
             Column::make('tanggal_po'),
-            Column::make('vendor_id'),
-            Column::make('buyer_id'),
-            Column::make('catatan'),
-            Column::make('catatan_2'),
-            Column::make('diskon'),
+            Column::make('vendor_id')->title('Vendor'),
+            Column::make('up_vendor')->title('up'),
+            Column::make('kota_vendor')->title('Kota'),
+            Column::make('tlp_vendor')->title('No Tlp'),
+            Column::make('perihal'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
