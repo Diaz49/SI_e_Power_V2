@@ -67,5 +67,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // sph
     Route::get('data-sph', [SphController::class, 'index'])->name('data-sph');
+    Route::post('data-sph', [SphController::class, 'store'])->name('data-sph.store');
+    Route::get('data-sph/{id}/edit', [SphController::class, 'edit'])->name('data-sph.edit');
+    Route::put('data-sph/{id}', [SphController::class, 'update'])->name('data-sph.update');
+    Route::delete('data-sph/delete/{id}', [SphController::class, 'delete'])->name('data-sph.delete');
 });
 

@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sph', function (Blueprint $table) {
+        Schema::create('sph_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_sph'); // Kode urut SPH
-            $table->date('tanggal');
-            $table->unsignedBigInteger('data_client_id'); // Foreign Key ke tabel data_clients
-            $table->decimal('penawaran_harga', 10, 2);
+            $table->unsignedBigInteger('sph_id');
+            $table->string('project');
+            $table->string('qty');
+            $table->string('satuan');
+            $table->decimal('price', 10, 2);
             $table->timestamps();
-    
+
             // Menambahkan foreign key
-            $table->foreign('data_client_id')->references('id')->on('client')->onDelete('cascade');
+            $table->foreign('sph_id')->references('id')->on('sph')->onDelete('cascade');
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sph');
+        Schema::dropIfExists('sph_detail');
     }
 };
