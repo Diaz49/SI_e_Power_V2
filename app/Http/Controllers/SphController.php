@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\SphDataTable;
+use App\Http\Controllers\Controller;
+use App\Models\Sph;
 use Illuminate\Http\Request;
 
 class SphController extends Controller
@@ -9,9 +12,9 @@ class SphController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(SphDataTable $dataTable)
     {
-        //
+        return $dataTable->render('sph.index');
     }
 
     /**

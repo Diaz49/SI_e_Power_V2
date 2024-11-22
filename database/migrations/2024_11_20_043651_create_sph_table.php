@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamps();
     
             // Menambahkan foreign key
-            $table->foreign('data_client_id')->references('id')->on('data_clients')->onDelete('cascade');
+            $table->foreign('data_client_id')->references('id')->on('client')->onDelete('cascade');
         });
     }
 

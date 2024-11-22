@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables\Master;
+namespace App\DataTables;
 
 use App\Models\Sph;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -20,10 +20,20 @@ class SphDataTable extends DataTable
      * @param QueryBuilder $query Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
-    {
+    {   
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'sph.action')
-            ->setRowId('id');
+        ->addIndexColumn()
+        ->addColumn('nama_client', function ($row) {
+            return $row->dataClient->nama_client; // Ambil nama_client dari relasi
+        })
+        ->addColumn('up_sph', function ($row) {
+            return $row->dataClient->up_sph; 
+        })
+        ->addColumn('action', function($row){
+            return view('sph.action', ['sph'=> $row]);
+        })
+        ->setRowId('id')
+        ->rawColumns(['action']);
     }
 
     /**
@@ -31,7 +41,7 @@ class SphDataTable extends DataTable
      */
     public function query(Sph $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('dataClient'); // Muat relasi client
     }
 
     /**
@@ -62,15 +72,24 @@ class SphDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::computed('DT_RowIndex')
+                ->title('No.') // Ubah judul kolom menjadi "No."
+                ->searchable(false)
+                ->orderable(false)
+                ->width(30)
+                ->addClass('text-center')
+                ->searchable(false),
+            Column::make('tanggal'),
+            Column::make('kode_sph'),
+            Column::make('nama_client'),
+            Column::make('up_sph'),
+            Column::make('item'),
+            Column::make('price'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

@@ -25,6 +25,6 @@ class Sph extends Model
 
     public function dataClient()
     {
-        return $this->belongsTo(DataClient::class);
+        return $this->belongsTo(DataClient::class, 'data_client_id', 'id');
     }
 }

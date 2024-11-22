@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'LALALALALA',
             'username' => 'admin',
-            'password' => Hash::make('test')
+            'password' => Hash::make('123')
         ]);
     }
 }

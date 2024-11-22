@@ -6,7 +6,7 @@ use App\Http\Controllers\Master\ProjectIdController;
 use App\Http\Controllers\Master\DataClientController;
 use App\Http\Controllers\Master\BankController;
 use App\Http\Controllers\Master\DataVendorController;
-use App\Http\Controllers\MasterController;
+use App\Http\Controllers\SphController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -58,5 +58,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('data-vendor/{id}/edit', [DataVendorController::class, 'edit'])->name('data-vendor.edit');
     Route::put('data-vendor/{id}', [DataVendorController::class, 'update'])->name('data-vendor.update');
     Route::delete('data-vendor/delete/{id}', [DataVendorController::class, 'delete'])->name('data-vendor.delete');
+    // sph
+    Route::get('data-sph', [SphController::class, 'index'])->name('data-sph');
 });
 
