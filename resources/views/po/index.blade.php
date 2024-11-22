@@ -3,155 +3,142 @@
     @push('style')
     @endpush
     <h4 class="text-primary fw-bolder fs-2 m-4">Data Purchase Order MPA</h4>
-    <div class="d-flex justify-content-end">
-        <div class="row ">
-            <div class="col-12 d-flex justify-content-end mb-3 ">
-                <button class="btn btn-outline-secondary btn-sm me-4" data-bs-target="#modalTambah" data-bs-toggle="modal"
-                    id="btn-tambah" style="--bs-btn-bg:white;"><i class="fas fa-plus"></i>Tambah Data</button>
-            </div>
-            <div class="col-12 d-flex justify-content-end">
-                <button class="btn btn-outline-secondary btn-sm " onclick="return swal('Title', 'Text', 'success')"
-                    style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
-                <button class="btn btn-outline-secondary btn-sm ms-3 me-4" style="--bs-btn-bg:white;"><i
-                        class="fas fa-download"></i> Export</button>
-            </div>
+    <div id="datatable-section">
+        <div class="d-flex justify-content-end">
 
-        </div>
-    </div>
-    <div class="card m-4">
-        <div class="card-body">
-            <div class="table-responsive">
-                {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
+            <div class="row ">
+                <div class="col-12 d-flex justify-content-end mb-3 ">
+                    <button class="btn btn-outline-secondary btn-sm me-4" id="btn-tambah" style="--bs-btn-bg:white;">
+                        <i class="fas fa-plus"></i> Tambah Data
+                    </button>
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                    <button class="btn btn-outline-secondary btn-sm " onclick="return swal('Title', 'Text', 'success')"
+                        style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
+                    <button class="btn btn-outline-secondary btn-sm ms-3 me-4" style="--bs-btn-bg:white;"><i
+                            class="fas fa-download"></i> Export</button>
+                </div>
 
             </div>
         </div>
+
+        <div class="card m-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
+
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Modal Tambah -->
-    <form action="{{ route('data-vendor.store') }}" method="POST" id="formTambah">
-        @csrf
-        <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Vendor</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-1 label">Nama Vendor</div>
+    <!-- Form Tambah -->
+    <div id="form-section" style="display:none;" class="m-4 ">
+
+        <form action="{{ route('data-vendor.store') }}" method="POST" id="formTambah">
+            @csrf
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5 class="card-title">Detail</h5>
+                        <div class="mb-1 mt-4 label">Nama Barang</div>
                         <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
                             placeholder="Masukkan Nama Vendor">
                         @error('nama_vendor')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Alamat Vendor</div>
-                        <textarea type="text" class="form-control" name="alamat_vendor" id="alamat_vendor" value=""
-                            placeholder="Masukkan Alamat Vendor"></textarea>
-                        @error('alamat_vendor')
+                        <div class="mb-1 mt-2 label">Qty</div>
+                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
+                            placeholder="Masukkan Nama Vendor">
+                        @error('nama_vendor')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Kota</div>
+                        <div class="mb-1 mt-2 label">Satuan</div>
+                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
+                            placeholder="Masukkan Nama Vendor">
+                        @error('nama_vendor')
+                            <div class="text-danger error">{{ $message }}</div>
+                        @enderror
+
+                        <div class="mb-1 mt-2 label">Harga Satuan</div>
+                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
+                            placeholder="Masukkan Nama Vendor">
+                        @error('nama_vendor')
+                            <div class="text-danger error">{{ $message }}</div>
+                        @enderror
+                        <div class="d-flex justify-content-end mt-3">
+
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5 class="card-title">Header</h5>
+                        <div class="mb-1 mt-4 label">Kode Purchase Order</div>
                         <input type="text" class="form-control" name="kota" id="kota" value=""
                             placeholder="Masukkan Kota">
                         @error('kota')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">No Telpon</div>
+                        <div class="mb-1 mt-2 label">Tanggal</div>
                         <input type="text" class="form-control" name="no_tlp" id="no_tlp" value=""
                             placeholder="Masukkan No Telpon">
                         @error('no_tlp')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Email</div>
+                        <div class="mb-1 mt-2 label">Nama Vendor</div>
                         <input type="text" class="form-control" name="email" id="email" value=""
                             placeholder="Masukkan Email">
                         @error('email')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">up</div>
+                        <div class="mb-1 mt-2 label">Nama Buyer </div>
+                        <input type="text" class="form-control" name="up" id="up" value=""
+                            placeholder="Masukkan up">
+                        @error('up')
+                            <div class="text-danger error">{{ $message }}</div>
+                        @enderror
+                        <div class="mb-1 mt-2 label">Catatan</div>
+                        <input type="text" class="form-control" name="up" id="up" value=""
+                            placeholder="Masukkan up">
+                        @error('up')
+                            <div class="text-danger error">{{ $message }}</div>
+                        @enderror
+                        <div class="mb-1 mt-2 label">Catatan 2 </div>
                         <input type="text" class="form-control" name="up" id="up" value=""
                             placeholder="Masukkan up">
                         @error('up')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Tambah Data</button>
+                        <div class="mb-1 mt-2 label">Diskon Nominal Rupiah </div>
+                        <input type="text" class="form-control" name="up" id="up" value=""
+                            placeholder="Masukkan up">
+                        @error('up')
+                            <div class="text-danger error">{{ $message }}</div>
+                        @enderror
+
+
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+            <div class=" d-md-flex justify-content-end">
+                <button type="button" class="btn btn-secondary me-2" id="btn-cancel">Close</button>
+                <button type="submit" class="btn btn-primary">Tambah Data</button>
+            </div>
+        </form>
+    </div>
 
     <!-- Modal Edit -->
-    <form action="" method="POST" id="formEdit">
-        @method('PUT')
-        @csrf
-        <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Vendor</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-1 label">Nama Vendor</div>
-                        <input type="text" class="form-control" name="nama_vendor_edit" id="nama_vendor_edit"
-                            value="" placeholder="Masukkan Nama Vendor">
-                        @error('nama_vendor_edit')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">Alamat Vendor</div>
-                        <textarea type="text" class="form-control" name="alamat_vendor_edit" id="alamat_vendor_edit" value=""
-                            placeholder="Masukkan Alamat Vendor"></textarea>
-                        @error('alamat_vendor_edit')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">Kota</div>
-                        <input type="text" class="form-control" name="kota_edit" id="kota_edit" value=""
-                            placeholder="Masukkan Kota">
-                        @error('kota_edit')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">No Telpon</div>
-                        <input type="text" class="form-control" name="no_tlp_edit" id="no_tlp_edit" value=""
-                            placeholder="Masukkan No Telpon">
-                        @error('no_tlp_edit')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">Email</div>
-                        <input type="text" class="form-control" name="email_edit" id="email_edit" value=""
-                            placeholder="Masukkan Email">
-                        @error('email_edit')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">up</div>
-                        <input type="text" class="form-control" name="up_edit" id="up_edit" value=""
-                            placeholder="Masukkan up">
-                        @error('up_edit')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Edit Data</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
 
     @push('scripts')
         {{ $dataTable->scripts() }}
@@ -377,6 +364,24 @@
                 $('.error').remove();
                 // $('#formTambah')[0].reset();
             })
+            document.addEventListener('DOMContentLoaded', function() {
+                const btnTambah = document.getElementById('btn-tambah');
+                const btnCancel = document.getElementById('btn-cancel');
+                const datatableSection = document.getElementById('datatable-section');
+                const formSection = document.getElementById('form-section');
+
+                // Event saat tombol tambah ditekan
+                btnTambah.addEventListener('click', function() {
+                    datatableSection.style.display = 'none'; // Sembunyikan DataTable
+                    formSection.style.display = 'block'; // Tampilkan form
+                });
+
+                // Event saat tombol cancel ditekan
+                btnCancel.addEventListener('click', function() {
+                    formSection.style.display = 'none'; // Sembunyikan form
+                    datatableSection.style.display = 'block'; // Tampilkan DataTable
+                });
+            });
         </script>
     @endpush
 @endsection
