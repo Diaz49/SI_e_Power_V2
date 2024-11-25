@@ -83,8 +83,8 @@ class SphDataTable extends DataTable
             Column::make('kode_sph'),
             Column::make('nama_client'),
             Column::make('up_sph'),
-            Column::make('qty'), // total satuan barang
-            Column::make('price'), // total harga keseluruhan barang
+            // Column::make('qty'), // total satuan barang
+            // Column::make('price'), // total harga keseluruhan barang
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
