@@ -17,4 +17,9 @@ class DataClient extends Model
         'up_invoice',
         'up_sph',
     ];
+
+    public function sphs()
+    {
+        return $this->hasMany(Sph::class, 'data_client_id', 'id');
+    }
 }

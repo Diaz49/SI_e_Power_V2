@@ -69,7 +69,7 @@
                 <div class="sidebar-content">
                     <ul class="nav nav-secondary">
                         <li class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
-                            <a href="{{ route('dashboard') }}" class="collapsed">
+                            <a href="{{ route('dashboard') }}">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -175,10 +175,11 @@
                                 <p>Purchase Order</p>
                                 {{-- <span class="caret"></span> --}}
                             </a>
-                        </li>
-                        <li class="nav-item" {{-- {{ Route::is('sph') ? 'active' : '' }}  --}}>
-                            <a href="widgets.html">
-                                <i class="fas fa-desktop"></i>
+                            <li class="nav-item
+                            {{ Route::is('data-sph') ? 'active' : '' }}" 
+                            >
+                                <a href="{{ route('data-sph') }}">
+                                    <i class="fas fa-desktop"></i>
                                 <p>SPH</p>
                                 {{-- <span class="badge badge-success">4</span> --}}
                             </a>
