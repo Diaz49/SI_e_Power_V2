@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Master;
 
 use App\DataTables\Master\DataVendorDataTable;
-use App\Http\Controllers\Controller;
 use App\Models\DataVendor;
 use Illuminate\Http\Request;
 

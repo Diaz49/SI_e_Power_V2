@@ -25,5 +25,8 @@ class Po extends Model
     {
         return $this->belongsTo(DataVendor::class, 'vendor_id');
     }
-   
+    public function detail()
+    {
+        return $this->hasMany(DetailPo::class, 'po_id', 'kode_po');
+    }
 }
