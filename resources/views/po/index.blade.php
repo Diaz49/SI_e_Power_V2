@@ -35,12 +35,11 @@
     <!-- Form Tambah -->
     <div id="form-section" style="display:none;" class="m-4 ">
 
-        <form action="{{ route('data-vendor.store') }}" method="POST" id="formTambah">
+        <form action="{{ route('po.store') }}" method="POST" id="formTambah">
             @csrf
-
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card p-4">
+                    <div class="card p-4-">
                         <h5 class="card-title">Detail</h5>
                         <div class="mb-1 mt-4 label">Nama Barang</div>
                         <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
@@ -126,17 +125,19 @@
                         @error('up')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
-
-
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="submit" class="btn btn-primary">Tambah Data</button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class=" d-md-flex justify-content-end">
                 <button type="button" class="btn btn-secondary me-2" id="btn-cancel">Close</button>
-                <button type="submit" class="btn btn-primary">Tambah Data</button>
             </div>
         </form>
+   
     </div>
+
 
     <!-- Modal Edit -->
 
