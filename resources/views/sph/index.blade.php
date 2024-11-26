@@ -40,30 +40,30 @@
                 <div class="col-md-6">
                     <div class="card p-4">
                         <h5 class="card-title">Detail</h5>
-                        <div class="mb-1 mt-4 label">Nama Barang</div>
+                        <div class="mb-1 mt-4 label">Project</div>
                         <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
-                            placeholder="Masukkan Nama Vendor">
+                            placeholder="Masukkan Project">
                         @error('nama_vendor')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
                         <div class="mb-1 mt-2 label">Qty</div>
                         <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
-                            placeholder="Masukkan Nama Vendor">
+                            placeholder="Masukkan Quantity">
                         @error('nama_vendor')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
                         <div class="mb-1 mt-2 label">Satuan</div>
                         <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
-                            placeholder="Masukkan Nama Vendor">
+                            placeholder="Masukkan Satuan">
                         @error('nama_vendor')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Harga Satuan</div>
+                        <div class="mb-1 mt-2 label">Harga Satuan / Price</div>
                         <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
-                            placeholder="Masukkan Nama Vendor">
+                            placeholder="Masukkan Harga Satuan">
                         @error('nama_vendor')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
@@ -78,28 +78,28 @@
                 <div class="col-md-6">
                     <div class="card p-4">
                         <h5 class="card-title">Header</h5>
-                        <div class="mb-1 mt-4 label">Kode Purchase Order</div>
+                        <div class="mb-1 mt-4 label">Kode SPH</div>
                         <input type="text" class="form-control" name="kota" id="kota" value=""
-                            placeholder="Masukkan Kota">
+                            placeholder="Masukkan Kode SPH">
                         @error('kota')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
                         <div class="mb-1 mt-2 label">Tanggal</div>
                         <input type="text" class="form-control" name="no_tlp" id="no_tlp" value=""
-                            placeholder="Masukkan No Telpon">
+                            placeholder="Masukkan Tanggal">
                         @error('no_tlp')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Nama Vendor</div>
+                        <div class="mb-1 mt-2 label">Nama Client</div>
                         <input type="text" class="form-control" name="email" id="email" value=""
-                            placeholder="Masukkan Email">
+                            placeholder="Masukkan Nama Client">
                         @error('email')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Nama Buyer </div>
+                        {{-- <div class="mb-1 mt-2 label">Nama Buyer</div>
                         <input type="text" class="form-control" name="up" id="up" value=""
                             placeholder="Masukkan up">
                         @error('up')
@@ -116,11 +116,11 @@
                             placeholder="Masukkan up">
                         @error('up')
                             <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+                        @enderror --}}
 
-                        <div class="mb-1 mt-2 label">Diskon Nominal Rupiah </div>
+                        <div class="mb-1 mt-2 label">Perihal Penawaran Harga</div>
                         <input type="text" class="form-control" name="up" id="up" value=""
-                            placeholder="Masukkan up">
+                            placeholder="Masukkan Penawaran Harga">
                         @error('up')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
