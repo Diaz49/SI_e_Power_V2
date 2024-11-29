@@ -25,15 +25,18 @@
             <div class="card-body">
                 <div class="table-responsive">
                     {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
-
+                    
                 </div>
             </div>
         </div>
     </div>
-
+    
     <!-- Modal Tambah -->
     <div id="form-section" style="display:none;" class="m-4 ">
-
+        
+        <div class="d-md-flex justify-content-end mb-4">
+            <button type="button" class="btn btn-secondary me-2" id="btn-cancel">Close</button>
+        </div>
         <form action="{{ route('data-sph.store') }}" method="POST" id="formTambah">
             @csrf
             <div class="row">
@@ -95,28 +98,13 @@
                         <div class="mb-1 mt-2 label">Nama Client</div>
                         <input type="text" class="form-control" name="email" id="email" value=""
                             placeholder="Masukkan Nama Client">
+                        <input type="text" class="form-control" name="email" id="email" value=""
+                            placeholder="Alamat Client" readonly>
+                        <input type="text" class="form-control" name="email" id="email" value=""
+                            placeholder="Up Sph Client" readonly>
                         @error('email')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
-
-                        {{-- <div class="mb-1 mt-2 label">Nama Buyer</div>
-                        <input type="text" class="form-control" name="up" id="up" value=""
-                            placeholder="Masukkan up">
-                        @error('up')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-                        <div class="mb-1 mt-2 label">Catatan</div>
-                        <input type="text" class="form-control" name="up" id="up" value=""
-                            placeholder="Masukkan up">
-                        @error('up')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-                        <div class="mb-1 mt-2 label">Catatan 2 </div>
-                        <input type="text" class="form-control" name="up" id="up" value=""
-                            placeholder="Masukkan up">
-                        @error('up')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror --}}
 
                         <div class="mb-1 mt-2 label">Perihal Penawaran Harga</div>
                         <input type="text" class="form-control" name="up" id="up" value=""
@@ -129,9 +117,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class=" d-md-flex justify-content-end">
-                <button type="button" class="btn btn-secondary me-2" id="btn-cancel">Close</button>
             </div>
         </form>
    
@@ -426,23 +411,41 @@
             //     // $('#formTambah')[0].reset();
             // })
             document.addEventListener('DOMContentLoaded', function() {
-                const btnTambah = document.getElementById('btn-tambah');
-                const btnCancel = document.getElementById('btn-cancel');
-                const datatableSection = document.getElementById('datatable-section');
-                const formSection = document.getElementById('form-section');
+            const btnTambah = document.getElementById('btn-tambah');
+            const btnCancel = document.getElementById('btn-cancel');
+            const datatableSection = document.getElementById('datatable-section');
+            const formSection = document.getElementById('form-section');
 
-                // Event saat tombol tambah ditekan
-                btnTambah.addEventListener('click', function() {
-                    datatableSection.style.display = 'none'; // Sembunyikan DataTable
-                    formSection.style.display = 'block'; // Tampilkan form
-                });
+            // Cek status tampilan yang disimpan di localStorage
+            const isFormVisible = localStorage.getItem('formVisible') === 'true';
 
-                // Event saat tombol cancel ditekan
-                btnCancel.addEventListener('click', function() {
-                    formSection.style.display = 'none'; // Sembunyikan form
-                    datatableSection.style.display = 'block'; // Tampilkan DataTable
-                });
+            // Jika formSection harus ditampilkan berdasarkan localStorage, tampilkan form
+            if (isFormVisible) {
+                datatableSection.style.display = 'none'; // Sembunyikan DataTable
+                formSection.style.display = 'block'; // Tampilkan form
+            } else {
+                datatableSection.style.display = 'block'; // Tampilkan DataTable
+                formSection.style.display = 'none'; // Sembunyikan form
+            }
+
+            // Event saat tombol tambah ditekan
+            btnTambah.addEventListener('click', function() {
+                datatableSection.style.display = 'none'; // Sembunyikan DataTable
+                formSection.style.display = 'block'; // Tampilkan form
+
+                // Simpan status form terlihat di localStorage
+                localStorage.setItem('formVisible', 'true');
             });
+
+            // Event saat tombol cancel ditekan
+            btnCancel.addEventListener('click', function() {
+                formSection.style.display = 'none'; // Sembunyikan form
+                datatableSection.style.display = 'block'; // Tampilkan DataTable
+
+                // Simpan status form tidak terlihat di localStorage
+                localStorage.setItem('formVisible', 'false');
+            });
+        });
         </script>
     @endpush
 @endsection
