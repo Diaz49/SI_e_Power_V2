@@ -6,6 +6,7 @@ use App\Http\Controllers\Master\ProjectIdController;
 use App\Http\Controllers\Master\DataClientController;
 use App\Http\Controllers\Master\BankController;
 use App\Http\Controllers\Master\DataVendorController;
+use App\Http\Controllers\PurchaseOrder\DetailPoController;
 use App\Http\Controllers\PurchaseOrder\PurchaseOrderController;
 use App\Http\Controllers\SphController;
 use Illuminate\Support\Facades\Route;
@@ -65,8 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('po/{id}', [PurchaseOrderController::class, 'update'])->name('po.update');
     Route::delete('po/delete/{id}', [PurchaseOrderController::class, 'delete'])->name('po.delete');
     
-    Route::get('po-detail', [PurchaseOrderController::class, 'index'])->name('po-detail');
-    Route::post('po-detail', [PurchaseOrderController::class, 'store'])->name('po-detail.store');
+    Route::post('po-detail', [DetailPoController::class, 'store'])->name('po-detail.store');
     Route::get('po-detail/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('po-detail.edit');
     Route::put('po-detail/{id}', [PurchaseOrderController::class, 'update'])->name('po-detail.update');
     Route::delete('po-detail/delete/{id}', [PurchaseOrderController::class, 'delete'])->name('po-detail.delete');

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('po_detail', function (Blueprint $table) {
             $table->id(); // Primary key
             $table->unsignedBigInteger('po_id'); 
-            $table->string('nama_barang'); 
+            $table->string('nama_barang', 100); 
             $table->integer('qty'); 
-            $table->string('satuan'); 
+            $table->string('satuan', 50); 
             $table->decimal('harga_satuan', 10, 2); 
             $table->timestamps(); 
     

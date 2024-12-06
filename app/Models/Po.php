@@ -27,6 +27,6 @@ class Po extends Model
     }
     public function detail()
     {
-        return $this->hasMany(DetailPo::class, 'po_id', 'kode_po');
+        return $this->hasMany(DetailPo::class, 'po_id', 'id');
     }
 }
