@@ -33,7 +33,7 @@
     </div>
 
     <!-- Form Tambah -->
-    <div id="form-section" style="display:none;" class="m-4 ">
+    <div id="form-section" style="display:none;" class="m-4 ">z
 
         <div class="row">
             <form class="col-md-6" id="formTambahDetail">
@@ -43,32 +43,24 @@
                     <input type="text" class="form-control" name="po_id" id="po_id" hidden>
 
                     <div class="mb-1 mt-4 label">Nama Barang</div>
-                    <input type="text" class="form-control" name="nama_barang" id="nama_barang" disabled value=""
+                    <input type="text" class="form-control" name="nama_barang" id="nama_barang" value=""
                         placeholder="Masukkan Nama Barang">
-                    @error('nama_barang')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                    
 
                     <div class="mb-1 mt-2 label">Qty</div>
-                    <input type="text" class="form-control" name="qty" id="qty" disabled value=""
+                    <input type="text" class="form-control" name="qty" id="qty" value=""
                         placeholder="Masukkan Qty">
-                    @error('qty')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                    
 
                     <div class="mb-1 mt-2 label">Satuan</div>
-                    <input type="text" class="form-control" name="satuan" id="satuan" disabled value=""
+                    <input type="text" class="form-control" name="satuan" id="satuan" value=""
                         placeholder="Masukkan Satuan">
-                    @error('satuan')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                    
 
                     <div class="mb-1 mt-2 label">Harga Satuan</div>
-                    <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" disabled value=""
+                    <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value=""
                         placeholder="Masukkan Harga Satuan">
-                    @error('harga_satuan')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                    
 
                     <div class="d-flex justify-content-end mt-3">
                         <button type="submit" id="btn_detail" disabled class="btn btn-primary">Add</button>
@@ -84,16 +76,12 @@
                     <div class="mb-1 mt-4 label">Kode Purchase Order</div>
                     <input type="text" class="form-control" name="kode_purchase_order" id="kode_purchase_order"
                         value="" placeholder="Masukkan Kode Purchase Order">
-                    @error('kode_purchase_order')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                   
 
                     <div class="mb-1 mt-2 label">Tanggal</div>
                     <input type="date" class="form-control" name="tanggal" id="tanggal" value=""
                         placeholder="Pilih Tanggal">
-                    @error('tanggal')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                   
 
                     <div class="mb-1 mt-2 label">Nama Vendor</div>
                     <select type="text" class="form-control js-example-basic-single" name="nama_vendor" id="nama_vendor"
@@ -103,44 +91,32 @@
                             <option value="{{ $item->id }}">{{ $item->nama_vendor }}</option>
                         @endforeach
                     </select>
-                    @error('nama_vendor')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                 
 
                     <div class="mb-1 mt-2 label">Nama Buyer</div>
                     <input type="text" class="form-control" name="nama_buyer" id="nama_buyer" value=""
                         placeholder="Masukkan Nama Buyer">
-                    @error('nama_buyer')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                   
 
                     <div class="mb-1 mt-2 label">Perihal</div>
                     <input type="text" class="form-control" name="perihal" id="perihal" value=""
                         placeholder="Masukkan Perihal">
-                    @error('catatan')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                   
 
                     <div class="mb-1 mt-2 label">Catatan</div>
                     <input type="text" class="form-control" name="catatan" id="catatan" value=""
                         placeholder="Masukkan Catatan">
-                    @error('perihal')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                   
 
                     <div class="mb-1 mt-2 label">Catatan 2</div>
                     <input type="text" class="form-control" name="catatan_2" id="catatan_2" value=""
                         placeholder="Masukkan Catatan 2">
-                    @error('catatan_2')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                   
 
                     <div class="mb-1 mt-2 label">Diskon Nominal Rupiah</div>
                     <input type="number" class="form-control" name="diskon_rupiah" id="diskon_rupiah" value=""
                         placeholder="Masukkan Diskon Nominal Rupiah">
-                    @error('diskon_rupiah')
-                        <div class="text-danger error">{{ $message }}</div>
-                    @enderror
+                   
 
                     <div class="d-flex justify-content-end mt-3">
                         <button type="submit" id="btn_header" class="btn btn-primary">Tambah Data</button>
@@ -324,22 +300,10 @@
                         $('#po_id').val(result.id);
 
                         // Disable form fields setelah berhasil
-                        $('#kode_purchase_order').prop('disabled', true);
-                        $('#tanggal').prop('disabled', true);
-                        $('#nama_vendor').prop('disabled', true);
-                        $('#nama_buyer').prop('disabled', true);
-                        $('#perihal').prop('disabled', true);
-                        $('#catatan').prop('disabled', true);
-                        $('#catatan_2').prop('disabled', true);
-                        $('#diskon_rupiah').prop('disabled', true);
-                        $('#btn_header').prop('disabled', true);
+                        headerDisable();
+                        detailEnable();
 
-                        $('#nama_barang').prop('disabled', false);
-                        $('#qty').prop('disabled', false);
-                        $('#satuan').prop('disabled', false);
-                        $('#harga_satuan').prop('disabled', false);
-                        $('#btn_detail').prop('disabled', false);
-                        
+
                         $('.error').remove();
                     },
                     error: function(xhr) {
@@ -410,6 +374,12 @@
                             icon: 'success',
                             button: 'OK'
                         });
+                        $('#nama_barang').val('');
+                        $('#qty').val('');
+                        $('#satuan').val('');
+                        $('#harga_satuan').val('');
+                        $('#btn_detail').val('');
+                        console.log(result.id);
 
                         $('.error').remove();
                         // $('#modalTambah').modal('hide');
@@ -457,13 +427,55 @@
                 $('.error').remove();
                 $('#formTambahHeader')[0].reset();
                 $('#formTambahDetail')[0].reset();
-                $('#nama_vendor').val(null).trigger('change'); // Reset Select2
-
+                $('#nama_vendor').val(null).trigger('change');
+                detailDisable(); // Reset Select2
+                headerEnable();
                 // $('#formTambah')[0].reset();
             })
 
+            function detailDisable() {
+                $('#nama_barang').prop('disabled', true);
+                $('#qty').prop('disabled', true);
+                $('#satuan').prop('disabled', true);
+                $('#harga_satuan').prop('disabled', true);
+                $('#btn_detail').prop('disabled', true);
+            }
+
+            function detailEnable() {
+                $('#nama_barang').prop('disabled', false);
+                $('#qty').prop('disabled', false);
+                $('#satuan').prop('disabled', false);
+                $('#harga_satuan').prop('disabled', false);
+                $('#btn_detail').prop('disabled', false);
+            }
+
+            function headerDisable() {
+                $('#kode_purchase_order').prop('disabled', true);
+                $('#tanggal').prop('disabled', true);
+                $('#nama_vendor').prop('disabled', true);
+                $('#nama_buyer').prop('disabled', true);
+                $('#perihal').prop('disabled', true);
+                $('#catatan').prop('disabled', true);
+                $('#catatan_2').prop('disabled', true);
+                $('#diskon_rupiah').prop('disabled', true);
+                $('#btn_header').prop('disabled', true);
+            }
+
+            function headerEnable() {
+                $('#kode_purchase_order').prop('disabled', false);
+                $('#tanggal').prop('disabled', false);
+                $('#nama_vendor').prop('disabled', false);
+                $('#nama_buyer').prop('disabled', false);
+                $('#perihal').prop('disabled', false);
+                $('#catatan').prop('disabled', false);
+                $('#catatan_2').prop('disabled', false);
+                $('#diskon_rupiah').prop('disabled', false);
+                $('#btn_header').prop('disabled', false);
+            }
             $(document).ready(function() {
                 $('.js-example-basic-single').select2();
+                detailDisable();
+                headerEnable();
             });
             document.addEventListener('DOMContentLoaded', function() {
                 const btnTambah = document.getElementById('btn-tambah');
