@@ -33,8 +33,10 @@
     </div>
 
     <!-- Form Tambah -->
-    <div id="form-section" style="display:none;" class="m-4 ">z
-
+    <div id="form-section" style="display:none;" class="m-4 ">
+        <div class=" d-md-flex justify-content-start">
+            <p type="button" class="fw-bold" id="btn-cancel"><i class="fas fa-arrow-left"></i> Back</p>
+        </div>
         <div class="row">
             <form class="col-md-6" id="formTambahDetail">
                 @csrf
@@ -45,22 +47,22 @@
                     <div class="mb-1 mt-4 label">Nama Barang</div>
                     <input type="text" class="form-control" name="nama_barang" id="nama_barang" value=""
                         placeholder="Masukkan Nama Barang">
-                    
+
 
                     <div class="mb-1 mt-2 label">Qty</div>
                     <input type="text" class="form-control" name="qty" id="qty" value=""
                         placeholder="Masukkan Qty">
-                    
+
 
                     <div class="mb-1 mt-2 label">Satuan</div>
                     <input type="text" class="form-control" name="satuan" id="satuan" value=""
                         placeholder="Masukkan Satuan">
-                    
+
 
                     <div class="mb-1 mt-2 label">Harga Satuan</div>
                     <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value=""
                         placeholder="Masukkan Harga Satuan">
-                    
+
 
                     <div class="d-flex justify-content-end mt-3">
                         <button type="submit" id="btn_detail" disabled class="btn btn-primary">Add</button>
@@ -76,12 +78,12 @@
                     <div class="mb-1 mt-4 label">Kode Purchase Order</div>
                     <input type="text" class="form-control" name="kode_purchase_order" id="kode_purchase_order"
                         value="" placeholder="Masukkan Kode Purchase Order">
-                   
+
 
                     <div class="mb-1 mt-2 label">Tanggal</div>
                     <input type="date" class="form-control" name="tanggal" id="tanggal" value=""
                         placeholder="Pilih Tanggal">
-                   
+
 
                     <div class="mb-1 mt-2 label">Nama Vendor</div>
                     <select type="text" class="form-control js-example-basic-single" name="nama_vendor" id="nama_vendor"
@@ -91,43 +93,63 @@
                             <option value="{{ $item->id }}">{{ $item->nama_vendor }}</option>
                         @endforeach
                     </select>
-                 
+
 
                     <div class="mb-1 mt-2 label">Nama Buyer</div>
                     <input type="text" class="form-control" name="nama_buyer" id="nama_buyer" value=""
                         placeholder="Masukkan Nama Buyer">
-                   
+
 
                     <div class="mb-1 mt-2 label">Perihal</div>
                     <input type="text" class="form-control" name="perihal" id="perihal" value=""
                         placeholder="Masukkan Perihal">
-                   
+
 
                     <div class="mb-1 mt-2 label">Catatan</div>
                     <input type="text" class="form-control" name="catatan" id="catatan" value=""
                         placeholder="Masukkan Catatan">
-                   
+
 
                     <div class="mb-1 mt-2 label">Catatan 2</div>
                     <input type="text" class="form-control" name="catatan_2" id="catatan_2" value=""
                         placeholder="Masukkan Catatan 2">
-                   
+
 
                     <div class="mb-1 mt-2 label">Diskon Nominal Rupiah</div>
                     <input type="number" class="form-control" name="diskon_rupiah" id="diskon_rupiah" value=""
                         placeholder="Masukkan Diskon Nominal Rupiah">
-                   
 
-                    <div class="d-flex justify-content-end mt-3">
-                        <button type="submit" id="btn_header" class="btn btn-primary">Tambah Data</button>
-                    </div>
+
 
                 </div>
+
+
+
+                <div class="d-flex justify-content-end mt-3">
+                    <button type="submit" id="btn_header" class="btn btn-primary">Tambah Data</button>
+                </div>
             </form>
+
         </div>
-        <div class=" d-md-flex justify-content-end">
-            <button type="button" class="btn btn-secondary me-2" id="btn-cancel">Close</button>
+
+        {{-- Table --}}
+        <div class="mt-4">
+            <table class="table table-bordered" id="detailTable">
+                <thead>
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Qty</th>
+                        <th>Satuan</th>
+                        <th>Harga Satuan</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data detail akan ditambahkan di sini -->
+                </tbody>
+            </table>
         </div>
+    </div>
 
     </div>
 
@@ -137,6 +159,7 @@
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
+            let detailArray = [];
             $(document).on('click', 'button[data-action="delete"]', function() {
                 var url = $(this).data('url');
                 var tableId = $(this).data('table-id');
@@ -144,7 +167,7 @@
 
                 // Tampilkan SweetAlert konfirmasi
                 swal({
-                    text: 'Apa kamu yakin ingin menghapus Vendor ' + name + '?',
+                    text: 'Apa kamu yakin ingin menghapus PO ' + name + '?',
                     icon: 'warning',
                     buttons: {
                         cancel: 'Batal',
@@ -171,7 +194,7 @@
                                 // Menampilkan SweetAlert sukses
                                 swal({
                                     title: 'Berhasil!',
-                                    text: 'Vendor ' + name + ' berhasil dihapus',
+                                    text: 'PO ' + name + ' berhasil dihapus',
                                     icon: 'success',
                                     button: 'OK'
                                 });
@@ -180,7 +203,7 @@
                                 // Menampilkan SweetAlert error jika gagal
                                 swal({
                                     title: 'Gagal!',
-                                    text: 'Gagal menghapus Vendor',
+                                    text: 'Gagal menghapus PO',
                                     icon: 'error',
                                     button: 'OK'
                                 });
@@ -210,142 +233,88 @@
                     $('#formEdit').attr('action', updateUrl);
                 });
             });
-
-            $('#formEdit').on('submit', function(event) {
-                event.preventDefault();
-                var updateUrl = $(this).attr('action');
-
-                $.ajax({
-                    url: updateUrl,
-                    type: 'PUT',
-                    data: $(this).serialize(),
-                    success: function(result) {
-                        $('#datavendor-table').DataTable().ajax.reload();
-                        swal({
-                            title: 'Berhasil!',
-                            text: 'Vendor berhasil diubah',
-                            icon: 'success',
-                            button: 'OK'
-                        });
-                        $('#modalEdit').modal('hide');
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) { // Error validasi
-                            var errors = xhr.responseJSON.errors;
-
-                            // Kosongkan pesan error lama sebelum menampilkan yang baru
-                            $('.error').remove(); // Hapus error sebelumnya
-
-                            // Menampilkan pesan error untuk masing-masing field
-                            if (errors.nama_vendor_edit) {
-                                $('#nama_vendor_edit').after('<div class="text-danger error">' + errors
-                                    .nama_vendor_edit[0] + '</div>');
-                            }
-                            if (errors.alamat_vendor_edit) {
-                                $('#alamat_vendor_edit').after('<div class="text-danger error">' + errors
-                                    .alamat_vendor_edit[
-                                        0] + '</div>');
-                            }
-                            if (errors.kota_edit) {
-                                $('#kota_edit').after('<div class="text-danger error">' + errors.kota_edit[
-                                    0] + '</div>');
-                            }
-                            if (errors.no_tlp_edit) {
-                                $('#no_tlp_edit').after('<div class="text-danger error">' + errors
-                                    .no_tlp_edit[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.email_edit) {
-                                $('#email_edit').after('<div class="text-danger error">' + errors
-                                    .email_edit[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.up_edit) {
-                                $('#up_edit').after('<div class="text-danger error">' + errors.up_edit[
-                                        0] +
-                                    '</div>');
-                            }
-                        } else {
-                            swal({
-                                title: 'Gagal!',
-                                text: 'Gagal mengedit Vendor',
-                                icon: 'error',
-                                button: 'OK'
-                            });
-                        }
-                    }
-                });
-            });
             $('#formTambahHeader').on('submit', function(event) {
                 event.preventDefault();
-                var createUrl = '/po';
 
+                // Ambil data header dari form
+                let headerData = $(this).serializeArray();
+                let headerObj = {};
+                headerData.forEach(item => {
+                    headerObj[item.name] = item.value;
+                });
+                if (detailArray.length === 0) {
+                    return swal({
+                        title: 'Gagal!',
+                        text: 'Isi detail terlebih dahulu.',
+                        icon: 'error',
+                        button: 'OK'
+                    });
+                }
+                // Gabungkan header dengan detail
+                const dataToSend = {
+                    header: headerObj,
+                    details: detailArray, // detailArray sudah diisi sebelumnya
+                };
+                dataToSend._token = '{{ csrf_token() }}';
+                // Kirim data menggunakan AJAX
                 $.ajax({
-                    url: createUrl,
+                    url: '/po', // URL endpoint untuk menyimpan data
                     type: 'POST',
-                    data: $(this).serialize(),
-                    success: function(result) {
-                        $('#purchaseorder-table').DataTable().ajax.reload();
-
+                    data: JSON.stringify(dataToSend),
+                    contentType: 'application/json', // Pastikan data dikirim dalam format JSON
+                    success: function(response) {
                         swal({
                             title: 'Berhasil!',
-                            text: 'Header berhasil ditambah',
+                            text: 'Data purchase order berhasil disimpan!',
                             icon: 'success',
-                            button: 'OK'
+                            button: 'OK',
                         });
-
-                        // Isi input ID dengan ID yang diterima dari response
-                        $('#po_id').val(result.id);
-
-                        // Disable form fields setelah berhasil
-                        headerDisable();
-                        detailEnable();
-
-
+                        // Reset form dan tabel detail
+                        $('#formTambahHeader')[0].reset();
+                        $('#detailTable tbody').html('');
+                        $('#purchaseorder-table').DataTable().ajax.reload();
                         $('.error').remove();
+                        detailArray = [];
                     },
                     error: function(xhr) {
                         if (xhr.status === 422) { // Error validasi
                             var errors = xhr.responseJSON.errors;
-                            console.log(errors);
 
                             // Hapus pesan error sebelumnya
                             $('.error').remove();
 
                             // Menampilkan pesan error baru
-                            if (errors.kode_purchase_order) {
-                                $('#kode_purchase_order').after('<div class="text-danger error">' + errors
-                                    .kode_purchase_order[0] + '</div>');
+                            if (errors['header.kode_purchase_order']) {
+                                $('#kode_purchase_order').after('<div class="text-danger error">' + errors[
+                                    'header.kode_purchase_order'][0] + '</div>');
                             }
-                            if (errors.tanggal) {
-                                $('#tanggal').after('<div class="text-danger error">' + errors.tanggal[0] +
-                                    '</div>');
+                            if (errors['header.tanggal']) {
+                                $('#tanggal').after('<div class="text-danger error">' + errors[
+                                    'header.tanggal'][0] + '</div>');
                             }
-                            if (errors.nama_vendor) {
-                                $('#nama_vendor').after('<div class="text-danger error">' + errors
-                                    .nama_vendor[0] + '</div>');
+                            if (errors['header.nama_vendor']) {
+                                $('#nama_vendor').after('<div class="text-danger error">' + errors[
+                                    'header.nama_vendor'][0] + '</div>');
                             }
-                            if (errors.nama_buyer) {
-                                $('#nama_buyer').after('<div class="text-danger error">' + errors
-                                    .nama_buyer[0] + '</div>');
+                            if (errors['header.nama_buyer']) {
+                                $('#nama_buyer').after('<div class="text-danger error">' + errors[
+                                    'header.nama_buyer'][0] + '</div>');
                             }
-                            if (errors.perihal) {
-                                $('#perihal').after('<div class="text-danger error">' + errors.perihal[0] +
-                                    '</div>');
+                            if (errors['header.perihal']) {
+                                $('#perihal').after('<div class="text-danger error">' + errors[
+                                    'header.perihal'][0] + '</div>');
                             }
-                            if (errors.catatan) {
-                                $('#catatan').after('<div class="text-danger error">' + errors.catatan[0] +
-                                    '</div>');
+                            if (errors['header.catatan']) {
+                                $('#catatan').after('<div class="text-danger error">' + errors[
+                                    'header.catatan'][0] + '</div>');
                             }
-                            if (errors.catatan_2) {
-                                $('#catatan_2').after('<div class="text-danger error">' + errors.catatan_2[
-                                    0] + '</div>');
+                            if (errors['header.catatan_2']) {
+                                $('#catatan_2').after('<div class="text-danger error">' + errors[
+                                    'header.catatan_2'][0] + '</div>');
                             }
-                            if (errors.diskon_rupiah) {
-                                $('#diskon_rupiah').after('<div class="text-danger error">' + errors
-                                    .diskon_rupiah[0] + '</div>');
+                            if (errors['header.diskon_rupiah']) {
+                                $('#diskon_rupiah').after('<div class="text-danger error">' + errors[
+                                    'header.diskon_rupiah'][0] + '</div>');
                             }
                         } else {
                             swal({
@@ -356,70 +325,87 @@
                             });
                         }
                     }
+
+
                 });
             });
 
             $('#formTambahDetail').on('submit', function(event) {
                 event.preventDefault();
-                var createUrl = '/po-detail';
 
-                $.ajax({
-                    url: createUrl,
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function(result) {
-                        swal({
-                            title: 'Berhasil!',
-                            text: 'Detail berhasil ditambah',
-                            icon: 'success',
-                            button: 'OK'
-                        });
-                        $('#nama_barang').val('');
-                        $('#qty').val('');
-                        $('#satuan').val('');
-                        $('#harga_satuan').val('');
-                        $('#btn_detail').val('');
-                        console.log(result.id);
+                // Ambil nilai dari input
+                const nama_barang = $('#nama_barang').val();
+                const qty = $('#qty').val();
+                const satuan = $('#satuan').val();
+                const harga_satuan = $('#harga_satuan').val();
+                const po_id = $('#po_id').val(); // Misalnya, ID PO sudah ada di form
 
-                        $('.error').remove();
-                        // $('#modalTambah').modal('hide');
-                        // $('#formTambah')[0].reset();
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) { // Error validasi
-                            var errors = xhr.responseJSON.errors;
-                            console.log(errors);
-                            // Kosongkan pesan error lama sebelum menampilkan yang baru
-                            $('.error').remove(); // Hapus error sebelumnya
+                // Hapus pesan error sebelumnya
+                $('.error').remove();
 
-                            if (errors.nama_barang) {
-                                $('#nama_barang').after('<div class="text-danger error">' + errors
-                                    .nama_barang[0] + '</div>');
-                            }
-                            if (errors.qty) {
-                                $('#qty').after('<div class="text-danger error">' + errors
-                                    .qty[0] + '</div>');
-                            }
-                            if (errors.satuan) {
-                                $('#satuan').after('<div class="text-danger error">' + errors.satuan[0] +
-                                    '</div>');
-                            }
-                            if (errors.harga_satuan) {
-                                $('#harga_satuan').after('<div class="text-danger error">' + errors
-                                    .harga_satuan[0] +
-                                    '</div>');
-                            }
+                // Anda juga bisa mengecek jika PO ID tidak valid (misalnya mengecek di database jika perlu)
 
-                        } else {
-                            swal({
-                                title: 'Gagal!',
-                                text: 'Terjadi kesalahan dalam proses pengiriman data.',
-                                icon: 'error',
-                                button: 'OK'
-                            });
-                        }
-                    }
+                // Validasi Nama Barang
+                if (!nama_barang || nama_barang.length === 0 || nama_barang.length > 100) {
+                    $('#nama_barang').after(
+                        '<div class="text-danger error">Nama barang harus diisi dan maksimal 100 karakter.</div>');
+                    return;
+                }
 
+                // Validasi Quantity
+                if (!qty || isNaN(qty) || qty < 1) {
+                    $('#qty').after(
+                        '<div class="text-danger error">Quantity harus berupa angka dan lebih besar dari 0.</div>');
+                    return;
+                }
+
+                // Validasi Satuan
+                if (!satuan || satuan.length > 50) {
+                    $('#satuan').after(
+                        '<div class="text-danger error">Satuan harus diisi dan maksimal 50 karakter.</div>');
+                    return;
+                }
+
+                // Validasi Harga Satuan
+                if (!harga_satuan || isNaN(harga_satuan) || harga_satuan < 0 || harga_satuan > 9999999999.99) {
+                    $('#harga_satuan').after(
+                        '<div class="text-danger error">Harga satuan harus berupa angka .</div>'
+                    );
+                    return;
+                }
+
+                // Semua validasi lolos, lanjutkan menambah detail
+                detailArray.push({
+                    po_id,
+                    nama_barang,
+                    qty,
+                    satuan,
+                    harga_satuan
+                });
+
+                // Render data ke tabel
+                $('#detailTable tbody').append(`
+        <tr>
+            <td>${nama_barang}</td>
+            <td>${qty}</td>
+            <td>${satuan}</td>
+            <td>${harga_satuan}</td>
+            <td>
+                <button class="btn btn-danger btn-sm btn-delete-detail" data-index="${detailArray.length - 1}">
+                    Hapus
+                </button>
+            </td>
+        </tr>
+    `);
+
+                // Reset form input detail
+                $('#formTambahDetail')[0].reset();
+
+                swal({
+                    title: 'Berhasil!',
+                    text: 'Detail berhasil ditambahkan!',
+                    icon: 'success',
+                    button: 'OK',
                 });
             });
 
@@ -428,8 +414,7 @@
                 $('#formTambahHeader')[0].reset();
                 $('#formTambahDetail')[0].reset();
                 $('#nama_vendor').val(null).trigger('change');
-                detailDisable(); // Reset Select2
-                headerEnable();
+
                 // $('#formTambah')[0].reset();
             })
 
@@ -474,8 +459,7 @@
             }
             $(document).ready(function() {
                 $('.js-example-basic-single').select2();
-                detailDisable();
-                headerEnable();
+
             });
             document.addEventListener('DOMContentLoaded', function() {
                 const btnTambah = document.getElementById('btn-tambah');

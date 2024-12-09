@@ -64,7 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('po', [PurchaseOrderController::class, 'store'])->name('po.store');
     Route::get('po/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('po.edit');
     Route::put('po/{id}', [PurchaseOrderController::class, 'update'])->name('po.update');
-    Route::delete('po/delete/{id}', [PurchaseOrderController::class, 'delete'])->name('po.delete');
+    Route::delete('po/delete/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.delete');
     
     Route::post('po-detail', [DetailPoController::class, 'store'])->name('po-detail.store');
     Route::get('po-detail/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('po-detail.edit');

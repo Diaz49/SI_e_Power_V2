@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('po_detail', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->unsignedBigInteger('po_id'); 
+            $table->unsignedBigInteger('po_id')->nullable(); 
             $table->string('nama_barang', 100); 
             $table->integer('qty'); 
             $table->string('satuan', 50); 
