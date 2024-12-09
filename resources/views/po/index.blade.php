@@ -33,109 +33,102 @@
     </div>
 
     <!-- Form Tambah -->
-    <div id="form-section" style="display:none;" class="m-4 ">
+    <div id="form-section" style="display:none;" class="m-4 ">z
 
-        <form action="{{ route('po.store') }}" method="POST" id="formTambah">
-            @csrf
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card p-4-">
-                        <h5 class="card-title">Detail</h5>
-                        <div class="mb-1 mt-4 label">Nama Barang</div>
-                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
-                            placeholder="Masukkan Nama Vendor">
-                        @error('nama_vendor')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+        <div class="row">
+            <form class="col-md-6" id="formTambahDetail">
+                @csrf
+                <div class="card p-4">
+                    <h5 class="card-title">Detail</h5>
+                    <input type="text" class="form-control" name="po_id" id="po_id" hidden>
 
-                        <div class="mb-1 mt-2 label">Qty</div>
-                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
-                            placeholder="Masukkan Nama Vendor">
-                        @error('nama_vendor')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+                    <div class="mb-1 mt-4 label">Nama Barang</div>
+                    <input type="text" class="form-control" name="nama_barang" id="nama_barang" value=""
+                        placeholder="Masukkan Nama Barang">
+                    
 
-                        <div class="mb-1 mt-2 label">Satuan</div>
-                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
-                            placeholder="Masukkan Nama Vendor">
-                        @error('nama_vendor')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+                    <div class="mb-1 mt-2 label">Qty</div>
+                    <input type="text" class="form-control" name="qty" id="qty" value=""
+                        placeholder="Masukkan Qty">
+                    
 
-                        <div class="mb-1 mt-2 label">Harga Satuan</div>
-                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
-                            placeholder="Masukkan Nama Vendor">
-                        @error('nama_vendor')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-                        <div class="d-flex justify-content-end mt-3">
+                    <div class="mb-1 mt-2 label">Satuan</div>
+                    <input type="text" class="form-control" name="satuan" id="satuan" value=""
+                        placeholder="Masukkan Satuan">
+                    
 
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </div>
+                    <div class="mb-1 mt-2 label">Harga Satuan</div>
+                    <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value=""
+                        placeholder="Masukkan Harga Satuan">
+                    
 
-
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="submit" id="btn_detail" disabled class="btn btn-primary">Add</button>
                     </div>
+
+
                 </div>
-                <div class="col-md-6">
-                    <div class="card p-4">
-                        <h5 class="card-title">Header</h5>
-                        <div class="mb-1 mt-4 label">Kode Purchase Order</div>
-                        <input type="text" class="form-control" name="kota" id="kota" value=""
-                            placeholder="Masukkan Kota">
-                        @error('kota')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+            </form>
+            <form class="col-md-6" method="POST" id="formTambahHeader">
+                @csrf
+                <div class="card p-4">
+                    <h5 class="card-title">Header</h5>
+                    <div class="mb-1 mt-4 label">Kode Purchase Order</div>
+                    <input type="text" class="form-control" name="kode_purchase_order" id="kode_purchase_order"
+                        value="" placeholder="Masukkan Kode Purchase Order">
+                   
 
-                        <div class="mb-1 mt-2 label">Tanggal</div>
-                        <input type="text" class="form-control" name="no_tlp" id="no_tlp" value=""
-                            placeholder="Masukkan No Telpon">
-                        @error('no_tlp')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+                    <div class="mb-1 mt-2 label">Tanggal</div>
+                    <input type="date" class="form-control" name="tanggal" id="tanggal" value=""
+                        placeholder="Pilih Tanggal">
+                   
 
-                        <div class="mb-1 mt-2 label">Nama Vendor</div>
-                        <input type="text" class="form-control" name="email" id="email" value=""
-                            placeholder="Masukkan Email">
-                        @error('email')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+                    <div class="mb-1 mt-2 label">Nama Vendor</div>
+                    <select type="text" class="form-control js-example-basic-single" name="nama_vendor" id="nama_vendor"
+                        value="" placeholder="Masukkan Nama Vendor">
+                        <option value="">Pilih Vendor</option>
+                        @foreach ($vendor as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama_vendor }}</option>
+                        @endforeach
+                    </select>
+                 
 
-                        <div class="mb-1 mt-2 label">Nama Buyer </div>
-                        <input type="text" class="form-control" name="up" id="up" value=""
-                            placeholder="Masukkan up">
-                        @error('up')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-                        <div class="mb-1 mt-2 label">Catatan</div>
-                        <input type="text" class="form-control" name="up" id="up" value=""
-                            placeholder="Masukkan up">
-                        @error('up')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-                        <div class="mb-1 mt-2 label">Catatan 2 </div>
-                        <input type="text" class="form-control" name="up" id="up" value=""
-                            placeholder="Masukkan up">
-                        @error('up')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+                    <div class="mb-1 mt-2 label">Nama Buyer</div>
+                    <input type="text" class="form-control" name="nama_buyer" id="nama_buyer" value=""
+                        placeholder="Masukkan Nama Buyer">
+                   
 
-                        <div class="mb-1 mt-2 label">Diskon Nominal Rupiah </div>
-                        <input type="text" class="form-control" name="up" id="up" value=""
-                            placeholder="Masukkan up">
-                        @error('up')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-                        <div class="d-flex justify-content-end mt-3">
-                            <button type="submit" class="btn btn-primary">Tambah Data</button>
-                        </div>
+                    <div class="mb-1 mt-2 label">Perihal</div>
+                    <input type="text" class="form-control" name="perihal" id="perihal" value=""
+                        placeholder="Masukkan Perihal">
+                   
+
+                    <div class="mb-1 mt-2 label">Catatan</div>
+                    <input type="text" class="form-control" name="catatan" id="catatan" value=""
+                        placeholder="Masukkan Catatan">
+                   
+
+                    <div class="mb-1 mt-2 label">Catatan 2</div>
+                    <input type="text" class="form-control" name="catatan_2" id="catatan_2" value=""
+                        placeholder="Masukkan Catatan 2">
+                   
+
+                    <div class="mb-1 mt-2 label">Diskon Nominal Rupiah</div>
+                    <input type="number" class="form-control" name="diskon_rupiah" id="diskon_rupiah" value=""
+                        placeholder="Masukkan Diskon Nominal Rupiah">
+                   
+
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="submit" id="btn_header" class="btn btn-primary">Tambah Data</button>
                     </div>
+
                 </div>
-            </div>
-            <div class=" d-md-flex justify-content-end">
-                <button type="button" class="btn btn-secondary me-2" id="btn-cancel">Close</button>
-            </div>
-        </form>
-   
+            </form>
+        </div>
+        <div class=" d-md-flex justify-content-end">
+            <button type="button" class="btn btn-secondary me-2" id="btn-cancel">Close</button>
+        </div>
+
     </div>
 
 
@@ -144,12 +137,6 @@
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                @if (session('success'))
-                    swal('Berhasil!', '{{ session('success') }}', 'success');
-                @endif
-            });
-
             $(document).on('click', 'button[data-action="delete"]', function() {
                 var url = $(this).data('url');
                 var tableId = $(this).data('table-id');
@@ -291,26 +278,112 @@
                     }
                 });
             });
-
-            $('#formTambah').on('submit', function(event) {
+            $('#formTambahHeader').on('submit', function(event) {
                 event.preventDefault();
-                console.log('hai');
-                var createUrl = '/data-vendor';
+                var createUrl = '/po';
 
                 $.ajax({
                     url: createUrl,
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(result) {
-                        $('#datavendor-table').DataTable().ajax.reload();
+                        $('#purchaseorder-table').DataTable().ajax.reload();
+
                         swal({
                             title: 'Berhasil!',
-                            text: 'Vendor berhasil ditambah',
+                            text: 'Header berhasil ditambah',
                             icon: 'success',
                             button: 'OK'
                         });
-                        $('#modalTambah').modal('hide');
-                        $('#formTambah')[0].reset();
+
+                        // Isi input ID dengan ID yang diterima dari response
+                        $('#po_id').val(result.id);
+
+                        // Disable form fields setelah berhasil
+                        headerDisable();
+                        detailEnable();
+
+
+                        $('.error').remove();
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
+                            console.log(errors);
+
+                            // Hapus pesan error sebelumnya
+                            $('.error').remove();
+
+                            // Menampilkan pesan error baru
+                            if (errors.kode_purchase_order) {
+                                $('#kode_purchase_order').after('<div class="text-danger error">' + errors
+                                    .kode_purchase_order[0] + '</div>');
+                            }
+                            if (errors.tanggal) {
+                                $('#tanggal').after('<div class="text-danger error">' + errors.tanggal[0] +
+                                    '</div>');
+                            }
+                            if (errors.nama_vendor) {
+                                $('#nama_vendor').after('<div class="text-danger error">' + errors
+                                    .nama_vendor[0] + '</div>');
+                            }
+                            if (errors.nama_buyer) {
+                                $('#nama_buyer').after('<div class="text-danger error">' + errors
+                                    .nama_buyer[0] + '</div>');
+                            }
+                            if (errors.perihal) {
+                                $('#perihal').after('<div class="text-danger error">' + errors.perihal[0] +
+                                    '</div>');
+                            }
+                            if (errors.catatan) {
+                                $('#catatan').after('<div class="text-danger error">' + errors.catatan[0] +
+                                    '</div>');
+                            }
+                            if (errors.catatan_2) {
+                                $('#catatan_2').after('<div class="text-danger error">' + errors.catatan_2[
+                                    0] + '</div>');
+                            }
+                            if (errors.diskon_rupiah) {
+                                $('#diskon_rupiah').after('<div class="text-danger error">' + errors
+                                    .diskon_rupiah[0] + '</div>');
+                            }
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan dalam proses pengiriman data.',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
+                });
+            });
+
+            $('#formTambahDetail').on('submit', function(event) {
+                event.preventDefault();
+                var createUrl = '/po-detail';
+
+                $.ajax({
+                    url: createUrl,
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Detail berhasil ditambah',
+                            icon: 'success',
+                            button: 'OK'
+                        });
+                        $('#nama_barang').val('');
+                        $('#qty').val('');
+                        $('#satuan').val('');
+                        $('#harga_satuan').val('');
+                        $('#btn_detail').val('');
+                        console.log(result.id);
+
+                        $('.error').remove();
+                        // $('#modalTambah').modal('hide');
+                        // $('#formTambah')[0].reset();
                     },
                     error: function(xhr) {
                         if (xhr.status === 422) { // Error validasi
@@ -319,52 +392,91 @@
                             // Kosongkan pesan error lama sebelum menampilkan yang baru
                             $('.error').remove(); // Hapus error sebelumnya
 
-                            // Menampilkan pesan error untuk masing-masing field
-                            if (errors.nama_vendor) {
-                                $('#nama_vendor').after('<div class="text-danger error">' + errors
-                                    .nama_vendor[0] + '</div>');
+                            if (errors.nama_barang) {
+                                $('#nama_barang').after('<div class="text-danger error">' + errors
+                                    .nama_barang[0] + '</div>');
                             }
-                            if (errors.alamat_vendor) {
-                                $('#alamat_vendor').after('<div class="text-danger error">' + errors
-                                    .alamat_vendor[
-                                        0] + '</div>');
+                            if (errors.qty) {
+                                $('#qty').after('<div class="text-danger error">' + errors
+                                    .qty[0] + '</div>');
                             }
-                            if (errors.kota) {
-                                $('#kota').after('<div class="text-danger error">' + errors
-                                    .kota[
-                                        0] + '</div>');
-                            }
-                            if (errors.no_tlp) {
-                                $('#no_tlp').after('<div class="text-danger error">' + errors
-                                    .no_tlp[
-                                        0] +
+                            if (errors.satuan) {
+                                $('#satuan').after('<div class="text-danger error">' + errors.satuan[0] +
                                     '</div>');
                             }
-                            if (errors.email) {
-                                $('#email').after('<div class="text-danger error">' + errors.email[
-                                        0] +
+                            if (errors.harga_satuan) {
+                                $('#harga_satuan').after('<div class="text-danger error">' + errors
+                                    .harga_satuan[0] +
                                     '</div>');
                             }
-                            if (errors.up) {
-                                $('#up').after('<div class="text-danger error">' + errors.up[
-                                        0] +
-                                    '</div>');
-                            }
+
                         } else {
                             swal({
                                 title: 'Gagal!',
-                                text: 'Gagal mengedit Vendor',
+                                text: 'Terjadi kesalahan dalam proses pengiriman data.',
                                 icon: 'error',
                                 button: 'OK'
                             });
                         }
                     }
+
                 });
             });
+
             $('#btn-tambah').on('click', function() {
                 $('.error').remove();
+                $('#formTambahHeader')[0].reset();
+                $('#formTambahDetail')[0].reset();
+                $('#nama_vendor').val(null).trigger('change');
+                detailDisable(); // Reset Select2
+                headerEnable();
                 // $('#formTambah')[0].reset();
             })
+
+            function detailDisable() {
+                $('#nama_barang').prop('disabled', true);
+                $('#qty').prop('disabled', true);
+                $('#satuan').prop('disabled', true);
+                $('#harga_satuan').prop('disabled', true);
+                $('#btn_detail').prop('disabled', true);
+            }
+
+            function detailEnable() {
+                $('#nama_barang').prop('disabled', false);
+                $('#qty').prop('disabled', false);
+                $('#satuan').prop('disabled', false);
+                $('#harga_satuan').prop('disabled', false);
+                $('#btn_detail').prop('disabled', false);
+            }
+
+            function headerDisable() {
+                $('#kode_purchase_order').prop('disabled', true);
+                $('#tanggal').prop('disabled', true);
+                $('#nama_vendor').prop('disabled', true);
+                $('#nama_buyer').prop('disabled', true);
+                $('#perihal').prop('disabled', true);
+                $('#catatan').prop('disabled', true);
+                $('#catatan_2').prop('disabled', true);
+                $('#diskon_rupiah').prop('disabled', true);
+                $('#btn_header').prop('disabled', true);
+            }
+
+            function headerEnable() {
+                $('#kode_purchase_order').prop('disabled', false);
+                $('#tanggal').prop('disabled', false);
+                $('#nama_vendor').prop('disabled', false);
+                $('#nama_buyer').prop('disabled', false);
+                $('#perihal').prop('disabled', false);
+                $('#catatan').prop('disabled', false);
+                $('#catatan_2').prop('disabled', false);
+                $('#diskon_rupiah').prop('disabled', false);
+                $('#btn_header').prop('disabled', false);
+            }
+            $(document).ready(function() {
+                $('.js-example-basic-single').select2();
+                detailDisable();
+                headerEnable();
+            });
             document.addEventListener('DOMContentLoaded', function() {
                 const btnTambah = document.getElementById('btn-tambah');
                 const btnCancel = document.getElementById('btn-cancel');
@@ -381,6 +493,16 @@
                 btnCancel.addEventListener('click', function() {
                     formSection.style.display = 'none'; // Sembunyikan form
                     datatableSection.style.display = 'block'; // Tampilkan DataTable
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const input1 = document.getElementById('id');
+                const input2 = document.getElementById('detail_kode_po');
+
+                // Event untuk mendeteksi perubahan pada Input 1
+                input1.addEventListener('input', function() {
+                    input2.value = input1.value; // Set nilai Input 2 sama dengan Input 1
                 });
             });
         </script>

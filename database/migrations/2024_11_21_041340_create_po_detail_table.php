@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('po_detail', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->unsignedBigInteger('po_id'); // Relasi ke tabel purchase orders
-            $table->string('nama_barang'); // Nama barang
-            $table->integer('qty'); // Jumlah barang
-            $table->string('satuan'); // Satuan (misal: pcs, kg, dll)
-            $table->decimal('harga_satuan', 10, 2); // Harga satuan
-            $table->timestamps(); // Untuk kolom created_at dan updated_at
+            $table->unsignedBigInteger('po_id'); 
+            $table->string('nama_barang', 100); 
+            $table->integer('qty'); 
+            $table->string('satuan', 50); 
+            $table->decimal('harga_satuan', 10, 2); 
+            $table->timestamps(); 
     
             // Foreign key constraints
             $table->foreign('po_id')->references('id')->on('po')->onDelete('cascade');

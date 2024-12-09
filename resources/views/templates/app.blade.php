@@ -30,6 +30,7 @@
     </script>
 
     <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ asset('select2/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }} " />
     <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }} " />
@@ -74,13 +75,15 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item {{ Route::is('project-id') ? 'active' : ''}}{{ Route::is('data-client') ? 'active' : ''}} {{ Route::is('data-vendor') ? 'active' :''}} {{ Route::is('bank') ? 'active' : '' }}">
+                        <li
+                            class="nav-item {{ Route::is('project-id') ? 'active' : '' }}{{ Route::is('data-client') ? 'active' : '' }} {{ Route::is('data-vendor') ? 'active' : '' }} {{ Route::is('bank') ? 'active' : '' }}">
                             <a data-bs-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
                                 <p>Master</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse {{ Route::is('project-id') ? 'show' : ''}}{{ Route::is('data-client') ? 'show' : ''}} {{ Route::is('data-vendor') ? 'show' :''}} {{ Route::is('bank') ? 'show' : '' }}" id="base">
+                            <div class="collapse {{ Route::is('project-id') ? 'show' : '' }}{{ Route::is('data-client') ? 'show' : '' }} {{ Route::is('data-vendor') ? 'show' : '' }} {{ Route::is('bank') ? 'show' : '' }}"
+                                id="base">
                                 <ul class="nav nav-collapse">
                                     <li class="{{ Route::is('project-id') ? 'active' : '' }}">
                                         <a href="{{ route('project-id') }}">
@@ -92,7 +95,7 @@
                                             <span class="sub-item">Data Client</span>
                                         </a>
                                     </li>
-                                    <li class="{{ Route::is('data-vendor') ? 'active' :''}}">
+                                    <li class="{{ Route::is('data-vendor') ? 'active' : '' }}">
                                         <a href="{{ route('data-vendor') }}">
                                             <span class="sub-item">Data Vendor</span>
                                         </a>
@@ -175,11 +178,10 @@
                                 <p>Purchase Order</p>
                                 {{-- <span class="caret"></span> --}}
                             </a>
-                            <li class="nav-item
-                            {{ Route::is('data-sph') ? 'active' : '' }}" 
-                            >
-                                <a href="{{ route('data-sph') }}">
-                                    <i class="fas fa-desktop"></i>
+                        <li class="nav-item
+                            {{ Route::is('data-sph') ? 'active' : '' }}">
+                            <a href="{{ route('data-sph') }}">
+                                <i class="fas fa-desktop"></i>
                                 <p>SPH</p>
                                 {{-- <span class="badge badge-success">4</span> --}}
                             </a>
@@ -561,6 +563,8 @@
     <!-- Kaiadmin JS -->
     <script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>
     @stack('scripts')
+    <!-- Select2! -->
+    <script src="{{ asset('select2/select2.js') }}"></script>
 
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>

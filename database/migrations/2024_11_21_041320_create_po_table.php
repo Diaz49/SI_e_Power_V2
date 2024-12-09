@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('po', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->string('kode_po')->unique(); // Kode unik untuk setiap purchase order
+            $table->string('kode_po', 100)->unique(); // Kode unik untuk setiap purchase order
             $table->date('tanggal_po'); // Tanggal purchase
             $table->unsignedBigInteger('vendor_id'); // Relasi ke tabel vendor
-            $table->string('buyer'); // Kode unik untuk setiap purchase order
+            $table->string('buyer', 50); // Kode unik untuk setiap purchase order
             $table->text('perihal')->nullable(); // Catatan pertama
             $table->text('catatan')->nullable(); // Catatan pertama
             $table->text('catatan_2')->nullable(); // Catatan kedua
