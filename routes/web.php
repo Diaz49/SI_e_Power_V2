@@ -9,6 +9,7 @@ use App\Http\Controllers\Master\DataVendorController;
 use App\Http\Controllers\PurchaseOrder\DetailPoController;
 use App\Http\Controllers\PurchaseOrder\PurchaseOrderController;
 use App\Http\Controllers\SphController;
+use App\Http\Controllers\BastController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,5 +78,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('data-sph/{id}/edit', [SphController::class, 'edit'])->name('data-sph.edit');
     Route::put('data-sph/{id}', [SphController::class, 'update'])->name('data-sph.update');
     Route::delete('data-sph/delete/{id}', [SphController::class, 'delete'])->name('data-sph.delete');
+
+    //bast
+    Route::get('bast', [BastController::class, 'index'])->name('bast');
 });
 

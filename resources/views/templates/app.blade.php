@@ -160,19 +160,21 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item" {{-- {{ Route::is('bast') ? 'active' : '' }}  --}}>
-                            <a href="#tables" class="collapsed">
+                        <li class="nav-item {{ Route::is('bast') ? 'active' : '' }}">
+                            <a href="{{ route('bast') }}" class="collapsed">
                                 <i class="fas fa-table"></i>
                                 <p>BAST</p>
                             </a>
                         </li>
-                        <li class="nav-item" {{-- {{ Route::is('bakn') ? 'active' : '' }}  --}}>
+                        {{-- <li class="nav-item" 
+                        {{ Route::is('bakn') ? 'active' : '' }} 
+                        >
                             <a href="#maps" class="collapsed">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <p>BAKN</p>
                             </a>
-                        </li>
-                        <li class="nav-item {{ Route::is('po') ? 'active' : '' }}"">
+                        </li> --}}
+                        <li class="nav-item {{ Route::is('po') ? 'active' : '' }}">
                             <a href="{{ route('po') }}" class="collapsed">
                                 <i class="far fa-chart-bar"></i>
                                 <p>Purchase Order</p>
