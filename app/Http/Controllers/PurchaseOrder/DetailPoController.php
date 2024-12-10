@@ -50,4 +50,6 @@ class DetailPoController extends Controller
         DetailPo::create($detail);
         return response()->json();
     }
+
+    
 }

@@ -65,7 +65,7 @@
 
 
                     <div class="d-flex justify-content-end mt-3">
-                        <button type="submit" id="btn_detail" disabled class="btn btn-primary">Add</button>
+                        <button type="submit" id="btn_detail" class="btn btn-primary">Add</button>
                     </div>
 
 
@@ -93,6 +93,16 @@
                             <option value="{{ $item->id }}">{{ $item->nama_vendor }}</option>
                         @endforeach
                     </select>
+                    <input type="text" class="form-control" name="alamat_vendor" disabled id="alamat_vendor" value=""
+                        placeholder="Alamat Vendor">
+                    <input type="text" class="form-control" name="kota_vendor" disabled id="kota_vendor" value=""
+                        placeholder="Kota Vendor">
+                    <input type="text" class="form-control" name="up_vendor" disabled id="up_vendor" value=""
+                        placeholder="Up Venodr">
+                    <input type="text" class="form-control" name="email_vendor" disabled id="email_vendor" value=""
+                        placeholder="Email Vendor">
+                    <input type="text" class="form-control" name="nomor_vendor" disabled id="nomor_vendor" value=""
+                        placeholder="Nomor Telepon">
 
 
                     <div class="mb-1 mt-2 label">Nama Buyer</div>
@@ -488,6 +498,12 @@
                 input1.addEventListener('input', function() {
                     input2.value = input1.value; // Set nilai Input 2 sama dengan Input 1
                 });
+            });
+
+            $(document).on('click', '.btn-delete-detail', function() {
+                const index = $(this).data('index');
+                detailArray.splice(index, 1); // Hapus dari array
+                $(this).closest('tr').remove(); // Hapus dari tabel
             });
         </script>
     @endpush
