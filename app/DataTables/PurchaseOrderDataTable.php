@@ -24,7 +24,9 @@ class PurchaseOrderDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->addColumn('action', 'po.action')
+            ->addColumn('action', function (Po $po) {
+                return view('po.action', ['po' => $po]);
+            })
             ->editColumn('vendor_id', function (Po $po) {
                 return $po->vendor->nama_vendor;
             })

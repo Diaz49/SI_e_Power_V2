@@ -19,53 +19,87 @@ class PurchaseOrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_purchase_order' => 'required|max:100|unique:po,kode_po',
-            'tanggal' => 'required|date',
-            'nama_vendor' => 'required', // Asumsi 'vendors' adalah tabel vendor
-            'nama_buyer' => 'required|max:50',
-            'perihal' => 'nullable|string',
-            'catatan' => 'nullable|string',
-            'catatan_2' => 'nullable|string',
-            'diskon_rupiah' => 'nullable|numeric|min:0|max:9999999999.99',
+            'header.kode_purchase_order' => 'required|max:100|unique:po,kode_po',
+            'header.tanggal' => 'required|date',
+            'header.nama_vendor' => 'required',
+            'header.nama_buyer' => 'required|max:50',
+            'header.perihal' => 'nullable|string',
+            'header.catatan' => 'nullable|string',
+            'header.catatan_2' => 'nullable|string',
+            'header.diskon_rupiah' => 'nullable|numeric|min:0|max:9999999999.99',
+            'details.*.nama_barang' => 'required|string|max:255',
+            'details.*.qty' => 'required|integer|min:1',
+            'details.*.satuan' => 'required|string|max:50',
+            'details.*.harga_satuan' => 'required|numeric|min:0',
         ], [
-            'kode_purchase_order.required' => 'Kode purchase order wajib diisi.',
-            'kode_purchase_order.max' => 'Kode purchase order tidak boleh lebih dari 100 karakter.',
-            'kode_purchase_order.unique' => 'Kode purchase order sudah digunakan.',
+            'header.kode_purchase_order.required' => 'Kode purchase order wajib diisi.',
+            'header.kode_purchase_order.max' => 'Kode purchase order maksimal 100 karakter.',
+            'header.kode_purchase_order.unique' => 'Kode purchase order sudah terdaftar.',
 
-            'tanggal.required' => 'Tanggal wajib diisi.',
-            'tanggal.date' => 'Tanggal harus berupa format tanggal yang valid.',
+            'header.tanggal.required' => 'Tanggal wajib diisi.',
+            'header.tanggal.date' => 'Tanggal harus dalam format yang valid.',
 
-            'nama_vendor.required' => 'Nama vendor wajib dipilih.',
-            'nama_vendor.exists' => 'Vendor yang dipilih tidak ditemukan.',
+            'header.nama_vendor.required' => 'Nama vendor wajib diisi.',
 
-            'nama_buyer.required' => 'Nama buyer wajib diisi.',
-            'nama_buyer.max' => 'Nama buyer tidak boleh lebih dari 50 karakter.',
+            'header.nama_buyer.required' => 'Nama buyer wajib diisi.',
+            'header.nama_buyer.max' => 'Nama buyer maksimal 50 karakter.',
 
-            'perihal.string' => 'Perihal harus berupa teks.',
+            'header.perihal.string' => 'Perihal harus berupa teks.',
 
-            'catatan.string' => 'Catatan harus berupa teks.',
+            'header.catatan.string' => 'Catatan harus berupa teks.',
 
-            'catatan_2.string' => 'Catatan 2 harus berupa teks.',
+            'header.catatan_2.string' => 'Catatan 2 harus berupa teks.',
 
-            'diskon_rupiah.numeric' => 'Diskon harus berupa angka.',
-            'diskon_rupiah.min' => 'Diskon tidak boleh bernilai negatif.',
-            'diskon_rupiah.max' => 'Diskon tidak boleh melebihi batas maksimal.',
+            'header.diskon_rupiah.numeric' => 'Diskon rupiah harus berupa angka.',
+            'header.diskon_rupiah.min' => 'Diskon rupiah tidak boleh kurang dari 0.',
+            'header.diskon_rupiah.max' => 'Diskon rupiah maksimal 9999999999.99.',
+
+            'details.*.nama_barang.required' => 'Nama barang pada detail wajib diisi.',
+            'details.*.nama_barang.string' => 'Nama barang pada detail harus berupa teks.',
+            'details.*.nama_barang.max' => 'Nama barang pada detail maksimal 255 karakter.',
+
+            'details.*.qty.required' => 'Jumlah barang pada detail wajib diisi.',
+            'details.*.qty.integer' => 'Jumlah barang pada detail harus berupa angka.',
+            'details.*.qty.min' => 'Jumlah barang pada detail minimal 1.',
+
+            'details.*.satuan.required' => 'Satuan barang pada detail wajib diisi.',
+            'details.*.satuan.string' => 'Satuan barang pada detail harus berupa teks.',
+            'details.*.satuan.max' => 'Satuan barang pada detail maksimal 50 karakter.',
+
+            'details.*.harga_satuan.required' => 'Harga satuan barang wajib diisi.',
+            'details.*.harga_satuan.numeric' => 'Harga satuan barang harus berupa angka.',
+            'details.*.harga_satuan.min' => 'Harga satuan barang tidak boleh kurang dari 0.',
         ]);
 
+        // Simpan data header
+        $po = Po::create([
+            'kode_po' => $request->input('header.kode_purchase_order'),
+            'tanggal_po' => $request->input('header.tanggal'),
+            'vendor_id' => $request->input('header.nama_vendor'),
+            'buyer' => $request->input('header.nama_buyer'),
+            'perihal' => $request->input('header.perihal'),
+            'catatan' => $request->input('header.catatan'),
+            'catatan_2' => $request->input('header.catatan_2'),
+            'diskon' => $request->input('header.diskon_rupiah'),
+        ]);
 
-        $po = [
-            'kode_po' => $request->kode_purchase_order,
-            'tanggal_po' => $request->tanggal,
-            'vendor_id' => $request->nama_vendor,
-            'buyer' => $request->nama_buyer,
-            'perihal' => $request->perihal,
-            'catatan' => $request->catatan,
-            'catatan_2' => $request->catatan_2,
-            'diskon' => $request->diskon_rupiah,
-        ];
+        // Simpan data detail
+        foreach ($request->input('details') as $detail) {
+            $po->detail()->create([
+                'nama_barang' => $detail['nama_barang'],
+                'qty' => $detail['qty'],
+                'satuan' => $detail['satuan'],
+                'harga_satuan' => $detail['harga_satuan'],
+            ]);
+        }
 
-        $createdPo = Po::create($po);
+        return response()->json(['message' => 'Purchase order berhasil disimpan.']);
+    }
 
-        return response()->json(['id' => $createdPo->id]);
+    public function destroy(string $id)
+    {
+        $po = Po::find($id);
+        $po->delete();
+        return response()->json();
     }
 }
