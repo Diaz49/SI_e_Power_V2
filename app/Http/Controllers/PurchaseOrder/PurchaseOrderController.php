@@ -85,11 +85,13 @@ class PurchaseOrderController extends Controller
 
         // Simpan data detail
         foreach ($request->input('details') as $detail) {
+            $jumlah_harga = $detail['qty'] * $detail['harga_satuan'];
             $po->detail()->create([
                 'nama_barang' => $detail['nama_barang'],
                 'qty' => $detail['qty'],
                 'satuan' => $detail['satuan'],
                 'harga_satuan' => $detail['harga_satuan'],
+                'jumlah_harga' => $jumlah_harga,
             ]);
         }
 
