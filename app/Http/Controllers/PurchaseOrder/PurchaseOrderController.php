@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DataVendor;
 use App\Models\Po;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseOrderController extends Controller
 {
@@ -70,32 +71,39 @@ class PurchaseOrderController extends Controller
             'details.*.harga_satuan.numeric' => 'Harga satuan barang harus berupa angka.',
             'details.*.harga_satuan.min' => 'Harga satuan barang tidak boleh kurang dari 0.',
         ]);
-
+        DB::beginTransaction(); // Mulai transaksi
         // Simpan data header
-        $po = Po::create([
-            'kode_po' => $request->input('header.kode_purchase_order'),
-            'tanggal_po' => $request->input('header.tanggal'),
-            'vendor_id' => $request->input('header.nama_vendor'),
-            'buyer' => $request->input('header.nama_buyer'),
-            'perihal' => $request->input('header.perihal'),
-            'catatan' => $request->input('header.catatan'),
-            'catatan_2' => $request->input('header.catatan_2'),
-            'diskon' => $request->input('header.diskon_rupiah'),
-        ]);
 
-        // Simpan data detail
-        foreach ($request->input('details') as $detail) {
-            $jumlah_harga = $detail['qty'] * $detail['harga_satuan'];
-            $po->detail()->create([
-                'nama_barang' => $detail['nama_barang'],
-                'qty' => $detail['qty'],
-                'satuan' => $detail['satuan'],
-                'harga_satuan' => $detail['harga_satuan'],
-                'jumlah_harga' => $jumlah_harga,
+        try {
+
+            $po = Po::create([
+                'kode_po' => $request->input('header.kode_purchase_order'),
+                'tanggal_po' => $request->input('header.tanggal'),
+                'vendor_id' => $request->input('header.nama_vendor'),
+                'buyer' => $request->input('header.nama_buyer'),
+                'perihal' => $request->input('header.perihal'),
+                'catatan' => $request->input('header.catatan'),
+                'catatan_2' => $request->input('header.catatan_2'),
+                'diskon' => $request->input('header.diskon_rupiah'),
             ]);
-        }
 
-        return response()->json(['message' => 'Purchase order berhasil disimpan.']);
+            // Simpan data detail
+            foreach ($request->input('details') as $detail) {
+                $jumlah_harga = $detail['qty'] * $detail['harga_satuan'];
+                $po->detail()->create([
+                    'nama_barang' => $detail['nama_barang'],
+                    'qty' => $detail['qty'],
+                    'satuan' => $detail['satuan'],
+                    'harga_satuan' => $detail['harga_satuan'],
+                    'jumlah_harga' => $jumlah_harga,
+                ]);
+            }
+            DB::commit();
+            return response()->json(['message' => 'Purchase order berhasil disimpan.']);
+        } catch (\Exception $e) {
+            DB::rollBack(); // Batalkan semua perubahan jika ada error
+            return response()->json(['message' => 'Gagal menyimpan purchase order: ' . $e->getMessage()], 500);
+        }
     }
 
     public function destroy(string $id)

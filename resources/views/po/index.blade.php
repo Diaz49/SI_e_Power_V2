@@ -42,8 +42,8 @@
                 @csrf
                 <div class="card p-4">
                     <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white ">
-                        1
-                    </span> Detail</h5>
+                            1
+                        </span> Detail</h5>
                     <input type="text" class="form-control" name="po_id" id="po_id" hidden>
 
                     <div class="mb-1 mt-4 label">Deskripsi</div>
@@ -77,8 +77,8 @@
                 @csrf
                 <div class="card p-4">
                     <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white fw-lighter">
-                        2
-                    </span> Header</h5>
+                            2
+                        </span> Header</h5>
                     <div class="mb-1 mt-4 label">Kode Purchase Order</div>
                     <input type="text" class="form-control" name="kode_purchase_order" id="kode_purchase_order"
                         value="" placeholder="Masukkan Kode Purchase Order">
@@ -138,7 +138,8 @@
 
 
                 <div class="d-flex justify-content-end mt-3">
-                    <button type="submit" id="btn_header" class="btn btn-primary"><i class="far fa-save"></i>  Save</button>
+                    <button type="submit" id="btn_header" class="btn btn-primary"><i class="far fa-save"></i>
+                        Save</button>
                 </div>
             </form>
 
@@ -147,7 +148,7 @@
         {{-- Table --}}
         <div class="mt-4">
             <table class="table table-bordered" id="detailTable">
-                <thead class="table-dark text-center"> 
+                <thead class="table-dark text-center">
                     <tr>
                         <th>No</th>
                         <th>Nama Barang</th>
@@ -252,7 +253,7 @@
             });
             $('#formTambahHeader').on('submit', function(event) {
                 event.preventDefault();
-
+                $('.error').remove();
                 // Ambil data header dari form
                 let headerData = $(this).serializeArray();
                 let headerObj = {};
@@ -333,6 +334,15 @@
                                 $('#diskon_rupiah').after('<div class="text-danger error">' + errors[
                                     'header.diskon_rupiah'][0] + '</div>');
                             }
+                        }
+                        if (xhr.status === 500) {
+                            return swal({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan dalam menyimpan ke Database.',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+
                         } else {
                             swal({
                                 title: 'Gagal!',
@@ -383,7 +393,7 @@
                 }
 
                 // Validasi Harga Satuan
-                if (!harga_satuan || isNaN(harga_satuan) || harga_satuan < 0 || harga_satuan > 9999999999.99) {
+                if (!harga_satuan || isNaN(harga_satuan) || harga_satuan < 0 || harga_satuan > 99999999999999999999.99) {
                     $('#harga_satuan').after(
                         '<div class="text-danger error">Harga satuan harus berupa angka .</div>'
                     );
@@ -392,7 +402,7 @@
 
                 // Semua validasi lolos, lanjutkan menambah detail
                 detailArray.push({
-no,
+                    no,
                     po_id,
                     nama_barang,
                     qty,
@@ -442,7 +452,7 @@ no,
                 // Menjumlahkan semua nilai yang ada di kolom "Jumlah"
                 $('#detailTable tbody .jumlah').each(function() {
                     var jumlah = $(this).text().replace('Rp. ', '').replace('.', '').replace(',',
-                    ''); // Hapus format Rp dan koma
+                        ''); // Hapus format Rp dan koma
                     total += parseFloat(jumlah); // Tambahkan jumlah ke total
                 });
 
