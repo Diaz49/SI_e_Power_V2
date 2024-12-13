@@ -41,10 +41,12 @@
             <form class="col-md-6" id="formTambahDetail">
                 @csrf
                 <div class="card p-4">
-                    <h5 class="card-title">Detail</h5>
+                    <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white ">
+                            1
+                        </span> Detail</h5>
                     <input type="text" class="form-control" name="po_id" id="po_id" hidden>
 
-                    <div class="mb-1 mt-4 label">Nama Barang</div>
+                    <div class="mb-1 mt-4 label">Deskripsi</div>
                     <input type="text" class="form-control" name="nama_barang" id="nama_barang" value=""
                         placeholder="Masukkan Nama Barang">
 
@@ -74,7 +76,9 @@
             <form class="col-md-6" method="POST" id="formTambahHeader">
                 @csrf
                 <div class="card p-4">
-                    <h5 class="card-title">Header</h5>
+                    <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white fw-lighter">
+                            2
+                        </span> Header</h5>
                     <div class="mb-1 mt-4 label">Kode Purchase Order</div>
                     <input type="text" class="form-control" name="kode_purchase_order" id="kode_purchase_order"
                         value="" placeholder="Masukkan Kode Purchase Order">
@@ -90,19 +94,23 @@
                         value="" placeholder="Masukkan Nama Vendor">
                         <option value="">Pilih Vendor</option>
                         @foreach ($vendor as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_vendor }}</option>
+                            <option value="{{ $item->id }}" data-alamat="{{ $item->alamat_vendor }}"
+                                data-kota="{{ $item->kota }}" data-up="{{ $item->up }}"
+                                data-email="{{ $item->email }}" data-nomor="{{ $item->no_tlp }}">{{ $item->nama_vendor }}
+                            </option>
                         @endforeach
                     </select>
-                    <input type="text" class="form-control" name="alamat_vendor" disabled id="alamat_vendor" value=""
-                        placeholder="Alamat Vendor">
-                    <input type="text" class="form-control" name="kota_vendor" disabled id="kota_vendor" value=""
-                        placeholder="Kota Vendor">
+
+                    <input type="text" class="form-control" name="alamat_vendor" disabled id="alamat_vendor"
+                        value="" placeholder="Alamat Vendor">
+                    <input type="text" class="form-control" name="kota_vendor" disabled id="kota_vendor"
+                        value="" placeholder="Kota Vendor">
                     <input type="text" class="form-control" name="up_vendor" disabled id="up_vendor" value=""
                         placeholder="Up Venodr">
-                    <input type="text" class="form-control" name="email_vendor" disabled id="email_vendor" value=""
-                        placeholder="Email Vendor">
-                    <input type="text" class="form-control" name="nomor_vendor" disabled id="nomor_vendor" value=""
-                        placeholder="Nomor Telepon">
+                    <input type="text" class="form-control" name="email_vendor" disabled id="email_vendor"
+                        value="" placeholder="Email Vendor">
+                    <input type="text" class="form-control" name="nomor_vendor" disabled id="nomor_vendor"
+                        value="" placeholder="Nomor Telepon">
 
 
                     <div class="mb-1 mt-2 label">Nama Buyer</div>
@@ -117,10 +125,7 @@
 
                     <div class="mb-1 mt-2 label">Catatan</div>
                     <input type="text" class="form-control" name="catatan" id="catatan" value=""
-                        placeholder="Masukkan Catatan">
-
-
-                    <div class="mb-1 mt-2 label">Catatan 2</div>
+                        placeholder="Masukkan Catatan 1">
                     <input type="text" class="form-control" name="catatan_2" id="catatan_2" value=""
                         placeholder="Masukkan Catatan 2">
 
@@ -128,15 +133,13 @@
                     <div class="mb-1 mt-2 label">Diskon Nominal Rupiah</div>
                     <input type="number" class="form-control" name="diskon_rupiah" id="diskon_rupiah" value=""
                         placeholder="Masukkan Diskon Nominal Rupiah">
-
-
-
                 </div>
 
 
 
                 <div class="d-flex justify-content-end mt-3">
-                    <button type="submit" id="btn_header" class="btn btn-primary">Tambah Data</button>
+                    <button type="submit" id="btn_header" class="btn btn-primary"><i class="far fa-save"></i>
+                        Save</button>
                 </div>
             </form>
 
@@ -145,16 +148,19 @@
         {{-- Table --}}
         <div class="mt-4">
             <table class="table table-bordered" id="detailTable">
-                <thead>
+                <thead class="table-dark text-center">
                     <tr>
+                        <th>No</th>
                         <th>Nama Barang</th>
                         <th>Qty</th>
                         <th>Satuan</th>
                         <th>Harga Satuan</th>
+                        <th>Jumlah</th>
                         <th>Aksi</th>
                     </tr>
+
                 </thead>
-                <tbody>
+                <tbody class="table-group-divider text-center">
                     <!-- Data detail akan ditambahkan di sini -->
                 </tbody>
             </table>
@@ -170,6 +176,8 @@
         {{ $dataTable->scripts() }}
         <script>
             let detailArray = [];
+            let no = 1;
+
             $(document).on('click', 'button[data-action="delete"]', function() {
                 var url = $(this).data('url');
                 var tableId = $(this).data('table-id');
@@ -245,7 +253,7 @@
             });
             $('#formTambahHeader').on('submit', function(event) {
                 event.preventDefault();
-
+                $('.error').remove();
                 // Ambil data header dari form
                 let headerData = $(this).serializeArray();
                 let headerObj = {};
@@ -255,7 +263,7 @@
                 if (detailArray.length === 0) {
                     return swal({
                         title: 'Gagal!',
-                        text: 'Isi detail terlebih dahulu.',
+                        text: 'Tambah detail terlebih dahulu.',
                         icon: 'error',
                         button: 'OK'
                     });
@@ -326,6 +334,15 @@
                                 $('#diskon_rupiah').after('<div class="text-danger error">' + errors[
                                     'header.diskon_rupiah'][0] + '</div>');
                             }
+                        }
+                        if (xhr.status === 500) {
+                            return swal({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan dalam menyimpan ke Database.',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+
                         } else {
                             swal({
                                 title: 'Gagal!',
@@ -349,11 +366,10 @@
                 const satuan = $('#satuan').val();
                 const harga_satuan = $('#harga_satuan').val();
                 const po_id = $('#po_id').val(); // Misalnya, ID PO sudah ada di form
+                const jumlah_harga = qty * harga_satuan;
 
                 // Hapus pesan error sebelumnya
                 $('.error').remove();
-
-                // Anda juga bisa mengecek jika PO ID tidak valid (misalnya mengecek di database jika perlu)
 
                 // Validasi Nama Barang
                 if (!nama_barang || nama_barang.length === 0 || nama_barang.length > 100) {
@@ -377,7 +393,7 @@
                 }
 
                 // Validasi Harga Satuan
-                if (!harga_satuan || isNaN(harga_satuan) || harga_satuan < 0 || harga_satuan > 9999999999.99) {
+                if (!harga_satuan || isNaN(harga_satuan) || harga_satuan < 0 || harga_satuan > 99999999999999999999.99) {
                     $('#harga_satuan').after(
                         '<div class="text-danger error">Harga satuan harus berupa angka .</div>'
                     );
@@ -386,27 +402,37 @@
 
                 // Semua validasi lolos, lanjutkan menambah detail
                 detailArray.push({
+                    no,
                     po_id,
                     nama_barang,
                     qty,
                     satuan,
-                    harga_satuan
+                    harga_satuan,
+                    jumlah_harga
                 });
 
                 // Render data ke tabel
-                $('#detailTable tbody').append(`
-        <tr>
-            <td>${nama_barang}</td>
-            <td>${qty}</td>
-            <td>${satuan}</td>
-            <td>${harga_satuan}</td>
-            <td>
-                <button class="btn btn-danger btn-sm btn-delete-detail" data-index="${detailArray.length - 1}">
-                    Hapus
-                </button>
-            </td>
-        </tr>
-    `);
+                var rowDetail = `
+    <tr>
+        <td>${no++}</td>
+        <td>${nama_barang}</td>
+        <td>${qty}</td>
+        <td>${satuan}</td>
+        <td>Rp. ${harga_satuan}</td>
+        <td class="jumlah">Rp. ${jumlah_harga}</td> <!-- Class 'jumlah' untuk mempermudah seleksi -->
+        <td>
+            <button class="btn btn-danger btn-sm btn-delete-detail" data-index="${detailArray.length - 1}">
+                         <i class="fas fa-trash"></i> 
+            </button>
+        </td>
+    </tr>
+`;
+
+                // Menambahkan row detail ke dalam tabel
+                $('#detailTable tbody').append(rowDetail);
+
+                // Panggil fungsi untuk menghitung dan menambahkan row subtotal
+                calculateSubtotal();
 
                 // Reset form input detail
                 $('#formTambahDetail')[0].reset();
@@ -418,6 +444,44 @@
                     button: 'OK',
                 });
             });
+
+            // Fungsi untuk menghitung subtotal
+            function calculateSubtotal() {
+                var total = 0;
+
+                // Menjumlahkan semua nilai yang ada di kolom "Jumlah"
+                $('#detailTable tbody .jumlah').each(function() {
+                    var jumlah = $(this).text().replace('Rp. ', '').replace('.', '').replace(',',
+                        ''); // Hapus format Rp dan koma
+                    total += parseFloat(jumlah); // Tambahkan jumlah ke total
+                });
+
+                // Cek apakah row subtotal sudah ada, jika sudah dihapus dulu sebelum menambahkan yang baru
+                if ($('#detailTable tbody .subtotal').length > 0) {
+                    $('#detailTable tbody .subtotal').remove();
+                }
+
+                // Menambahkan row subtotal
+                var subtotalRow = `
+        <tr class="subtotal">
+            <td colspan="5" class=" fw-bold">Subtotal:</td>
+            <td  class="fw-bold">Rp. ${total.toLocaleString('id-ID')}</td> <!-- Format angka dengan Rupiah -->
+        </tr>
+    `;
+
+                // Menambahkan row subtotal
+                $('#detailTable tbody').append(subtotalRow);
+            }
+
+            // Fungsi untuk menghapus baris detail dan update subtotal
+            $(document).on('click', '.btn-delete-detail', function() {
+                // Menghapus baris yang dipilih
+                $(this).closest('tr').remove();
+
+                // Menghitung ulang subtotal setelah baris dihapus
+                calculateSubtotal();
+            });
+
 
             $('#btn-tambah').on('click', function() {
                 $('.error').remove();
@@ -469,6 +533,28 @@
             }
             $(document).ready(function() {
                 $('.js-example-basic-single').select2();
+                // Menangkap event change pada select2
+                $('#nama_vendor').on('change', function() {
+                    // Ambil ID vendor yang dipilih
+                    var vendorId = $(this).val();
+
+                    // Cari data vendor berdasarkan ID (misalnya, dalam elemen data-* yang sudah ada di halaman)
+                    var vendor = $('#nama_vendor option').filter(function() {
+                        return $(this).val() == vendorId;
+                    }).data();
+
+                    // Isi input dengan data yang sesuai
+                    if (vendorId) {
+                        $('#alamat_vendor').val(vendor.alamat);
+                        $('#kota_vendor').val(vendor.kota);
+                        $('#up_vendor').val(vendor.up);
+                        $('#email_vendor').val(vendor.email);
+                        $('#nomor_vendor').val(vendor.nomor);
+                    } else {
+                        // Kosongkan input jika tidak ada vendor yang dipilih
+                        $('#alamat_vendor, #kota_vendor, #up_vendor, #email_vendor, #nomor_vendor').val('');
+                    }
+                });
 
             });
             document.addEventListener('DOMContentLoaded', function() {

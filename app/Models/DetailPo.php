@@ -16,6 +16,7 @@ class DetailPo extends Model
         'qty',
         'satuan',
         'harga_satuan',
+        'jumlah_harga',
     ];
 
     public function po()

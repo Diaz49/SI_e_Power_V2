@@ -38,6 +38,10 @@ class PurchaseOrderDataTable extends DataTable
             })
             ->addColumn('tlp_vendor', function (Po $po) {
                 return $po->vendor->no_tlp;
+            })->addColumn('jumlah_item', function (Po $po) {
+                return $po->detail->count();
+            })->addColumn('jumlah_harga', function (Po $po) {
+                return $po->detail->sum('jumlah_harga');
             })
             ->setRowId('id');
     }
@@ -92,6 +96,8 @@ class PurchaseOrderDataTable extends DataTable
             Column::make('kota_vendor')->title('Kota'),
             Column::make('tlp_vendor')->title('No Tlp'),
             Column::make('perihal'),
+            Column::make('jumlah_item')->title('Jumlah Item'),
+            Column::make('jumlah_harga')->title('Total PO'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

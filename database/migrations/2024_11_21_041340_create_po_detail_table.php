@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('qty'); 
             $table->string('satuan', 50); 
             $table->decimal('harga_satuan', 10, 2); 
+            $table->decimal('jumlah_harga', 20, 2); 
             $table->timestamps(); 
     
             // Foreign key constraints
