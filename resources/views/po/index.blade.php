@@ -464,7 +464,7 @@
                 // Menambahkan row subtotal
                 var subtotalRow = `
         <tr class="subtotal">
-            <td colspan="5" class=" fw-bold">Subtotal:</td>
+            <td colspan="6" class=" fw-bold">Subtotal:</td>
             <td  class="fw-bold">Rp. ${total.toLocaleString('id-ID')}</td> <!-- Format angka dengan Rupiah -->
         </tr>
     `;
