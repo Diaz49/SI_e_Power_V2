@@ -131,7 +131,7 @@
 
 
                     <div class="mb-1 mt-2 label">Diskon Nominal Rupiah</div>
-                    <input type="number" class="form-control" name="diskon_rupiah" id="diskon_rupiah" value=""
+                    <input type="text" class="form-control" name="diskon_rupiah" id="diskon_rupiah" value=""
                         placeholder="Masukkan Diskon Nominal Rupiah">
                 </div>
 
@@ -170,15 +170,15 @@
     </div>
 
 
-    <!-- Modal Edit -->
+    <!-- Modal Edit Header -->
     <form action="" method="POST" id="formEditHeader">
         @method('PUT')
         @csrf
-        <div class="modal fade" id="modalEditHeader" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalEditHeader" aria-labelledby="modalEditDetailLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Header</h1>
+                        <h1 class="modal-title fs-5" id="modalEditDetailLabel">Edit Data Header</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -229,7 +229,7 @@
                             value="" placeholder="Masukkan Catatan 2">
 
                         <div class="mb-1 mt-2 label">Diskon Nominal Rupiah</div>
-                        <input type="number" class="form-control" name="edit_diskon_rupiah" id="edit_diskon_rupiah"
+                        <input type="text" class="form-control" name="edit_diskon_rupiah" id="edit_diskon_rupiah"
                             value="" placeholder="Masukkan Diskon Nominal Rupiah">
 
                     </div>
@@ -241,13 +241,54 @@
         </div>
     </form>
 
+    <!-- Modal Edit Detail -->
+    <div class="modal fade" id="modalEditDetail1" tabindex="-1" aria-labelledby="modalEditDetailLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalEditDetailLabel">Edit Data Detail</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4">
+                        <table class="table table-bordered" id="detailEditTable">
+                            <thead class="table-dark text-center">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Qty</th>
+                                    <th>Satuan</th>
+                                    <th>Harga Satuan</th>
+                                    <th>Jumlah</th>
+                                    <th>Aksi</th>
+                                </tr>
+
+                            </thead>
+                            <tbody class="table-group-divider text-center">
+                                <!-- Data detail akan ditambahkan di sini -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Edit Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="" method="POST" id="formEditDetail">
+        @method('PUT')
+        @csrf
+    </form>
+
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
             let detailArray = [];
             let no = 1;
 
-            $(document).on('click', 'button[data-action="delete"]', function() {
+            $(document).on('click', '#btnDeletePo', function() {
                 var url = $(this).data('url');
                 var tableId = $(this).data('table-id');
                 var name = $(this).data('name');
@@ -720,7 +761,8 @@
 
                             // Menampilkan pesan error untuk masing-masing field
                             if (errors.edit_kode_purchase_order) {
-                                $('#edit_kode_purchase_order').after('<div class="text-danger error">' + errors
+                                $('#edit_kode_purchase_order').after('<div class="text-danger error">' +
+                                    errors
                                     .edit_kode_purchase_order[0] + '</div>');
                             }
                             if (errors.edit_tanggal) {
@@ -729,8 +771,9 @@
                                         0] + '</div>');
                             }
                             if (errors.edit_nama_vendor) {
-                                $('#edit_nama_vendor').after('<div class="text-danger error">' + errors.edit_nama_vendor[
-                                    0] + '</div>');
+                                $('#edit_nama_vendor').after('<div class="text-danger error">' + errors
+                                    .edit_nama_vendor[
+                                        0] + '</div>');
                             }
                             if (errors.edit_nama_buyer) {
                                 $('#edit_nama_buyer').after('<div class="text-danger error">' + errors
@@ -745,17 +788,20 @@
                                     '</div>');
                             }
                             if (errors.edit_catatan) {
-                                $('#edit_catatan').after('<div class="text-danger error">' + errors.edit_catatan[
+                                $('#edit_catatan').after('<div class="text-danger error">' + errors
+                                    .edit_catatan[
                                         0] +
                                     '</div>');
                             }
                             if (errors.edit_catatan_2) {
-                                $('#edit_catatan_2').after('<div class="text-danger error">' + errors.edit_catatan_2[
+                                $('#edit_catatan_2').after('<div class="text-danger error">' + errors
+                                    .edit_catatan_2[
                                         0] +
                                     '</div>');
                             }
                             if (errors.edit_diskon_rupiah) {
-                                $('#edit_diskon_rupiah').after('<div class="text-danger error">' + errors.edit_diskon_rupiah[
+                                $('#edit_diskon_rupiah').after('<div class="text-danger error">' + errors
+                                    .edit_diskon_rupiah[
                                         0] +
                                     '</div>');
                             }
@@ -770,6 +816,127 @@
                     }
                 });
             });
+
+            $(document).on('click', '#btnEditDetail', function() {
+                let poId = $(this).data('id'); // Ambil ID PO dari tombol
+
+                // AJAX request untuk mengambil data detail
+                $.ajax({
+                    url: `/po-detail/${poId}/edit`, // Endpoint untuk method edit
+                    type: 'GET',
+                    success: function(response) {
+                        // Kosongkan tabel sebelum menambahkan data baru
+                        $('#detailEditTable tbody').empty();
+
+                        // Loop data detail dan tambahkan ke tabel
+                        response.detail.forEach((detail, index) => {
+                            $('#detailEditTable tbody').append(`
+                    <tr id="row-${detail.id}">
+                        <td>${index + 1}</td>
+                        <td>${detail.nama_barang}</td>
+                        <td>${detail.qty}</td>
+                        <td>${detail.satuan}</td>
+                        <td>${detail.harga_satuan}</td>
+                        <td>${detail.jumlah_harga}</td>
+                    <td>
+                        <div class="dropdown">
+                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                            style="--bs-btn-active-border-color:transparent;">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                        
+                            <li><a href="javascript:void(0)"  class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
+                                    data-id="" type="button" data-bs-toggle="modal" data-bs-target="#modalEditDetail2">Edit Detail<i
+                                        class="ml-4 fas fa-pen"></i></a></li>
+                            <li>
+                                <button class="dropdown-item text-danger fw-bold d-flex justify-content-between py-2" id="btnDeleteDetailItem" type="button"
+                                    data-table-id="purchaseorder-table" data-url="po-detail/delete/${detail.id}" data-id="${detail.id}"
+                                    data-name="${detail.nama_barang}" data-action="delete">
+                                    Delete <i class="fas fa-trash"></i>
+                                </button>
+
+                            </li>
+                        </ul>
+                    </div>
+
+                    </td>
+                    </tr>
+                `);
+                        });
+
+                        // Tampilkan modal
+                        $('#modalEditDetail1').modal('show');
+                    },
+                    error: function() {
+                        alert('Gagal mengambil data detail.');
+                    }
+                });
+            });
+
+            $(document).on('click', '#btnDeleteDetailItem', function() {
+                var url = $(this).data('url');
+                var itemId = $(this).data('id');
+                var name = $(this).data('name');
+
+                // Tampilkan SweetAlert konfirmasi
+                swal({
+                    text: 'Apa kamu yakin ingin menghapus item ' + name + '?',
+                    icon: 'warning',
+                    buttons: {
+                        cancel: 'Batal',
+                        confirm: {
+                            text: 'Ya, hapus',
+                            value: true,
+                            visible: true,
+                            className: 'btn btn-danger',
+                        }
+                    },
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        // Jika user mengklik "Ya, hapus"
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                            },
+                            success: function(result) {
+                                swal({
+                                    title: 'Berhasil!',
+                                    text: 'Item ' + name + ' berhasil dihapus',
+                                    icon: 'success',
+                                    button: 'OK'
+                                }).then(() => {
+                                    $('#row-' + itemId).remove(); // Hapus baris dari DOM
+
+                                    // Update penomoran ulang
+                                    $('#detailEditTable tbody tr').each(function(index) {
+                                        $(this).find('td:first').text(index +
+                                        1); // Kolom pertama diupdate
+                                    });
+
+                                    $('#purchaseorder-table').DataTable().ajax
+                                .reload(); // Reload DataTable jika diperlukan
+
+                                });
+                            },
+                            error: function(xhr) {
+                                // Menampilkan SweetAlert error jika gagal
+                                swal({
+                                    title: 'Gagal!',
+                                    text: 'Gagal menghapus item detail',
+                                    icon: 'error',
+                                    button: 'OK'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+  
         </script>
     @endpush
 @endsection
