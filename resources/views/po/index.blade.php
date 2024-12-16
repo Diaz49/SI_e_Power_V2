@@ -336,7 +336,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" class="form-control" name="edit_po_id" id="edit_po_id" >
+                        <input type="text" class="form-control" name="edit_po_id" id="edit_po_id" hidden >
 
                         <div class="mb-1 label">Deskripsi</div>
                         <input type="text" class="form-control" name="edit_nama_barang" id="edit_nama_barang"
