@@ -242,7 +242,7 @@
     </form>
 
     <!-- Modal Edit Detail -->
-    <div class="modal fade" id="modalEditDetail1" tabindex="-1" aria-labelledby="modalEditDetailLabel"
+    <div class="modal fade" id="modalEditDetail" tabindex="-1" aria-labelledby="modalEditDetailLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -272,14 +272,97 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Edit Data</button>
+                    <button type="button" data-bs-target="#modalAddDetail" data-bs-toggle="modal"
+                        class="btn btn-primary">Tambah Detail</button>
                 </div>
             </div>
         </div>
     </div>
-    <form action="" method="POST" id="formEditDetail">
+
+    <!-- Modal Add Detail -->
+    <form action="" method="POST" id="formAddDetail">
         @method('PUT')
         @csrf
+        <div class="modal fade" id="modalAddDetail" tabindex="-1" aria-labelledby="modalAddDetailLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p type="button" class="modal-title fw-bold me-2" id="btn-back" data-bs-toggle="modal"
+                            data-bs-target="#modalEditDetail"><i class="fas fa-arrow-left"></i></p>
+                        <h1 class="modal-title fs-5" id="modalAddDetailLabel">Tambah Detail</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-1 label">Deskripsi</div>
+                        <input type="text" class="form-control" name="add_nama_barang" id="add_nama_barang"
+                            value="" placeholder="Masukkan Nama Barang">
+
+
+                        <div class="mb-1 mt-2 label">Qty</div>
+                        <input type="text" class="form-control" name="add_qty" id="add_qty" value=""
+                            placeholder="Masukkan Qty">
+
+
+                        <div class="mb-1 mt-2 label">Satuan</div>
+                        <input type="text" class="form-control" name="add_satuan" id="add_satuan" value=""
+                            placeholder="Masukkan Satuan">
+
+
+                        <div class="mb-1 mt-2 label">Harga Satuan</div>
+                        <input type="text" class="form-control" name="add_harga_satuan" id="add_harga_satuan"
+                            value="" placeholder="Masukkan Harga Satuan">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Tambah Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal Edit Item -->
+    <form action="" method="POST" id="formEditItem">
+        @method('PUT')
+        @csrf
+        <div class="modal fade" id="modalEditItem" tabindex="-1" aria-labelledby="modalEditItemLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p type="button" class="modal-title fw-bold me-2" id="btn-back" data-bs-toggle="modal"
+                            data-bs-target="#modalEditDetail"><i class="fas fa-arrow-left"></i></p>
+                        <h1 class="modal-title fs-5" id="modalEditItemLabel">Edit Item</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" name="edit_po_id" id="edit_po_id" >
+
+                        <div class="mb-1 label">Deskripsi</div>
+                        <input type="text" class="form-control" name="edit_nama_barang" id="edit_nama_barang"
+                            value="" placeholder="Masukkan Nama Barang">
+
+
+                        <div class="mb-1 mt-2 label">Qty</div>
+                        <input type="text" class="form-control" name="edit_qty" id="edit_qty" value=""
+                            placeholder="Masukkan Qty">
+
+
+                        <div class="mb-1 mt-2 label">Satuan</div>
+                        <input type="text" class="form-control" name="edit_satuan" id="edit_satuan" value=""
+                            placeholder="Masukkan Satuan">
+
+
+                        <div class="mb-1 mt-2 label">Harga Satuan</div>
+                        <input type="text" class="form-control" name="edit_harga_satuan" id="edit_harga_satuan"
+                            value="" placeholder="Masukkan Harga Satuan">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Edit Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 
     @push('scripts')
@@ -846,8 +929,8 @@
                         </button>
                         <ul class="dropdown-menu">
                         
-                            <li><a href="javascript:void(0)"  class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
-                                    data-id="" type="button" data-bs-toggle="modal" data-bs-target="#modalEditDetail2">Edit Detail<i
+                            <li><a href="javascript:void(0)" id="btnEditItem"  class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
+                                    data-id="${detail.id}" data-po-id="${poId}" type="button" data-bs-toggle="modal" data-bs-target="#modalEditItem">Edit Detail<i
                                         class="ml-4 fas fa-pen"></i></a></li>
                             <li>
                                 <button class="dropdown-item text-danger fw-bold d-flex justify-content-between py-2" id="btnDeleteDetailItem" type="button"
@@ -914,11 +997,11 @@
                                     // Update penomoran ulang
                                     $('#detailEditTable tbody tr').each(function(index) {
                                         $(this).find('td:first').text(index +
-                                        1); // Kolom pertama diupdate
+                                            1); // Kolom pertama diupdate
                                     });
 
                                     $('#purchaseorder-table').DataTable().ajax
-                                .reload(); // Reload DataTable jika diperlukan
+                                        .reload(); // Reload DataTable jika diperlukan
 
                                 });
                             },
@@ -936,7 +1019,28 @@
                 });
             });
 
-  
+            $(document).on('click', '#btnEditItem', function() {
+
+                $('.error').remove(); // Hapus error sebelumnya
+                var itemId = $(this).data('id'); // Ambil ID dari tombol edit
+                var poId = $(this).data('po-id'); // Ambil ID dari tombol edit
+                var url = '/po-item/' + itemId + '/edit'; // URL untuk ambil data
+                var updateUrl = '/po-item/' + itemId; // URL untuk update data
+
+                // Request AJAX untuk mendapatkan data Vendor berdasarkan ID
+                $.get(url, function(data) {
+                    // Isi field modal dengan data yang didapat dari server
+                    $('#edit_po_id').val(poId);
+                    $('#edit_nama_barang').val(data.nama_barang);
+                    $('#edit_qty').val(data.qty);
+                    $('#edit_satuan').val(data.satuan);
+                    $('#edit_harga_satuan').val(data.harga_satuan);
+
+
+                    // Set URL action form pada modal
+                    $('#formEditItem').attr('action', updateUrl);
+                });
+            });
         </script>
     @endpush
 @endsection

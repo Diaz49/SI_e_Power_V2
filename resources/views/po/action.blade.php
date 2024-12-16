@@ -11,7 +11,7 @@
                 data-id="{{ $po->id }}" type="button" data-bs-toggle="modal" data-bs-target="#modalEditHeader">Edit Header<i
                     class="ml-4 fas fa-pen"></i></a></li>
         <li><a href="javascript:void(0)" id="btnEditDetail" class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
-                data-id="{{ $po->id }}" type="button" data-bs-toggle="modal" data-bs-target="#modalEditDetail1">Edit Detail<i
+                data-id="{{ $po->id }}" type="button" data-bs-toggle="modal" data-bs-target="#modalEditDetail">Edit Detail<i
                     class="ml-4 fas fa-pen"></i></a></li>
         <li>
             <button class="dropdown-item text-danger fw-bold d-flex justify-content-between py-2" id="btnDeletePo" type="button"

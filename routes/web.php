@@ -68,6 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::post('po-detail', [DetailPoController::class, 'store'])->name('po-detail.store');
     Route::get('po-detail/{id}/edit', [DetailPoController::class, 'edit'])->name('po-detail.edit');
+    Route::get('po-item/{id}/edit', [DetailPoController::class, 'item'])->name('po-item.edit');
     Route::put('po-detail/{id}', [DetailPoController::class, 'update'])->name('po-detail.update');
     Route::delete('po-detail/delete/{id}', [DetailPoController::class, 'destroy'])->name('po-detail.destroy');
 

@@ -20,7 +20,11 @@ class DetailPoController extends Controller
         ]);
     }
 
-
+    public function item(string $id)
+    {
+        $detail = DetailPo::find($id);
+        return response()->json($detail);
+    }
 
     public function destroy(string $id)
     {
