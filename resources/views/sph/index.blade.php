@@ -33,9 +33,8 @@
     
     <!-- Modal Tambah -->
     <div id="form-section" style="display:none;" class="m-4 ">
-        
-        <div class="d-md-flex justify-content-end mb-4">
-            <button type="button" class="btn btn-secondary me-2" id="btn-cancel">Close</button>
+        <div class=" d-md-flex justify-content-start">
+            <p type="button" class="fw-bold" id="btn-cancel"><i class="fas fa-arrow-left"></i> Back</p>
         </div>
         <form action="{{ route('data-sph.store') }}" method="POST" id="formTambah">
             @csrf

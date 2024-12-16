@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('sph_detail', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sph_id');
-            $table->string('project');
+            $table->string('project', 100);
             $table->string('qty');
             $table->string('satuan');
             $table->decimal('price', 10, 2);
+            $table->decimal('jumlah_harga', 20, 2);
             $table->timestamps();
 
             // Menambahkan foreign key
