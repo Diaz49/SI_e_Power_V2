@@ -36,12 +36,15 @@
         <div class=" d-md-flex justify-content-start">
             <p type="button" class="fw-bold" id="btn-cancel"><i class="fas fa-arrow-left"></i> Back</p>
         </div>
-        <form action="{{ route('data-sph.store') }}" method="POST" id="formTambah">
+        {{-- <form action="{{ route('data-sph.store') }}" method="POST" id="formTambah"> --}}
             @csrf
             <div class="row">
-                <div class="col-md-6">
+                <form class="col-md-6" id="formTambahDetail">
+                    @csrf
                     <div class="card p-4">
-                        <h5 class="card-title">Detail</h5>
+                        <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white ">
+                            1
+                        </span> Detail</h5>
                         <div class="mb-1 mt-4 label">Project</div>
                         <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
                             placeholder="Masukkan Project">
@@ -76,10 +79,13 @@
 
 
                     </div>
-                </div>
-                <div class="col-md-6">
+                </form>
+                <form class="col-md-6" method="POST" id="formTambahHeader">
+                    @csrf
                     <div class="card p-4">
-                        <h5 class="card-title">Header</h5>
+                        <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white fw-lighter">
+                            2
+                        </span> Header</h5>
                         <div class="mb-1 mt-4 label">Kode SPH</div>
                         <input type="text" class="form-control" name="kota" id="kota" value=""
                             placeholder="Masukkan Kode SPH">
@@ -111,13 +117,16 @@
                         @error('up')
                             <div class="text-danger error">{{ $message }}</div>
                         @enderror
-                        <div class="d-flex justify-content-end mt-3">
-                            <button type="submit" class="btn btn-primary">Tambah Data</button>
-                        </div>
                     </div>
-                </div>
+
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="submit" id="btn_header" class="btn btn-primary"><i class="far fa-save"></i>
+                            Save</button>
+                    </div>
+
+                </form>
             </div>
-        </form>
+        {{-- </form> --}}
    
         {{-- Table --}}
         <div class="mt-4">
