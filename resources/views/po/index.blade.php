@@ -167,7 +167,6 @@
         </div>
     </div>
 
-    </div>
 
 
     <!-- Modal Edit Header -->
@@ -272,7 +271,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-bs-target="#modalAddDetail" data-bs-toggle="modal"
+                    <button type="submit" id="btnTambahDetail" data-bs-target="#modalAddItem" data-bs-toggle="modal"
                         class="btn btn-primary">Tambah Detail</button>
                 </div>
             </div>
@@ -280,20 +279,22 @@
     </div>
 
     <!-- Modal Add Detail -->
-    <form action="" method="POST" id="formAddDetail">
-        @method('PUT')
+    <form action="" method="POST" id="formAddItem">
+        @method('POST')
         @csrf
-        <div class="modal fade" id="modalAddDetail" tabindex="-1" aria-labelledby="modalAddDetailLabel"
+        <div class="modal fade" id="modalAddItem" tabindex="-1" aria-labelledby="modalAddItemLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <p type="button" class="modal-title fw-bold me-2" id="btn-back" data-bs-toggle="modal"
                             data-bs-target="#modalEditDetail"><i class="fas fa-arrow-left"></i></p>
-                        <h1 class="modal-title fs-5" id="modalAddDetailLabel">Tambah Detail</h1>
+                        <h1 class="modal-title fs-5" id="modalAddItemLabel">Tambah Detail</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <input type="text" class="form-control" name="add_po_id" id="add_po_id" hidden>
+
                         <div class="mb-1 label">Deskripsi</div>
                         <input type="text" class="form-control" name="add_nama_barang" id="add_nama_barang"
                             value="" placeholder="Masukkan Nama Barang">
@@ -336,7 +337,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" class="form-control" name="edit_po_id" id="edit_po_id" hidden >
+                        <input type="text" class="form-control" name="edit_po_id" id="edit_po_id" hidden>
 
                         <div class="mb-1 label">Deskripsi</div>
                         <input type="text" class="form-control" name="edit_nama_barang" id="edit_nama_barang"
@@ -444,7 +445,7 @@
                     $('#edit_diskon_rupiah').val(data.diskon);
 
                     // Set URL action form pada modal
-                    $('#formEditHeader').attr('action', updateUrl);
+                    $('#formEditHeader').attr('data-po-id', poId 'action', updateUrl);
                 });
             });
 
@@ -611,20 +612,20 @@
 
                 // Render data ke tabel
                 var rowDetail = `
-    <tr>
-        <td>${no++}</td>
-        <td>${nama_barang}</td>
-        <td>${qty}</td>
-        <td>${satuan}</td>
-        <td>Rp. ${harga_satuan}</td>
-        <td class="jumlah">Rp. ${jumlah_harga}</td> <!-- Class 'jumlah' untuk mempermudah seleksi -->
-        <td>
-            <button class="btn btn-danger btn-sm btn-delete-detail" data-index="${detailArray.length - 1}">
-                         <i class="fas fa-trash"></i> 
-            </button>
-        </td>
-    </tr>
-`;
+                <tr>
+                    <td>${no++}</td>
+                    <td>${nama_barang}</td>
+                    <td>${qty}</td>
+                    <td>${satuan}</td>
+                    <td>Rp. ${harga_satuan}</td>
+                    <td class="jumlah">Rp. ${jumlah_harga}</td> <!-- Class 'jumlah' untuk mempermudah seleksi -->
+                    <td>
+                        <button class="btn btn-danger btn-sm btn-delete-detail" data-index="${detailArray.length - 1}">
+                                    <i class="fas fa-trash"></i> 
+                        </button>
+                    </td>
+                </tr>
+            `;
 
                 // Menambahkan row detail ke dalam tabel
                 $('#detailTable tbody').append(rowDetail);
@@ -665,7 +666,7 @@
             <td colspan="6" class=" fw-bold">Subtotal:</td>
             <td  class="fw-bold">Rp. ${total.toLocaleString('id-ID')}</td> <!-- Format angka dengan Rupiah -->
         </tr>
-    `;
+            `;
 
                 // Menambahkan row subtotal
                 $('#detailTable tbody').append(subtotalRow);
@@ -819,7 +820,7 @@
 
             $('#formEditHeader').on('submit', function(event) {
                 event.preventDefault();
-                var updateUrl = $(this).attr('action');
+                var updateUrl = $(this).attr('data-po-id', poId 'action');
 
                 $.ajax({
                     url: updateUrl,
@@ -902,6 +903,8 @@
 
             $(document).on('click', '#btnEditDetail', function() {
                 let poId = $(this).data('id'); // Ambil ID PO dari tombol
+                $('#btnTambahDetail').attr('data-po-id', poId);
+console.log('click');
 
                 // AJAX request untuk mengambil data detail
                 $.ajax({
@@ -1038,7 +1041,134 @@
 
 
                     // Set URL action form pada modal
-                    $('#formEditItem').attr('action', updateUrl);
+                    $('#formEditItem').attr('data-po-id', poId 'action', updateUrl);
+                });
+            });
+
+            $('#formEditItem').on('submit', function(event) {
+                event.preventDefault();
+                var updateUrl = $(this).attr('data-po-id', poId 'action');
+
+                $.ajax({
+                    url: updateUrl,
+                    type: 'PUT',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        $('#purchaseorder-table').DataTable().ajax.reload();
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Item berhasil diubah',
+                            icon: 'success',
+                            button: 'OK'
+                        }).then(() => {
+
+                            $('#modalEditItem').modal('hide');
+
+                        });
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
+
+                            // Kosongkan pesan error lama sebelum menampilkan yang baru
+                            $('.error').remove(); // Hapus error sebelumnya
+
+                            // Menampilkan pesan error untuk masing-masing field
+                            if (errors.edit_nama_barang) {
+                                $('#edit_nama_barang').after('<div class="text-danger error">' +
+                                    errors
+                                    .edit_nama_barang[0] + '</div>');
+                            }
+                            if (errors.edit_qty) {
+                                $('#edit_qty').after('<div class="text-danger error">' + errors
+                                    .edit_qty[
+                                        0] + '</div>');
+                            }
+                            if (errors.edit_satuan) {
+                                $('#edit_satuan').after('<div class="text-danger error">' + errors
+                                    .edit_satuan[
+                                        0] + '</div>');
+                            }
+                            if (errors.edit_harga_satuan) {
+                                $('#edit_harga_satuan').after('<div class="text-danger error">' + errors
+                                    .edit_harga_satuan[
+                                        0] +
+                                    '</div>');
+                            }
+
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Gagal mengedit Item',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
+                });
+            });
+            $('#btnTambahDetail').on('click', function() {
+                // $('#formAddItem')[0].reset();
+                let poId = $(this).data('po-id');
+                console.log(poId);
+            })
+            $('#formAddItem').on('submit', function(event) {
+                event.preventDefault();
+                var createUrl = '/po-item';
+
+                $.ajax({
+                    url: createUrl,
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        $('#purchaseorder-table').DataTable().ajax.reload();
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Item berhasil ditambah',
+                            icon: 'success',
+                            button: 'OK'
+                        });
+                        $('#modalAddItem').modal('hide');
+                        $('#formAddItem')[0].reset();
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
+                            console.log(errors);
+                            // Kosongkan pesan error lama sebelum menampilkan yang baru
+                            $('.error').remove(); // Hapus error sebelumnya
+
+                            // Menampilkan pesan error untuk masing-masing field
+                            if (errors.add_nama_barang) {
+                                $('#add_nama_barang').after('<div class="text-danger error">' +
+                                    errors
+                                    .add_nama_barang[0] + '</div>');
+                            }
+                            if (errors.add_qty) {
+                                $('#add_qty').after('<div class="text-danger error">' + errors
+                                    .add_qty[
+                                        0] + '</div>');
+                            }
+                            if (errors.add_satuan) {
+                                $('#add_satuan').after('<div class="text-danger error">' + errors
+                                    .add_satuan[
+                                        0] + '</div>');
+                            }
+                            if (errors.add_harga_satuan) {
+                                $('#add_harga_satuan').after('<div class="text-danger error">' + errors
+                                    .add_harga_satuan[
+                                        0] +
+                                    '</div>');
+                            }
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Gagal menambah Item',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
                 });
             });
         </script>
