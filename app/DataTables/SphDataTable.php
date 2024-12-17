@@ -23,14 +23,20 @@ class SphDataTable extends DataTable
     {   
         return (new EloquentDataTable($query))
         ->addIndexColumn()
+        ->addColumn('action', function($row){
+            return view('sph.action', ['sph'=> $row]);
+        })
         ->addColumn('nama_client', function ($row) {
             return $row->dataClient->nama_client; // Ambil nama_client dari relasi
         })
         ->addColumn('up_sph', function ($row) {
             return $row->dataClient->up_sph; 
         })
-        ->addColumn('action', function($row){
-            return view('sph.action', ['sph'=> $row]);
+        ->addColumn('price', function ($row) {
+            return $row->detailSph->price; 
+        })
+        ->addColumn('jumlah_harga', function ($row) {
+            return $row->detailSph->jumlah_harga; 
         })
         ->setRowId('id')
         ->rawColumns(['action']);
@@ -79,12 +85,12 @@ class SphDataTable extends DataTable
                 ->width(30)
                 ->addClass('text-center')
                 ->searchable(false),
-            Column::make('tanggal'),
-            Column::make('kode_sph'),
-            Column::make('nama_client'),
-            Column::make('up_sph'),
-            // Column::make('qty'), // total satuan barang
-            // Column::make('price'), // total harga keseluruhan barang
+            Column::make('tanggal')->title('Tanggal'),
+            Column::make('kode_sph')->title('Kode SPH'),
+            Column::make('nama_client')->title('Nama Client'),
+            Column::make('up_sph')->title('Up'),
+            Column::make('price')->title('Total Item'),
+            Column::make('jumlah_harga')->title('Total SPH'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

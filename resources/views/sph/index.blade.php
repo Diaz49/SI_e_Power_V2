@@ -119,7 +119,29 @@
             </div>
         </form>
    
+        {{-- Table --}}
+        <div class="mt-4">
+            <table class="table table-bordered" id="detailTable">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>No</th>
+                        <th>Deskripsi Project</th>
+                        <th>Qty</th>
+                        <th>Satuan</th>
+                        <th>Harga Satuan</th>
+                        <th>Jumlah</th>
+                        <th>Aksi</th>
+                    </tr>
+    
+                </thead>
+                <tbody class="table-group-divider text-center">
+                    <!-- Data detail akan ditambahkan di sini -->
+                </tbody>
+            </table>
+        </div>
+
     </div>
+
 
     <!-- Modal Edit -->
     {{-- <form action="" method="POST" id="formEdit">
@@ -409,42 +431,63 @@
             //     $('.error').remove();
             //     // $('#formTambah')[0].reset();
             // })
+
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     const btnTambah = document.getElementById('btn-tambah');
+            //     const btnCancel = document.getElementById('btn-cancel');
+            //     const datatableSection = document.getElementById('datatable-section');
+            //     const formSection = document.getElementById('form-section');
+
+            //     // Cek status tampilan yang disimpan di localStorage
+            //     const isFormVisible = localStorage.getItem('formVisible') === 'true';
+
+            //     // Jika formSection harus ditampilkan berdasarkan localStorage, tampilkan form
+            //     if (isFormVisible) {
+            //         datatableSection.style.display = 'none'; // Sembunyikan DataTable
+            //         formSection.style.display = 'block'; // Tampilkan form
+            //     } else {
+            //         datatableSection.style.display = 'block'; // Tampilkan DataTable
+            //         formSection.style.display = 'none'; // Sembunyikan form
+            //     }
+
+            //     // Event saat tombol tambah ditekan
+            //     btnTambah.addEventListener('click', function() {
+            //         datatableSection.style.display = 'none'; // Sembunyikan DataTable
+            //         formSection.style.display = 'block'; // Tampilkan form
+
+            //         // Simpan status form terlihat di localStorage
+            //         localStorage.setItem('formVisible', 'true');
+            //     });
+
+            //     // Event saat tombol cancel ditekan
+            //     btnCancel.addEventListener('click', function() {
+            //         formSection.style.display = 'none'; // Sembunyikan form
+            //         datatableSection.style.display = 'block'; // Tampilkan DataTable
+
+            //         // Simpan status form tidak terlihat di localStorage
+            //         localStorage.setItem('formVisible', 'false');
+            //     });
+            // });
+
             document.addEventListener('DOMContentLoaded', function() {
-            const btnTambah = document.getElementById('btn-tambah');
-            const btnCancel = document.getElementById('btn-cancel');
-            const datatableSection = document.getElementById('datatable-section');
-            const formSection = document.getElementById('form-section');
+                const btnTambah = document.getElementById('btn-tambah');
+                const btnCancel = document.getElementById('btn-cancel');
+                const datatableSection = document.getElementById('datatable-section');
+                const formSection = document.getElementById('form-section');
 
-            // Cek status tampilan yang disimpan di localStorage
-            const isFormVisible = localStorage.getItem('formVisible') === 'true';
+                // Event saat tombol tambah ditekan
+                btnTambah.addEventListener('click', function() {
+                    datatableSection.style.display = 'none'; // Sembunyikan DataTable
+                    formSection.style.display = 'block'; // Tampilkan form
+                });
 
-            // Jika formSection harus ditampilkan berdasarkan localStorage, tampilkan form
-            if (isFormVisible) {
-                datatableSection.style.display = 'none'; // Sembunyikan DataTable
-                formSection.style.display = 'block'; // Tampilkan form
-            } else {
-                datatableSection.style.display = 'block'; // Tampilkan DataTable
-                formSection.style.display = 'none'; // Sembunyikan form
-            }
-
-            // Event saat tombol tambah ditekan
-            btnTambah.addEventListener('click', function() {
-                datatableSection.style.display = 'none'; // Sembunyikan DataTable
-                formSection.style.display = 'block'; // Tampilkan form
-
-                // Simpan status form terlihat di localStorage
-                localStorage.setItem('formVisible', 'true');
+                // Event saat tombol cancel ditekan
+                btnCancel.addEventListener('click', function() {
+                    formSection.style.display = 'none'; // Sembunyikan form
+                    datatableSection.style.display = 'block'; // Tampilkan DataTable
+                });
             });
 
-            // Event saat tombol cancel ditekan
-            btnCancel.addEventListener('click', function() {
-                formSection.style.display = 'none'; // Sembunyikan form
-                datatableSection.style.display = 'block'; // Tampilkan DataTable
-
-                // Simpan status form tidak terlihat di localStorage
-                localStorage.setItem('formVisible', 'false');
-            });
-        });
         </script>
     @endpush
 @endsection

@@ -27,4 +27,8 @@ class Sph extends Model
     {
         return $this->belongsTo(DataClient::class, 'data_client_id', 'id');
     }
+    public function detailSph()
+    {
+        return $this->belongsTo(DetailSPH::class, 'sph_id', 'id');
+    }
 }
