@@ -146,8 +146,8 @@
         </div>
 
         {{-- Table --}}
-        <div class="mt-4">
-            <table class="table table-bordered" id="detailTable">
+        <div class="mt-4 table-responsive">
+            <table class="table table-bordered " id="detailTable">
                 <thead class="table-dark text-center">
                     <tr>
                         <th>No</th>
@@ -250,8 +250,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mt-4">
-                        <table class="table table-bordered" id="detailEditTable">
+                    <div class="mt-4 table-responsive">
+                        <table class="table table-bordered " id="detailEditTable">
                             <thead class="table-dark text-center">
                                 <tr>
                                     <th>No</th>
