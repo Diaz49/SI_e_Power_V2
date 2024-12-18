@@ -272,13 +272,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="btnTambahDetail" data-bs-target="#modalAddItem" data-bs-toggle="modal"
-                        class="btn btn-primary">Tambah Detail</button>
+                        class="btn btn-primary" data-add-po-id="">Tambah Detail</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Add Detail -->
+    <!-- Modal Add Item -->
     <form action="" method="POST" id="formAddItem">
         @method('POST')
         @csrf
@@ -445,7 +445,7 @@
                     $('#edit_diskon_rupiah').val(data.diskon);
 
                     // Set URL action form pada modal
-                    $('#formEditHeader').attr('data-po-id', poId 'action', updateUrl);
+                    $('#formEditHeader').attr('action', updateUrl);
                 });
             });
 
@@ -625,7 +625,7 @@
                         </button>
                     </td>
                 </tr>
-            `;
+                `;
 
                 // Menambahkan row detail ke dalam tabel
                 $('#detailTable tbody').append(rowDetail);
@@ -662,11 +662,11 @@
 
                 // Menambahkan row subtotal
                 var subtotalRow = `
-        <tr class="subtotal">
-            <td colspan="6" class=" fw-bold">Subtotal:</td>
-            <td  class="fw-bold">Rp. ${total.toLocaleString('id-ID')}</td> <!-- Format angka dengan Rupiah -->
-        </tr>
-            `;
+                <tr class="subtotal">
+                    <td colspan="6" class=" fw-bold">Subtotal:</td>
+                    <td  class="fw-bold">Rp. ${total.toLocaleString('id-ID')}</td> <!-- Format angka dengan Rupiah -->
+                </tr>
+                    `;
 
                 // Menambahkan row subtotal
                 $('#detailTable tbody').append(subtotalRow);
@@ -820,7 +820,7 @@
 
             $('#formEditHeader').on('submit', function(event) {
                 event.preventDefault();
-                var updateUrl = $(this).attr('data-po-id', poId 'action');
+                var updateUrl = $(this).attr('action');
 
                 $.ajax({
                     url: updateUrl,
@@ -903,8 +903,8 @@
 
             $(document).on('click', '#btnEditDetail', function() {
                 let poId = $(this).data('id'); // Ambil ID PO dari tombol
-                $('#btnTambahDetail').attr('data-po-id', poId);
-console.log('click');
+                $('#btnTambahDetail').attr('data-add-po-id', poId);
+                
 
                 // AJAX request untuk mengambil data detail
                 $.ajax({
@@ -1041,13 +1041,13 @@ console.log('click');
 
 
                     // Set URL action form pada modal
-                    $('#formEditItem').attr('data-po-id', poId 'action', updateUrl);
+                    $('#formEditItem').attr('action', updateUrl);
                 });
             });
 
             $('#formEditItem').on('submit', function(event) {
                 event.preventDefault();
-                var updateUrl = $(this).attr('data-po-id', poId 'action');
+                var updateUrl = $(this).attr('action');
 
                 $.ajax({
                     url: updateUrl,
@@ -1108,9 +1108,10 @@ console.log('click');
                 });
             });
             $('#btnTambahDetail').on('click', function() {
-                // $('#formAddItem')[0].reset();
-                let poId = $(this).data('po-id');
-                console.log(poId);
+                let poId = $(this).attr('data-add-po-id');
+                $('#formAddItem')[0].reset();
+                $('#add_po_id').val(poId);
+
             })
             $('#formAddItem').on('submit', function(event) {
                 event.preventDefault();
