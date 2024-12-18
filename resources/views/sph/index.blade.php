@@ -36,7 +36,6 @@
         <div class=" d-md-flex justify-content-start">
             <p type="button" class="fw-bold" id="btn-cancel"><i class="fas fa-arrow-left"></i> Back</p>
         </div>
-        {{-- <form action="{{ route('data-sph.store') }}" method="POST" id="formTambah"> --}}
             @csrf
             <div class="row">
                 <form class="col-md-6" id="formTambahDetail">
@@ -126,7 +125,6 @@
 
                 </form>
             </div>
-        {{-- </form> --}}
    
         {{-- Table --}}
         <div class="mt-4">
@@ -151,71 +149,8 @@
 
     </div>
 
-
-    <!-- Modal Edit -->
-    {{-- <form action="" method="POST" id="formEdit">
-        @method('PUT')
-        @csrf
-        <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Project ID</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-1 label">Project ID</div>
-                        <input type="text" class="form-control" name="project_id_edit" id="project_id_edit"
-                            value="" placeholder="Masukkan Project ID">
-                        @error('project_id_edit')
-                            <div class="error text-danger">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">Nama Project</div>
-                        <input type="text" class="form-control" name="nama_project_edit" id="nama_project_edit"
-                            value="" placeholder="Masukkan Nama Project">
-                        @error('nama_project_edit')
-                            <div class=" error text-danger">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">Nama Client</div>
-                        <input type="text" class="form-control" name="nama_client_edit" id="nama_client_edit"
-                            value="" placeholder="Masukkan Nama Client">
-                        @error('nama_client_edit')
-                            <div class="text-danger error ">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">Alamat</div>
-                        <textarea type="text" class="form-control" name="alamat_edit" id="alamat_edit" value=""
-                            placeholder="Masukkan Alamat"></textarea>
-                        @error('alamat_edit')
-                            <div class="text-danger error ">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">HPP</div>
-                        <input type="text" class="form-control" name="hpp_edit" id="hpp_edit" value=""
-                            placeholder="Masukkan HPP">
-                        @error('hpp_edit')
-                            <div class="text-danger error ">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">RAB</div>
-                        <input type="text" class="form-control" name="rab_edit" id="rab_edit" value=""
-                            placeholder="Masukkan RAB">
-                        @error('rab_edit')
-                            <div class="text-danger error ">{{ $message }}</div>
-                        @enderror
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Edit Data</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form> --}}
-
+    {{-- Modal Edit --}}
+    
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
@@ -476,7 +411,7 @@
             //         // Simpan status form tidak terlihat di localStorage
             //         localStorage.setItem('formVisible', 'false');
             //     });
-            // });
+            // }); // kepake buat pindah halaman dan permanen
 
             document.addEventListener('DOMContentLoaded', function() {
                 const btnTambah = document.getElementById('btn-tambah');
