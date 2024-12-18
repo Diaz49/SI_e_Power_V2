@@ -306,7 +306,6 @@
 
             $('#formTambah').on('submit', function(event) {
                 event.preventDefault();
-                console.log('hai');
                 var createUrl = '/data-vendor';
 
                 $.ajax({

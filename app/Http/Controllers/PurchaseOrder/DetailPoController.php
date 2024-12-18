@@ -4,52 +4,103 @@ namespace App\Http\Controllers\PurchaseOrder;
 
 use App\Http\Controllers\Controller;
 use App\Models\DetailPo;
+use App\Models\Po;
 use Illuminate\Http\Request;
 
 class DetailPoController extends Controller
 {
-    public function store(Request $request)
+    public function table(string $id)
     {
-        $request->validate([
-            'po_id' => 'required|exists:po,id',
-            'nama_barang' => 'required|string|max:100',
-            'qty' => 'required|integer|min:1',
-            'satuan' => 'required|string|max:50',
-            'harga_satuan' => 'required|numeric|min:0|max:9999999999.99',
-        ], [
-            'po_id.required' => 'ID PO wajib diisi.',
-            'po_id.exists' => 'ID PO yang dipilih tidak ditemukan.',
+        $po = Po::with('detail')->findOrFail($id);
 
-            'nama_barang.required' => 'Nama barang wajib diisi.',
-            'nama_barang.string' => 'Nama barang harus berupa teks.',
-            'nama_barang.max' => 'Nama barang tidak boleh lebih dari 100 karakter.',
-
-            'qty.required' => 'Kuantitas barang wajib diisi.',
-            'qty.integer' => 'Kuantitas barang harus berupa angka bulat.',
-            'qty.min' => 'Kuantitas barang minimal 1.',
-
-            'satuan.required' => 'Satuan barang wajib diisi.',
-            'satuan.string' => 'Satuan barang harus berupa teks.',
-            'satuan.max' => 'Satuan barang tidak boleh lebih dari 50 karakter.',
-
-            'harga_satuan.required' => 'Harga satuan barang wajib diisi.',
-            'harga_satuan.numeric' => 'Harga satuan harus berupa angka.',
-            'harga_satuan.min' => 'Harga satuan tidak boleh bernilai negatif.',
-            'harga_satuan.max' => 'Harga satuan tidak boleh melebihi batas maksimal.',
+        // Kirim data ke view dalam bentuk JSON untuk ditampilkan di modal
+        return response()->json([
+            'po' => $po,
+            'detail' => $po->detail
         ]);
-
-
-        $detail = [
-            'po_id' => $request->po_id,
-            'nama_barang' => $request->nama_barang,
-            'qty' => $request->qty,
-            'satuan' => $request->satuan,
-            'harga_satuan' => $request->harga_satuan,
-        ];
-
-        DetailPo::create($detail);
-        return response()->json();
     }
 
-    
+    public function store(Request $request)
+    {
+
+        $request->validate([
+            'add_nama_barang' => 'required|string|max:255',
+            'add_qty' => 'required|integer|min:1',
+            'add_satuan' => 'required|string|max:50',
+            'add_harga_satuan' => 'required|numeric|min:0',
+        ], [
+            'add_nama_barang.required' => 'Nama barang pada detail wajib diisi.',
+            'add_nama_barang.string' => 'Nama barang pada detail harus berupa teks.',
+            'add_nama_barang.max' => 'Nama barang pada detail maksimal 255 karakter.',
+
+            'add_qty.required' => 'Jumlah barang pada detail wajib diisi.',
+            'add_qty.integer' => 'Jumlah barang pada detail harus berupa angka.',
+            'add_qty.min' => 'Jumlah barang pada detail minimal 1.',
+
+            'add_satuan.required' => 'Satuan barang pada detail wajib diisi.',
+            'add_satuan.string' => 'Satuan barang pada detail harus berupa teks.',
+            'add_satuan.max' => 'Satuan barang pada detail maksimal 50 karakter.',
+
+            'add_harga_satuan.required' => 'Harga satuan barang wajib diisi.',
+            'add_harga_satuan.numeric' => 'Harga satuan barang harus berupa angka.',
+            'add_harga_satuan.min' => 'Harga satuan barang tidak boleh kurang dari 0.',
+        ]);
+        $data = [
+            'po_id' => $request->add_po_id,
+            'nama_barang' => $request->add_nama_barang,
+            'qty' => $request->add_qty,
+            'satuan' => $request->add_satuan,
+            'harga_satuan' => $request->add_harga_satuan,
+            'jumlah_harga' => $request->add_qty * $request->add_harga_satuan
+        ];
+        DetailPo::create($data);
+        return response()->json();
+    }
+    public function edit(string $id)
+    {
+        $detail = DetailPo::find($id);
+        return response()->json($detail);
+    }
+    public function update(Request $request, string $id)
+    {
+        $detail = DetailPo::find($id);
+        $request->validate([
+            'edit_nama_barang' => 'required|string|max:255',
+            'edit_qty' => 'required|integer|min:1',
+            'edit_satuan' => 'required|string|max:50',
+            'edit_harga_satuan' => 'required|numeric|min:0',
+        ], [
+            'edit_nama_barang.required' => 'Nama barang pada detail wajib diisi.',
+            'edit_nama_barang.string' => 'Nama barang pada detail harus berupa teks.',
+            'edit_nama_barang.max' => 'Nama barang pada detail maksimal 255 karakter.',
+
+            'edit_qty.required' => 'Jumlah barang pada detail wajib diisi.',
+            'edit_qty.integer' => 'Jumlah barang pada detail harus berupa angka.',
+            'edit_qty.min' => 'Jumlah barang pada detail minimal 1.',
+
+            'edit_satuan.required' => 'Satuan barang pada detail wajib diisi.',
+            'edit_satuan.string' => 'Satuan barang pada detail harus berupa teks.',
+            'edit_satuan.max' => 'Satuan barang pada detail maksimal 50 karakter.',
+
+            'edit_harga_satuan.required' => 'Harga satuan barang wajib diisi.',
+            'edit_harga_satuan.numeric' => 'Harga satuan barang harus berupa angka.',
+            'edit_harga_satuan.min' => 'Harga satuan barang tidak boleh kurang dari 0.',
+        ]);
+
+        $data = [
+            'nama_barang' => $request->edit_nama_barang,
+            'qty' => $request->edit_qty,
+            'satuan' => $request->edit_satuan,
+            'harga_satuan' => $request->edit_harga_satuan,
+        ];
+
+        $detail->update($data);
+        return response()->json($data);
+    }
+    public function destroy(string $id)
+    {
+        $detail = DetailPo::findOrFail($id);
+        $detail->delete();
+        return response()->json();
+    }
 }
