@@ -93,12 +93,40 @@ class SphController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $sph = Sph::find($id);
+        return response()->json($sph, 200);
     }
 
     public function update(Request $request, string $id)
     {
-        //
+        $sph = Sph::findOrFail($id);
+        $request->validate([
+            'edit_kode_sph' => ['required', 'max:100',   Rule::unique('sph', 'kode_sph')->ignore($sph->id)],
+            'edit_tanggal' => 'required|date',
+            'edit_nama_client' => 'required',
+            'edit_penawaran_harga' => 'nullable|numeric|min:0|max:9999999999.99',
+        ], [
+            'edit_kode_sph.required' => 'Kode Surat Penawaran Harga wajib diisi.',
+            'edit_kode_sph.max' => 'Kode Surat Penawaran Harga maksimal 100 karakter.',
+            'edit_kode_sph.unique' => 'Kode Surat Penawaran Harga sudah terdaftar.',
+
+            'edit_tanggal.required' => 'Tanggal wajib diisi.',
+            'edit_tanggal.date' => 'Tanggal harus dalam format yang valid.',
+
+            'edit_nama_client.required' => 'Nama vendor wajib diisi.',
+
+            'edit_penawaran_harga.numeric' => 'Diskon rupiah harus berupa angka.',
+            'edit_penawaran_harga.min' => 'Diskon rupiah tidak boleh kurang dari 0.',
+            'edit_penawaran_harga.max' => 'Diskon rupiah maksimal 9999999999.99.',
+        ]);
+
+        $sph->update([
+            'kode_sph' => $request->edit_kode_sph,
+            'tanggal' => $request->edit_tanggal,
+            'data_client_id' => $request->edit_nama_client,
+            'penawaran_harga' => $request->edit_penawaran_harga,
+        ]);
+        return response()->json(['success' => 'Data header berhasil di edit!'], 200);
     }
 
     public function destroy(string $id)

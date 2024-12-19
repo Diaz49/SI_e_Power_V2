@@ -136,7 +136,180 @@
 
     </div>
 
-    {{-- Modal Edit --}}
+    <!-- Modal Edit Header -->
+    <form action="" method="POST" id="formEditHeader">
+        @method('PUT')
+        @csrf
+        <div class="modal fade" id="modalEditHeader" aria-labelledby="modalEditDetailLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalEditDetailLabel">Edit Data Header</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-1 mt-4 label">Kode SPH</div>
+                        <input type="text" class="form-control" name="edit_kode_sph" id="edit_kode_sph" value=""
+                            placeholder="Masukkan Kode SPH">
+
+                        <div class="mb-1 mt-2 label">Tanggal</div>
+                        <input type="date" class="form-control" name="edit_tanggal" id="edit_tanggal" value=""
+                            placeholder="Masukkan Tanggal">
+
+                        <div class="mb-1 mt-2 label">Nama Client</div>
+                        <select type="text" class="form-control js-example-basic-single" name="edit_nama_client" id="edit_nama_client"
+                            value="" placeholder="Masukkan Data Client">
+                            <option value="">Pilih Data Client</option>
+                            @foreach ($dataclient as $item)
+                                <option value="{{ $item->id }}" data-alamat="{{ $item->alamat }}"
+                                    data-up_sph="{{ $item->up_sph }}">{{ $item->nama_client }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="text" class="form-control" name="edit_alamat_client" disabled
+                            id="edit_alamat_client" value="" placeholder="Alamat Data Client">
+                        <input type="text" class="form-control" name="edit_up_sph_client" disabled
+                            id="edit_up_sph_client" value="" placeholder="Up Sph Client">
+                      
+
+                        <div class="mb-1 mt-2 label">Perihal Penawaran Harga</div>
+                        <input type="text" class="form-control" name="edit_penawaran_harga" id="edit_penawaran_harga" value=""
+                            placeholder="Masukkan Penawaran Harga">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Edit Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal Edit Detail -->
+    <div class="modal fade" id="modalEditDetail" tabindex="-1" aria-labelledby="modalEditDetailLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalEditDetailLabel">Edit Data Detail</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4">
+                        <table class="table table-bordered" id="detailEditTable">
+                            <thead class="table-dark text-center">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Deskripsi Project</th>
+                                    <th>Qty</th>
+                                    <th>Satuan</th>
+                                    <th>Harga Satuan</th>
+                                    <th>Jumlah</th>
+                                    <th>Aksi</th>
+                                </tr>
+
+                            </thead>
+                            <tbody class="table-group-divider text-center">
+                                <!-- Data detail akan ditambahkan di sini -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnTambahDetail" data-bs-target="#modalAddItem" data-bs-toggle="modal"
+                        class="btn btn-primary" data-add-sph-id="">Tambah Detail</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Item -->
+    <form action="" method="POST" id="formAddItem">
+        @method('POST')
+        @csrf
+        <div class="modal fade" id="modalAddItem" tabindex="-1" aria-labelledby="modalAddItemLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p type="button" class="modal-title fw-bold me-2" id="btn-back" data-bs-toggle="modal"
+                            data-bs-target="#modalEditDetail"><i class="fas fa-arrow-left"></i></p>
+                        <h1 class="modal-title fs-5" id="modalAddItemLabel">Tambah Detail</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <input type="text" class="form-control" name="add_sph_id" id="add_sph_id" hidden>
+
+                        <div class="mb-1 label">Deskripsi Project</div>
+                        <input type="text" class="form-control" name="add_nama_project" id="add_nama_project"
+                            value="" placeholder="Masukkan Nama Barang">
+
+
+                        <div class="mb-1 mt-2 label">Qty</div>
+                        <input type="text" class="form-control" name="add_qty" id="add_qty" value=""
+                            placeholder="Masukkan Qty">
+
+
+                        <div class="mb-1 mt-2 label">Satuan</div>
+                        <input type="text" class="form-control" name="add_satuan" id="add_satuan" value=""
+                            placeholder="Masukkan Satuan">
+
+
+                        <div class="mb-1 mt-2 label">Harga Satuan</div>
+                        <input type="text" class="form-control" name="add_harga_satuan" id="add_harga_satuan"
+                            value="" placeholder="Masukkan Harga Satuan">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Tambah Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal Edit Item -->
+    <form action="" method="POST" id="formEditItem">
+        @method('PUT')
+        @csrf
+        <div class="modal fade" id="modalEditItem" tabindex="-1" aria-labelledby="modalEditItemLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p type="button" class="modal-title fw-bold me-2" id="btn-back" data-bs-toggle="modal"
+                            data-bs-target="#modalEditDetail"><i class="fas fa-arrow-left"></i></p>
+                        <h1 class="modal-title fs-5" id="modalEditItemLabel">Edit Item</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="mb-1 label">Deskripsi</div>
+                        <input type="text" class="form-control" name="edit_nama_project" id="edit_nama_project"
+                            value="" placeholder="Masukkan Nama Barang">
+
+
+                        <div class="mb-1 mt-2 label">Qty</div>
+                        <input type="text" class="form-control" name="edit_qty" id="edit_qty" value=""
+                            placeholder="Masukkan Qty">
+
+
+                        <div class="mb-1 mt-2 label">Satuan</div>
+                        <input type="text" class="form-control" name="edit_satuan" id="edit_satuan" value=""
+                            placeholder="Masukkan Satuan">
+
+
+                        <div class="mb-1 mt-2 label">Harga Satuan</div>
+                        <input type="text" class="form-control" name="edit_harga_satuan" id="edit_harga_satuan"
+                            value="" placeholder="Masukkan Harga Satuan">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Edit Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     @push('scripts')
         {{ $dataTable->scripts() }}
@@ -207,82 +380,14 @@
                 $.get(url, function(data) {
                     // Isi field modal dengan data yang didapat dari server
                     $('#edit_kode_sph').val(data.kode_sph);
-                    $('#edit_tanggal').val(data.tgl);
-                    $('#edit_nama_client').val(data.nama_client);
-                    $('#edit_penawaran_harga').val(data.alamat);
+                    $('#edit_tanggal').val(data.tanggal);
+                    $('#edit_nama_client').val(data.data_client_id).trigger('change');
+                    $('#edit_penawaran_harga').val(data.penawaran_harga);
 
                     // Set URL action form pada modal
                     $('#formEditHeader').attr('action', updateUrl);
                 });
             });
-
-            // $('#formEdit').on('submit', function(event) {
-            //     event.preventDefault();
-            //     var updateUrl = $(this).attr('action');
-
-            //     $.ajax({
-            //         url: updateUrl,
-            //         type: 'PUT',
-            //         data: $(this).serialize(),
-            //         success: function(result) {
-            //             $('#dataprojectid-table').DataTable().ajax.reload();
-            //             swal({
-            //                 title: 'Berhasil!',
-            //                 text: 'Project berhasil diubah',
-            //                 icon: 'success',
-            //                 button: 'OK'
-            //             });
-            //             $('#modalEdit').modal('hide');
-            //         },
-            //         error: function(xhr) {
-            //             if (xhr.status === 422) { // Error validasi
-            //                 var errors = xhr.responseJSON.errors;
-
-            //                 // Kosongkan pesan error lama sebelum menampilkan yang baru
-            //                 $('.error').remove(); // Hapus error sebelumnya
-
-            //                 // Menampilkan pesan error untuk masing-masing field
-            //                 if (errors.project_id_edit) {
-            //                     $('#project_id_edit').after('<div class="text-danger error">' + errors
-            //                         .project_id_edit[0] + '</div>');
-            //                 }
-            //                 if (errors.nama_project_edit) {
-            //                     $('#nama_project_edit').after('<div class="text-danger error">' + errors
-            //                         .nama_project_edit[
-            //                             0] + '</div>');
-            //                 }
-            //                 if (errors.nama_client_edit) {
-            //                     $('#nama_client_edit').after('<div class="text-danger error">' + errors
-            //                         .nama_client_edit[
-            //                             0] + '</div>');
-            //                 }
-            //                 if (errors.alamat_edit) {
-            //                     $('#alamat_edit').after('<div class="text-danger error">' + errors
-            //                         .alamat_edit[
-            //                             0] +
-            //                         '</div>');
-            //                 }
-            //                 if (errors.hpp_edit) {
-            //                     $('#hpp_edit').after('<div class="text-danger error">' + errors.hpp_edit[
-            //                             0] +
-            //                         '</div>');
-            //                 }
-            //                 if (errors.rab_edit) {
-            //                     $('#rab_edit').after('<div class="text-danger error">' + errors.rab_edit[
-            //                             0] +
-            //                         '</div>');
-            //                 }
-            //             } else {
-            //                 swal({
-            //                     title: 'Gagal!',
-            //                     text: 'Gagal mengedit project',
-            //                     icon: 'error',
-            //                     button: 'OK'
-            //                 });
-            //             }
-            //         }
-            //     });
-            // });
 
             $('#formTambahHeader').on('submit', function(event) {
                 event.preventDefault();
@@ -609,6 +714,353 @@
                 btnCancel.addEventListener('click', function() {
                     formSection.style.display = 'none'; // Sembunyikan form
                     datatableSection.style.display = 'block'; // Tampilkan DataTable
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const input1 = document.getElementById('id');
+                const input2 = document.getElementById('detail_kode_sph');
+
+                // Event untuk mendeteksi perubahan pada Input 1
+                input1.addEventListener('input', function() {
+                    input2.value = input1.value; // Set nilai Input 2 sama dengan Input 1
+                });
+            });
+
+            $(document).on('click', '.btn-delete-detail', function() {
+                const index = $(this).data('index');
+                detailArray.splice(index, 1); // Hapus dari array
+                $(this).closest('tr').remove(); // Hapus dari tabel
+            });
+
+            $('#formEditHeader').on('submit', function(event) {
+                event.preventDefault();
+                var updateUrl = $(this).attr('action');
+
+                $.ajax({
+                    url: updateUrl,
+                    type: 'PUT',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        $('#sph-table').DataTable().ajax.reload();
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Header berhasil diubah',
+                            icon: 'success',
+                            button: 'OK'
+                        });
+                        $('#modalEditHeader').modal('hide');
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
+
+                            // Kosongkan pesan error lama sebelum menampilkan yang baru
+                            $('.error').remove(); // Hapus error sebelumnya
+
+                            // Menampilkan pesan error untuk masing-masing field
+                            if (errors.edit_kode_sph) {
+                                $('#edit_kode_sph').after('<div class="text-danger error">' +
+                                    errors
+                                    .edit_kode_sph[0] + '</div>');
+                            }
+                            if (errors.edit_tanggal) {
+                                $('#edit_tanggal').after('<div class="text-danger error">' + errors
+                                    .edit_tanggal[
+                                        0] + '</div>');
+                            }
+                            if (errors.edit_nama_client) {
+                                $('#edit_nama_client').after('<div class="text-danger error">' + errors
+                                    .edit_nama_client[
+                                        0] + '</div>');
+                            }
+                            if (errors.edit_penawaran_harga) {
+                                $('#edit_penawaran_harga').after('<div class="text-danger error">' + errors
+                                    .edit_penawaran_harga[
+                                        0] +
+                                    '</div>');
+                            }
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Gagal mengedit Header',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', '#btnEditDetail', function() {
+                let sphId = $(this).data('id'); // Ambil ID PO dari tombol
+                $('#btnTambahDetail').attr('data-add-sph-id', sphId);
+                
+
+                // AJAX request untuk mengambil data detail
+                $.ajax({
+                    url: `/sph-detail/${sphId}/edit`, // Endpoint untuk method edit
+                    type: 'GET',
+                    success: function(response) {
+                        // Kosongkan tabel sebelum menambahkan data baru
+                        $('#detailEditTable tbody').empty();
+
+                        // Loop data detail dan tambahkan ke tabel
+                        response.detailSph.forEach((detailSph, index) => {
+                            $('#detailEditTable tbody').append(`
+                    <tr id="row-${detailSph.id}">
+                        <td>${index + 1}</td>
+                        <td>${detailSph.nama_project}</td>
+                        <td>${detailSph.qty}</td>
+                        <td>${detailSph.satuan}</td>
+                        <td>${detailSph.harga_satuan}</td>
+                        <td>${detailSph.jumlah_harga}</td>
+                    <td>
+                        <div class="dropdown">
+                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                            style="--bs-btn-active-border-color:transparent;">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                        
+                            <li><a href="javascript:void(0)" id="btnEditItem"  class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
+                                    data-id="${detailSph.id}" data-po-id="${sphId}" type="button" data-bs-toggle="modal" data-bs-target="#modalEditItem">Edit Detail<i
+                                        class="ml-4 fas fa-pen"></i></a></li>
+                            <li>
+                                <button class="dropdown-item text-danger fw-bold d-flex justify-content-between py-2" id="btnDeleteDetailItem" type="button"
+                                    data-table-id="purchaseorder-table" data-url="sph-detail/delete/${detailSph.id}" data-id="${detailSph.id}"
+                                    data-name="${detailSph.nama_project}" data-action="delete">
+                                    Delete <i class="fas fa-trash"></i>
+                                </button>
+
+                            </li>
+                        </ul>
+                    </div>
+
+                    </td>
+                    </tr>
+                `);
+                        });
+
+                        // Tampilkan modal
+                        $('#modalEditDetail1').modal('show');
+                    },
+                    error: function() {
+                        alert('Gagal mengambil data detail.');
+                    }
+                });
+            });
+
+            $(document).on('click', '#btnDeleteDetailItem', function() {
+                var url = $(this).data('url');
+                var itemId = $(this).data('id');
+                var name = $(this).data('name');
+
+                // Tampilkan SweetAlert konfirmasi
+                swal({
+                    text: 'Apa kamu yakin ingin menghapus item ' + name + '?',
+                    icon: 'warning',
+                    buttons: {
+                        cancel: 'Batal',
+                        confirm: {
+                            text: 'Ya, hapus',
+                            value: true,
+                            visible: true,
+                            className: 'btn btn-danger',
+                        }
+                    },
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        // Jika user mengklik "Ya, hapus"
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                            },
+                            success: function(result) {
+                                swal({
+                                    title: 'Berhasil!',
+                                    text: 'Item ' + name + ' berhasil dihapus',
+                                    icon: 'success',
+                                    button: 'OK'
+                                }).then(() => {
+                                    $('#row-' + itemId).remove(); // Hapus baris dari DOM
+
+                                    // Update penomoran ulang
+                                    $('#detailEditTable tbody tr').each(function(index) {
+                                        $(this).find('td:first').text(index +
+                                            1); // Kolom pertama diupdate
+                                    });
+
+                                    $('#sph-table').DataTable().ajax
+                                        .reload(); // Reload DataTable jika diperlukan
+
+                                });
+                            },
+                            error: function(xhr) {
+                                // Menampilkan SweetAlert error jika gagal
+                                swal({
+                                    title: 'Gagal!',
+                                    text: 'Gagal menghapus item detail',
+                                    icon: 'error',
+                                    button: 'OK'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            $(document).on('click', '#btnEditItem', function() {
+
+                $('.error').remove(); // Hapus error sebelumnya
+                var itemId = $(this).data('id'); // Ambil ID dari tombol edit
+                var sphId = $(this).data('sph-id'); // Ambil ID dari tombol edit
+                var url = '/sph-item/' + itemId + '/edit'; // URL untuk ambil data
+                var updateUrl = '/sph-item/' + itemId; // URL untuk update data
+
+                // Request AJAX untuk mendapatkan data Vendor berdasarkan ID
+                $.get(url, function(data) {
+                    // Isi field modal dengan data yang didapat dari server
+                    $('#edit_sph_id').val(sphId);
+                    $('#edit_nama_project').val(data.nama_project);
+                    $('#edit_qty').val(data.qty);
+                    $('#edit_satuan').val(data.satuan);
+                    $('#edit_harga_satuan').val(data.harga_satuan);
+
+
+                    // Set URL action form pada modal
+                    $('#formEditItem').attr('action', updateUrl);
+                });
+            });
+
+            $('#formEditItem').on('submit', function(event) {
+                event.preventDefault();
+                var updateUrl = $(this).attr('action');
+
+                $.ajax({
+                    url: updateUrl,
+                    type: 'PUT',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        $('#sph-table').DataTable().ajax.reload();
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Item berhasil diubah',
+                            icon: 'success',
+                            button: 'OK'
+                        }).then(() => {
+
+                            $('#modalEditItem').modal('hide');
+
+                        });
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
+
+                            // Kosongkan pesan error lama sebelum menampilkan yang baru
+                            $('.error').remove(); // Hapus error sebelumnya
+
+                            // Menampilkan pesan error untuk masing-masing field
+                            if (errors.edit_nama_project) {
+                                $('#edit_nama_project').after('<div class="text-danger error">' +
+                                    errors
+                                    .edit_nama_project[0] + '</div>');
+                            }
+                            if (errors.edit_qty) {
+                                $('#edit_qty').after('<div class="text-danger error">' + errors
+                                    .edit_qty[
+                                        0] + '</div>');
+                            }
+                            if (errors.edit_satuan) {
+                                $('#edit_satuan').after('<div class="text-danger error">' + errors
+                                    .edit_satuan[
+                                        0] + '</div>');
+                            }
+                            if (errors.edit_harga_satuan) {
+                                $('#edit_harga_satuan').after('<div class="text-danger error">' + errors
+                                    .edit_harga_satuan[
+                                        0] +
+                                    '</div>');
+                            }
+
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Gagal mengedit Item',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
+                });
+            });
+            $('#btnTambahDetail').on('click', function() {
+                let sphId = $(this).attr('data-add-sph-id');
+                $('#formAddItem')[0].reset();
+                $('#add_sph_id').val(sphId);
+
+            })
+            $('#formAddItem').on('submit', function(event) {
+                event.preventDefault();
+                var createUrl = '/sph-item';
+
+                $.ajax({
+                    url: createUrl,
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        $('#sph-table').DataTable().ajax.reload();
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Item berhasil ditambah',
+                            icon: 'success',
+                            button: 'OK'
+                        });
+                        $('#modalAddItem').modal('hide');
+                        $('#formAddItem')[0].reset();
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
+                            console.log(errors);
+                            // Kosongkan pesan error lama sebelum menampilkan yang baru
+                            $('.error').remove(); // Hapus error sebelumnya
+
+                            // Menampilkan pesan error untuk masing-masing field
+                            if (errors.add_nama_project) {
+                                $('#add_nama_project').after('<div class="text-danger error">' +
+                                    errors
+                                    .add_nama_project[0] + '</div>');
+                            }
+                            if (errors.add_qty) {
+                                $('#add_qty').after('<div class="text-danger error">' + errors
+                                    .add_qty[
+                                        0] + '</div>');
+                            }
+                            if (errors.add_satuan) {
+                                $('#add_satuan').after('<div class="text-danger error">' + errors
+                                    .add_satuan[
+                                        0] + '</div>');
+                            }
+                            if (errors.add_harga_satuan) {
+                                $('#add_harga_satuan').after('<div class="text-danger error">' + errors
+                                    .add_harga_satuan[
+                                        0] +
+                                    '</div>');
+                            }
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Gagal menambah Item',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
                 });
             });
 

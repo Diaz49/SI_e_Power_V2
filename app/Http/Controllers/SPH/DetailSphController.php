@@ -7,16 +7,16 @@ use App\Models\DetailSPH;
 use App\Models\Sph;
 use Illuminate\Http\Request;
 
-class DetailPoController extends Controller
+class DetailSphController extends Controller
 {
     public function table(string $id)
     {
-        $sph = Sph::with('detail')->findOrFail($id);
+        $sph = Sph::with('detailSph')->findOrFail($id);
 
         // Kirim data ke view dalam bentuk JSON untuk ditampilkan di modal
         return response()->json([
             'sph' => $sph,
-            'detail' => $sph->detail
+            'detailSph' => $sph->detailSph
         ]);
     }
 
@@ -53,7 +53,7 @@ class DetailPoController extends Controller
             'harga_satuan' => $request->add_harga_satuan,
             'jumlah_harga' => $request->add_qty * $request->add_harga_satuan
         ];
-        DetailPo::create($data);
+        DetailSPH::create($data);
         return response()->json();
     }
     public function edit(string $id)
