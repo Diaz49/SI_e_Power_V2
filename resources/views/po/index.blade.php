@@ -268,6 +268,9 @@
                                 <!-- Data detail akan ditambahkan di sini -->
                             </tbody>
                         </table>
+                        <div class="mt-2">
+                            <strong>Total Keseluruhan: Rp <span id="totalHarga">0</span></strong>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -904,7 +907,7 @@
             $(document).on('click', '#btnEditDetail', function() {
                 let poId = $(this).data('id'); // Ambil ID PO dari tombol
                 $('#btnTambahDetail').attr('data-add-po-id', poId);
-                
+
 
                 // AJAX request untuk mengambil data detail
                 $.ajax({
@@ -944,11 +947,12 @@
 
                             </li>
                         </ul>
-                    </div>
+                          </div>
 
                     </td>
                     </tr>
                 `);
+                updateTotalHarga();
                         });
 
                         // Tampilkan modal
@@ -996,7 +1000,7 @@
                                     button: 'OK'
                                 }).then(() => {
                                     $('#row-' + itemId).remove(); // Hapus baris dari DOM
-
+                                    updateTotalHarga();
                                     // Update penomoran ulang
                                     $('#detailEditTable tbody tr').each(function(index) {
                                         $(this).find('td:first').text(index +
@@ -1172,6 +1176,21 @@
                     }
                 });
             });
+
+            function updateTotalHarga() {
+                let total = 0;
+
+                // Loop melalui semua baris tabel dan tambahkan nilai kolom jumlah_harga
+                $('#detailEditTable tbody tr').each(function() {
+                    let jumlahHarga = parseFloat($(this).find('td:nth-child(6)').text()); // Ambil kolom jumlah_harga
+                    if (!isNaN(jumlahHarga)) {
+                        total += jumlahHarga;
+                    }
+                });
+
+                // Perbarui elemen total harga
+                $('#totalHarga').text(total.toLocaleString('id-ID'));
+            }
         </script>
     @endpush
 @endsection
