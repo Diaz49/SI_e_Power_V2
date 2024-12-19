@@ -11,15 +11,10 @@ class Sph extends Model
 
     protected $table = 'sph'; // Nama tabel
 
-    protected $fillable = [
-        'project', 
-        'item', 
-        'unit', 
-        'price', 
+    protected $fillable = [ 
         'kode_sph', 
         'tanggal', 
         'data_client_id', 
-        'up', 
         'penawaran_harga'
     ];
 
@@ -29,6 +24,6 @@ class Sph extends Model
     }
     public function detailSph()
     {
-        return $this->belongsTo(DetailSPH::class, 'sph_id', 'id');
+        return $this->hasMany(DetailSPH::class, 'sph_id', 'id');
     }
 }

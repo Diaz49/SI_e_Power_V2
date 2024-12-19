@@ -44,36 +44,27 @@
                         <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white ">
                             1
                         </span> Detail</h5>
+
+                        <input type="text" class="form-control" name="sph_id" id="sph_id" hidden>
+
                         <div class="mb-1 mt-4 label">Project</div>
-                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
+                        <input type="text" class="form-control" name="nama_project" id="nama_project" value=""
                             placeholder="Masukkan Project">
-                        @error('nama_vendor')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
 
                         <div class="mb-1 mt-2 label">Qty</div>
-                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
+                        <input type="text" class="form-control" name="qty" id="qty" value=""
                             placeholder="Masukkan Quantity">
-                        @error('nama_vendor')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
 
                         <div class="mb-1 mt-2 label">Satuan</div>
-                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
+                        <input type="text" class="form-control" name="satuan" id="satuan" value=""
                             placeholder="Masukkan Satuan">
-                        @error('nama_vendor')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
 
                         <div class="mb-1 mt-2 label">Harga Satuan / Price</div>
-                        <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" value=""
+                        <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value=""
                             placeholder="Masukkan Harga Satuan">
-                        @error('nama_vendor')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
-                        <div class="d-flex justify-content-end mt-3">
 
-                            <button type="submit" class="btn btn-primary">Add</button>
+                        <div class="d-flex justify-content-end mt-3">
+                           <button type="submit" id="btn_detail" class="btn btn-primary">Add</button>
                         </div>
 
 
@@ -86,36 +77,33 @@
                             2
                         </span> Header</h5>
                         <div class="mb-1 mt-4 label">Kode SPH</div>
-                        <input type="text" class="form-control" name="kota" id="kota" value=""
+                        <input type="text" class="form-control" name="kode_sph" id="kode_sph" value=""
                             placeholder="Masukkan Kode SPH">
-                        @error('kota')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
 
                         <div class="mb-1 mt-2 label">Tanggal</div>
-                        <input type="text" class="form-control" name="no_tlp" id="no_tlp" value=""
+                        <input type="date" class="form-control" name="tanggal" id="tanggal" value=""
                             placeholder="Masukkan Tanggal">
-                        @error('no_tlp')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
 
                         <div class="mb-1 mt-2 label">Nama Client</div>
-                        <input type="text" class="form-control" name="email" id="email" value=""
-                            placeholder="Masukkan Nama Client">
-                        <input type="text" class="form-control" name="email" id="email" value=""
-                            placeholder="Alamat Client" readonly>
-                        <input type="text" class="form-control" name="email" id="email" value=""
-                            placeholder="Up Sph Client" readonly>
-                        @error('email')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+                        <select type="text" class="form-control js-example-basic-single" name="nama_client" id="nama_client"
+                            value="" placeholder="Masukkan Data Client">
+                            <option value="">Pilih Data Client</option>
+                            @foreach ($dataclient as $item)
+                                <option value="{{ $item->id }}" data-alamat="{{ $item->alamat }}"
+                                    data-up_sph="{{ $item->up_sph }}">{{ $item->nama_client }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <input type="text" class="form-control" name="alamat_client" disabled
+                            id="alamat_client" value="" placeholder="Alamat Data Client">
+                        <input type="text" class="form-control" name="up_sph_client" disabled
+                            id="up_sph_client" value="" placeholder="Up Sph Client">
+                      
 
                         <div class="mb-1 mt-2 label">Perihal Penawaran Harga</div>
-                        <input type="text" class="form-control" name="up" id="up" value=""
+                        <input type="text" class="form-control" name="penawaran_harga" id="penawaran_harga" value=""
                             placeholder="Masukkan Penawaran Harga">
-                        @error('up')
-                            <div class="text-danger error">{{ $message }}</div>
-                        @enderror
+
                     </div>
 
                     <div class="d-flex justify-content-end mt-3">
@@ -139,7 +127,6 @@
                         <th>Jumlah</th>
                         <th>Aksi</th>
                     </tr>
-    
                 </thead>
                 <tbody class="table-group-divider text-center">
                     <!-- Data detail akan ditambahkan di sini -->
@@ -150,24 +137,21 @@
     </div>
 
     {{-- Modal Edit --}}
-    
+
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                @if (session('success'))
-                    swal('Berhasil!', '{{ session('success') }}', 'success');
-                @endif
-            });
+            let detailArray = [];
+            let no = 1;
 
-            $(document).on('click', 'button[data-action="delete"]', function() {
+            $(document).on('click', '#btnDeleteSph', function() {
                 var url = $(this).data('url');
                 var tableId = $(this).data('table-id');
                 var name = $(this).data('name');
 
                 // Tampilkan SweetAlert konfirmasi
                 swal({
-                    text: 'Apa kamu yakin ingin menghapus Project ' + name + '?',
+                    text: 'Apa kamu yakin ingin menghapus SPH ' + name + '?',
                     icon: 'warning',
                     buttons: {
                         cancel: 'Batal',
@@ -194,7 +178,7 @@
                                 // Menampilkan SweetAlert sukses
                                 swal({
                                     title: 'Berhasil!',
-                                    text: 'Project ' + name + ' berhasil dihapus',
+                                    text: 'SPH ' + name + ' berhasil dihapus',
                                     icon: 'success',
                                     button: 'OK'
                                 });
@@ -203,7 +187,7 @@
                                 // Menampilkan SweetAlert error jika gagal
                                 swal({
                                     title: 'Gagal!',
-                                    text: 'Gagal menghapus project',
+                                    text: 'Gagal menghapus SPH',
                                     icon: 'error',
                                     button: 'OK'
                                 });
@@ -213,26 +197,24 @@
                 });
             });
 
-            // $(document).on('click', 'a[data-bs-toggle="modal"]', function() {
-            //     $('.error').remove(); // Hapus error sebelumnya
-            //     var projectId = $(this).data('id'); // Ambil ID dari tombol edit
-            //     var url = '/project-id/' + projectId + '/edit'; // URL untuk ambil data
-            //     var updateUrl = '/project-id/' + projectId; // URL untuk update data
+            $(document).on('click', 'a[data-bs-toggle="modal"]', function() {
+                $('.error').remove(); // Hapus error sebelumnya
+                var sphId = $(this).data('id'); // Ambil ID dari tombol edit
+                var url = '/data-sph/' + sphId + '/edit'; // URL untuk ambil data
+                var updateUrl = '/data-sph/' + sphId; // URL untuk update data
 
-            //     // Request AJAX untuk mendapatkan data project berdasarkan ID
-            //     $.get(url, function(data) {
-            //         // Isi field modal dengan data yang didapat dari server
-            //         $('#project_id_edit').val(data.project_id);
-            //         $('#nama_project_edit').val(data.nama_project);
-            //         $('#nama_client_edit').val(data.nama_client);
-            //         $('#alamat_edit').val(data.alamat);
-            //         $('#hpp_edit').val(data.hpp);
-            //         $('#rab_edit').val(data.rab);
+                // Request AJAX untuk mendapatkan data project berdasarkan ID
+                $.get(url, function(data) {
+                    // Isi field modal dengan data yang didapat dari server
+                    $('#edit_kode_sph').val(data.kode_sph);
+                    $('#edit_tanggal').val(data.tgl);
+                    $('#edit_nama_client').val(data.nama_client);
+                    $('#edit_penawaran_harga').val(data.alamat);
 
-            //         // Set URL action form pada modal
-            //         $('#formEdit').attr('action', updateUrl);
-            //     });
-            // });
+                    // Set URL action form pada modal
+                    $('#formEditHeader').attr('action', updateUrl);
+                });
+            });
 
             // $('#formEdit').on('submit', function(event) {
             //     event.preventDefault();
@@ -302,79 +284,277 @@
             //     });
             // });
 
-            // $('#formTambah').on('submit', function(event) {
-            //     event.preventDefault();
-            //     console.log('hai');
-            //     var createUrl = '/project-id';
+            $('#formTambahHeader').on('submit', function(event) {
+                event.preventDefault();
+                $('.error').remove();
+                // Ambil data header dari form
+                let headerData = $(this).serializeArray();
+                let headerObj = {};
+                headerData.forEach(item => {
+                    headerObj[item.name] = item.value;
+                });
+                if (detailArray.length === 0) {
+                    return swal({
+                        title: 'Gagal!',
+                        text: 'Tambah detail terlebih dahulu.',
+                        icon: 'error',
+                        button: 'OK'
+                    });
+                }
+                // Gabungkan header dengan detail
+                const dataToSend = {
+                    header: headerObj,
+                    details: detailArray, // detailArray sudah diisi sebelumnya
+                };
+                dataToSend._token = '{{ csrf_token() }}';
+                // Kirim data menggunakan AJAX
+                $.ajax({
+                    url: '/data-sph', // URL endpoint untuk menyimpan data
+                    type: 'POST',
+                    data: JSON.stringify(dataToSend),
+                    contentType: 'application/json', // Pastikan data dikirim dalam format JSON
+                    success: function(response) {
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Data purchase order berhasil disimpan!',
+                            icon: 'success',
+                            button: 'OK',
+                        });
+                        // Reset form dan tabel detail
+                        $('#formTambahHeader')[0].reset();
+                        $('#detailTable tbody').html('');
+                        $('#sph-table').DataTable().ajax.reload();
+                        $('.error').remove();
+                        detailArray = [];
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
 
-            //     $.ajax({
-            //         url: createUrl,
-            //         type: 'POST',
-            //         data: $(this).serialize(),
-            //         success: function(result) {
-            //             $('#dataprojectid-table').DataTable().ajax.reload();
-            //             swal({
-            //                 title: 'Berhasil!',
-            //                 text: 'Project berhasil ditambah',
-            //                 icon: 'success',
-            //                 button: 'OK'
-            //             });
-            //             $('#modalTambah').modal('hide');
-            //             $('#formTambah')[0].reset();
-            //         },
-            //         error: function(xhr) {
-            //             if (xhr.status === 422) { // Error validasi
-            //                 var errors = xhr.responseJSON.errors;
-            //                 console.log(errors);
-            //                 // Kosongkan pesan error lama sebelum menampilkan yang baru
-            //                 $('.error').remove(); // Hapus error sebelumnya
+                            // Hapus pesan error sebelumnya
+                            $('.error').remove();
 
-            //                 // Menampilkan pesan error untuk masing-masing field
-            //                 if (errors.project_id) {
-            //                     $('#project_id').after('<div class="text-danger error">' + errors
-            //                         .project_id[0] + '</div>');
-            //                 }
-            //                 if (errors.nama_project) {
-            //                     $('#nama_project').after('<div class="text-danger error">' + errors
-            //                         .nama_project[
-            //                             0] + '</div>');
-            //                 }
-            //                 if (errors.nama_client) {
-            //                     $('#nama_client').after('<div class="text-danger error">' + errors
-            //                         .nama_client[
-            //                             0] + '</div>');
-            //                 }
-            //                 if (errors.alamat) {
-            //                     $('#alamat').after('<div class="text-danger error">' + errors
-            //                         .alamat[
-            //                             0] +
-            //                         '</div>');
-            //                 }
-            //                 if (errors.hpp) {
-            //                     $('#hpp').after('<div class="text-danger error">' + errors.hpp[
-            //                             0] +
-            //                         '</div>');
-            //                 }
-            //                 if (errors.rab) {
-            //                     $('#rab').after('<div class="text-danger error">' + errors.rab[
-            //                             0] +
-            //                         '</div>');
-            //                 }
-            //             } else {
-            //                 swal({
-            //                     title: 'Gagal!',
-            //                     text: 'Gagal mengedit project',
-            //                     icon: 'error',
-            //                     button: 'OK'
-            //                 });
-            //             }
-            //         }
-            //     });
-            // });
-            // $('#btn-tambah').on('click', function() {
-            //     $('.error').remove();
-            //     // $('#formTambah')[0].reset();
-            // })
+                            // Menampilkan pesan error baru
+                            if (errors['header.kode_sph']) {
+                                $('#kode_sph').after('<div class="text-danger error">' + errors[
+                                    'header.kode_sph'][0] + '</div>');
+                            }
+                            if (errors['header.tanggal']) {
+                                $('#tanggal').after('<div class="text-danger error">' + errors[
+                                    'header.tanggal'][0] + '</div>');
+                            }
+                            if (errors['header.nama_client']) {
+                                $('#nama_client').after('<div class="text-danger error">' + errors[
+                                    'header.nama_client'][0] + '</div>');
+                            }
+                            if (errors['header.penawaran_harga']) {
+                                $('#penawaran_harga').after('<div class="text-danger error">' + errors[
+                                    'header.penawaran_harga'][0] + '</div>');
+                            }
+                        }
+                        if (xhr.status === 500) {
+                            return swal({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan dalam menyimpan ke Database.',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan dalam proses pengiriman data.',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
+
+
+                });
+            });
+
+            $('#formTambahDetail').on('submit', function(event) {
+                event.preventDefault();
+
+                // Ambil nilai dari input
+                const nama_project = $('#nama_project').val();
+                const qty = $('#qty').val();
+                const satuan = $('#satuan').val();
+                const harga_satuan = $('#harga_satuan').val();
+                const sph_id = $('#sph_id').val(); // Misalnya, ID SPH sudah ada di form
+                const jumlah_harga = qty * harga_satuan;
+
+                // Hapus pesan error sebelumnya
+                $('.error').remove();
+
+                // Validasi Nama Project
+                if (!nama_project || nama_project.length === 0 || nama_project.length > 100) {
+                    $('#nama_project').after(
+                        '<div class="text-danger error">Nama barang harus diisi dan maksimal 100 karakter.</div>');
+                    return;
+                }
+
+                // Validasi Quantity
+                if (!qty || isNaN(qty) || qty < 1) {
+                    $('#qty').after(
+                        '<div class="text-danger error">Quantity harus berupa angka dan lebih besar dari 0.</div>');
+                    return;
+                }
+
+                // Validasi Satuan
+                if (!satuan || satuan.length > 50) {
+                    $('#satuan').after(
+                        '<div class="text-danger error">Satuan harus diisi dan maksimal 50 karakter.</div>');
+                    return;
+                }
+
+                // Validasi Harga Satuan
+                if (!harga_satuan || isNaN(harga_satuan) || harga_satuan < 0 || harga_satuan >
+                    99999999999999999999.99) {
+                    $('#harga_satuan').after(
+                        '<div class="text-danger error">Harga satuan harus berupa angka .</div>'
+                    );
+                    return;
+                }
+            
+                // Semua validasi lolos, lanjutkan menambah detail
+                detailArray.push({
+                    no,
+                    sph_id,
+                    nama_project,
+                    qty,
+                    satuan,
+                    harga_satuan,
+                    jumlah_harga
+                });
+
+                // Render data ke tabel
+                var rowDetail = `
+                <tr>
+                    <td>${no++}</td>
+                    <td>${nama_project}</td>
+                    <td>${qty}</td>
+                    <td>${satuan}</td>
+                    <td>Rp. ${harga_satuan}</td>
+                    <td class="jumlah">Rp. ${jumlah_harga}</td> <!-- Class 'jumlah' untuk mempermudah seleksi -->
+                    <td>
+                        <button class="btn btn-danger btn-sm btn-delete-detail" data-index="${detailArray.length - 1}">
+                                    <i class="fas fa-trash"></i> 
+                        </button>
+                    </td>
+                </tr>
+                `;
+
+                // Menambahkan row detail ke dalam tabel
+                $('#detailTable tbody').append(rowDetail);
+
+                // Panggil fungsi untuk menghitung dan menambahkan row subtotal
+                calculateSubtotal();
+
+                // Reset form input detail
+                $('#formTambahDetail')[0].reset();
+
+                swal({
+                    title: 'Berhasil!',
+                    text: 'Detail berhasil ditambahkan!',
+                    icon: 'success',
+                    button: 'OK',
+                });
+            });
+
+            // Fungsi untuk menghitung subtotal
+            function calculateSubtotal() {
+                var total = 0;
+
+                // Menjumlahkan semua nilai yang ada di kolom "Jumlah"
+                $('#detailTable tbody .jumlah').each(function() {
+                    var jumlah = $(this).text().replace('Rp. ', '').replace('.', '').replace(',',
+                        ''); // Hapus format Rp dan koma
+                    total += parseFloat(jumlah); // Tambahkan jumlah ke total
+                });
+
+                // Cek apakah row subtotal sudah ada, jika sudah dihapus dulu sebelum menambahkan yang baru
+                if ($('#detailTable tbody .subtotal').length > 0) {
+                    $('#detailTable tbody .subtotal').remove();
+                }
+
+                // Menambahkan row subtotal
+                var subtotalRow = `
+                <tr class="subtotal">
+                    <td colspan="6" class=" fw-bold">Subtotal:</td>
+                    <td  class="fw-bold">Rp. ${total.toLocaleString('id-ID')}</td> <!-- Format angka dengan Rupiah -->
+                </tr>
+                    `;
+
+                // Menambahkan row subtotal
+                $('#detailTable tbody').append(subtotalRow);
+            }
+
+            // Fungsi untuk menghapus baris detail dan update subtotal
+            $(document).on('click', '.btn-delete-detail', function() {
+                // Menghapus baris yang dipilih
+                $(this).closest('tr').remove();
+
+                // Menghitung ulang subtotal setelah baris dihapus
+                calculateSubtotal();
+            });
+
+            $('#btn-tambah').on('click', function() {
+                $('.error').remove();
+                $('#formTambahHeader')[0].reset();
+                $('#formTambahDetail')[0].reset();
+                $('#nama_vendor').val(null).trigger('change');
+
+                // $('#formTambah')[0].reset();
+            })
+
+            $(document).ready(function() {
+                $('#nama_client').select2();
+                $('#edit_nama_client').select2({
+                    dropdownParent: $('#modalEditHeader'),
+                    width: '100%'
+                });
+                // Menangkap event change pada select2
+                $('#nama_client').on('change', function() {
+                    // Ambil ID client yang dipilih
+                    var clientId = $(this).val();
+
+                    // Cari data client berdasarkan ID (misalnya, dalam elemen data-* yang sudah ada di halaman)
+                    var client = $('#nama_client option').filter(function() {
+                        return $(this).val() == clientId;
+                    }).data();
+
+                    // Isi input dengan data yang sesuai
+                    if (clientId) {
+                        $('#alamat_client').val(client.alamat);
+                        $('#up_sph_client').val(client.up_sph);
+                    } else {
+                        // Kosongkan input jika tidak ada client yang dipilih
+                        $('#alamat_client, #up_sph_client').val('');
+                    }
+                });
+                $('#edit_nama_client').on('change', function() {
+                    // Ambil ID client yang dipilih
+                    var clientId = $(this).val();
+
+                    // Cari data client berdasarkan ID (misalnya, dalam elemen data-* yang sudah ada di halaman)
+                    var client = $('#edit_nama_client option').filter(function() {
+                        return $(this).val() == clientId;
+                    }).data();
+
+                    // Isi input dengan data yang sesuai
+                    if (clientId) {
+                        $('#edit_alamat_client').val(client.alamat);
+                        $('#edit_up_sph_client').val(client.up_sph);
+                    } else {
+                        // Kosongkan input jika tidak ada client yang dipilih
+                        $('#edit_alamat_client, #edit_up_sph_client')
+                            .val('');
+                    }
+                });
+
+            });
 
             // document.addEventListener('DOMContentLoaded', function() {
             //     const btnTambah = document.getElementById('btn-tambah');

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('sph_detail', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sph_id');
-            $table->string('project', 100);
+            $table->unsignedBigInteger('sph_id')->nullabel();
+            $table->string('nama_project', 100);
             $table->string('qty');
-            $table->string('satuan');
-            $table->decimal('price', 10, 2);
+            $table->string('satuan', 50);
+            $table->decimal('harga_satuan', 10, 2);
             $table->decimal('jumlah_harga', 20, 2);
             $table->timestamps();
 

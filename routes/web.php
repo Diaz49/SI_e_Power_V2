@@ -8,7 +8,8 @@ use App\Http\Controllers\Master\BankController;
 use App\Http\Controllers\Master\DataVendorController;
 use App\Http\Controllers\PurchaseOrder\DetailPoController;
 use App\Http\Controllers\PurchaseOrder\PurchaseOrderController;
-use App\Http\Controllers\SphController;
+use App\Http\Controllers\SPH\SphController;
+use App\Http\Controllers\SPH\DetailSphController;
 use App\Http\Controllers\BastController;
 use Illuminate\Support\Facades\Route;
 
@@ -78,7 +79,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('data-sph', [SphController::class, 'store'])->name('data-sph.store');
     Route::get('data-sph/{id}/edit', [SphController::class, 'edit'])->name('data-sph.edit');
     Route::put('data-sph/{id}', [SphController::class, 'update'])->name('data-sph.update');
-    Route::delete('data-sph/delete/{id}', [SphController::class, 'delete'])->name('data-sph.delete');
+    Route::delete('data-sph/delete/{id}', [SphController::class, 'destroy'])->name('data-sph.delete');
+
+    Route::post('sph-item', [DetailSphController::class, 'store'])->name('sph-item.store');
+    Route::get('sph-detail/{id}/edit', [DetailSphController::class, 'table'])->name('sph-detail.table');
+    Route::get('sph-item/{id}/edit', [DetailSphController::class, 'edit'])->name('sph-item.edit');
+    Route::put('sph-item/{id}', [DetailSphController::class, 'update'])->name('sph-item.update');
+    Route::delete('sph-detail/delete/{id}', [DetailSphController::class, 'destroy'])->name('sph-detail.destroy');
 
     //bast
     Route::get('bast', [BastController::class, 'index'])->name('bast');

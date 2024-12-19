@@ -11,10 +11,10 @@ class DetailSPH extends Model
     protected $table = 'sph_detail';
     protected $fillable = [
         'sph_id',
-        'project',
+        'nama_project',
         'qty',
         'satuan',
-        'price',
+        'harga_satuan',
         'jumlah_harga',
     ];
 

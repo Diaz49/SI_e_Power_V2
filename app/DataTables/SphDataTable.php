@@ -20,26 +20,31 @@ class SphDataTable extends DataTable
      * @param QueryBuilder $query Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
-    {   
+    {
         return (new EloquentDataTable($query))
-        ->addIndexColumn()
-        ->addColumn('action', function($row){
-            return view('sph.action', ['sph'=> $row]);
-        })
-        ->addColumn('nama_client', function ($row) {
-            return $row->dataClient->nama_client; // Ambil nama_client dari relasi
-        })
-        ->addColumn('up_sph', function ($row) {
-            return $row->dataClient->up_sph; 
-        })
-        ->addColumn('price', function ($row) {
-            return $row->detailSph->price; 
-        })
-        ->addColumn('jumlah_harga', function ($row) {
-            return $row->detailSph->jumlah_harga; 
-        })
-        ->setRowId('id')
-        ->rawColumns(['action']);
+            ->addIndexColumn()
+            ->addColumn('action', function(Sph $sph) {
+                return view('sph.action', ['sph' => $sph]);
+            })
+            // ->addColumn('kode_sph', function (Sph $sph) {
+            //     return $sph->sph->kode_sph;
+            // })
+            // ->addColumn('tanggal', function (Sph $sph) {
+            //     return $sph->sph->tanggal;
+            // })
+            ->addColumn('nama_client', function (Sph $sph) {
+                return $sph->dataClient->nama_client;
+            })
+            ->addColumn('up_sph', function (Sph $sph) {
+                return $sph->dataClient->up_sph;
+            })
+            ->addColumn('price', function (Sph $sph) {
+                return $sph->detailSph->count();
+            })
+            ->addColumn('jumlah_harga', function (Sph $sph) {
+                return $sph->detailSph->sum('jumlah_harga');
+            })
+            ->setRowId('id');
     }
 
     /**
@@ -47,7 +52,7 @@ class SphDataTable extends DataTable
      */
     public function query(Sph $model): QueryBuilder
     {
-        return $model->newQuery()->with('dataClient'); // Muat relasi client
+        return $model->newQuery();
     }
 
     /**
