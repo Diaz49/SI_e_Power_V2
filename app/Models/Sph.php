@@ -11,20 +11,19 @@ class Sph extends Model
 
     protected $table = 'sph'; // Nama tabel
 
-    protected $fillable = [
-        'project', 
-        'item', 
-        'unit', 
-        'price', 
+    protected $fillable = [ 
         'kode_sph', 
         'tanggal', 
         'data_client_id', 
-        'up', 
         'penawaran_harga'
     ];
 
     public function dataClient()
     {
         return $this->belongsTo(DataClient::class, 'data_client_id', 'id');
+    }
+    public function detailSph()
+    {
+        return $this->hasMany(DetailSPH::class, 'sph_id', 'id');
     }
 }

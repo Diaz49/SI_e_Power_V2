@@ -20,20 +20,31 @@ class SphDataTable extends DataTable
      * @param QueryBuilder $query Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
-    {   
+    {
         return (new EloquentDataTable($query))
-        ->addIndexColumn()
-        ->addColumn('nama_client', function ($row) {
-            return $row->dataClient->nama_client; // Ambil nama_client dari relasi
-        })
-        ->addColumn('up_sph', function ($row) {
-            return $row->dataClient->up_sph; 
-        })
-        ->addColumn('action', function($row){
-            return view('sph.action', ['sph'=> $row]);
-        })
-        ->setRowId('id')
-        ->rawColumns(['action']);
+            ->addIndexColumn()
+            ->addColumn('action', function(Sph $sph) {
+                return view('sph.action', ['sph' => $sph]);
+            })
+            // ->addColumn('kode_sph', function (Sph $sph) {
+            //     return $sph->sph->kode_sph;
+            // })
+            // ->addColumn('tanggal', function (Sph $sph) {
+            //     return $sph->sph->tanggal;
+            // })
+            ->addColumn('nama_client', function (Sph $sph) {
+                return $sph->dataClient->nama_client;
+            })
+            ->addColumn('up_sph', function (Sph $sph) {
+                return $sph->dataClient->up_sph;
+            })
+            ->addColumn('price', function (Sph $sph) {
+                return $sph->detailSph->count();
+            })
+            ->addColumn('jumlah_harga', function (Sph $sph) {
+                return $sph->detailSph->sum('jumlah_harga');
+            })
+            ->setRowId('id');
     }
 
     /**
@@ -41,7 +52,7 @@ class SphDataTable extends DataTable
      */
     public function query(Sph $model): QueryBuilder
     {
-        return $model->newQuery()->with('dataClient'); // Muat relasi client
+        return $model->newQuery();
     }
 
     /**
@@ -79,12 +90,12 @@ class SphDataTable extends DataTable
                 ->width(30)
                 ->addClass('text-center')
                 ->searchable(false),
-            Column::make('tanggal'),
-            Column::make('kode_sph'),
-            Column::make('nama_client'),
-            Column::make('up_sph'),
-            // Column::make('qty'), // total satuan barang
-            // Column::make('price'), // total harga keseluruhan barang
+            Column::make('tanggal')->title('Tanggal'),
+            Column::make('kode_sph')->title('Kode SPH'),
+            Column::make('nama_client')->title('Nama Client'),
+            Column::make('up_sph')->title('Up'),
+            Column::make('price')->title('Total Item'),
+            Column::make('jumlah_harga')->title('Total SPH'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

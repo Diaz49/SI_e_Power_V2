@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\SphDataTable;
+use App\DataTables\BastDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Sph;
 use Illuminate\Http\Request;
 
-class SphController extends Controller
+class BastController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(SphDataTable $dataTable)
+    public function index(BastDataTable $dataTable)
     {
-        return $dataTable->render('sph.index');
+        return $dataTable->render('bast.index');
     }
 
     /**
