@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('no_bast_5')->nullable();
             $table->string('kd_admin');
             $table->enum('jenis_no', ['PO', 'Kontrak', 'SPK', 'SPPK', 'FPB']);
-            -$table->string('no_3')->nullable();
+            $table->string('no_3')->nullable();
             $table->string('no_4')->nullable();
             $table->string('no_5')->nullable();
             $table->date('due');
