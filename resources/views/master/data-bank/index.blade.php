@@ -27,7 +27,7 @@
     </div>
 
     <!-- Modal Tambah -->
-    <form action="{{ route('bank.store') }}" method="POST">
+    <form action="{{ route('bank.store') }}" method="POST" id="formTambah">
         @csrf
         <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -38,21 +38,21 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-1 label">Nama Bank</div>
-                        <input type="text" class="form-control" name="nama_bank" value="{{ old('') }}"
+                        <input type="text" class="form-control" name="nama_bank" id="nama_bank" value="{{ old('') }}"
                             placeholder="Masukkan Nama Bank">
                         @error('nama_bank')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
 
                         <div class="mb-1 mt-2 label">Nama Rek.</div>
-                        <input type="text" class="form-control" name="nama_rek" value="{{ old('') }}"
+                        <input type="text" class="form-control" name="nama_rek" id="nama_rek" value="{{ old('') }}"
                             placeholder="Masukkan Nama Rekening">
                         @error('nama_rek')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
 
                         <div class="mb-1 mt-2 label">Nomer Rek.</div>
-                        <input type="text" class="form-control" name="nomer_rek" value="{{ old('') }}"
+                        <input type="text" class="form-control" name="nomer_rek" id="nomer_rek" value="{{ old('') }}"
                             placeholder="Masukkan Nomer Rekening">
                         @error('nomer_rek')
                             <div class="text-danger">{{ $message }}</div>
@@ -277,7 +277,7 @@
                         $('#bank-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
-                            text: 'Data Bank berhasil diubah',
+                            text: 'Data Bank berhasil di tambah',
                             icon: 'success',
                             button: 'OK'
                         });

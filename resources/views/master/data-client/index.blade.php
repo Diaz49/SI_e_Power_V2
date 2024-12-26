@@ -27,7 +27,7 @@
     </div>
 
     <!-- Modal Tambah -->
-    <form action="{{ route('data-client.store') }}" method="POST">
+    <form action="{{ route('data-client.store') }}" method="POST" id="formTambah">
         @csrf
         <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -38,32 +38,32 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-1 label">Nama Client</div>
-                        <input type="text" class="form-control" name="nama_client" value="{{ old('') }}"
+                        <input type="text" class="form-control" name="nama_client" id="nama_client" value="{{ old('') }}"
                             placeholder="Masukkan Nama Client">
-                        {{-- @error('')
+                        @error('nama_client')
                             <div class="text-danger">{{ $message }}</div>
-                        @enderror --}}
+                        @enderror
 
                         <div class="mb-1 mt-2 label">Alamat</div>
-                        <input type="text" class="form-control" name="alamat" value="{{ old('alamat') }}"
+                        <input type="text" class="form-control" name="alamat" id="alamat" value="{{ old('alamat') }}"
                             placeholder="Masukkan Alamat">
                         @error('alamat')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
 
                         <div class="mb-1 mt-2 label">Invoice</div>
-                        <input type="text" class="form-control" name="up_invoice" value="{{ old('') }}"
+                        <input type="text" class="form-control" name="up_invoice" id="up_invoice" value="{{ old('') }}"
                             placeholder="Masukkan Invoice">
-                        {{-- @error('')
+                        @error('up_invoice')
                             <div class="text-danger">{{ $message }}</div>
-                        @enderror --}}
+                        @enderror
 
                         <div class="mb-1 mt-2 label">SPH</div>
-                        <input type="text" class="form-control" name="up_sph" value="{{ old('') }}"
+                        <input type="text" class="form-control" name="up_sph" id="up_sph" value="{{ old('') }}"
                             placeholder="Masukkan SPH">
-                        {{-- @error('rab')
+                        @error('up_sph')
                             <div class="text-danger">{{ $message }}</div>
-                        @enderror --}}
+                        @enderror
 
                     </div>
                     <div class="modal-footer">
@@ -280,7 +280,7 @@
                         $('#dataclient-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
-                            text: 'Project berhasil diubah',
+                            text: 'Project berhasil di tambah',
                             icon: 'success',
                             button: 'OK'
                         });
