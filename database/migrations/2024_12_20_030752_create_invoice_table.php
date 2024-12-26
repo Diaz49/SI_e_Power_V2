@@ -14,15 +14,18 @@ return new class extends Migration
         Schema::create('invoice', function (Blueprint $table) {
             $table->id();
             $table->string('kd_invoice');
+            $table->text('header_deskripsi');
             $table->date('tgl_invoice');
             $table->unsignedBigInteger('client_id')->nullable();
-            $table->string('no_bast');
+            $table->string('no_bast_1');
             $table->string('no_bast_2')->nullable();
             $table->string('no_bast_3')->nullable();
             $table->string('no_bast_4')->nullable();
             $table->string('no_bast_5')->nullable();
             $table->string('kd_admin');
             $table->enum('jenis_no', ['PO', 'Kontrak', 'SPK', 'SPPK', 'FPB']);
+            $table->string('no_1')->nullable();
+            $table->string('no_2')->nullable();
             $table->string('no_3')->nullable();
             $table->string('no_4')->nullable();
             $table->string('no_5')->nullable();
