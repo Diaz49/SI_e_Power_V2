@@ -30,12 +30,16 @@ class DataClientController extends Controller
             'up_invoice' => 'required|numeric|min:0',
             'up_sph' => 'required|numeric|min:0',
         ], [
-            'up_invoice.required' => 'HPP harus diisi.',
-            'up_invoice.numeric' => 'HPP harus berupa angka.',
-            'up_invoice.min' => 'HPP tidak boleh kurang dari 0.',
-            'up_sph.required' => 'RAB harus diisi.',
-            'up_sph.numeric' => 'RAB harus berupa angka.',
-            'up_sph.min' => 'RAB tidak boleh kurang dari 0.',
+            'nama_client.required' => 'Nama Client harus diisi.',
+            'nama_client.string' => 'Nama Client harus berupa teks.',
+            'alamat.required' => 'Alamat harus diisi.',
+            'alamat.string' => 'Alamat harus berupa teks.',
+            'up_invoice.required' => 'Up Invoice harus diisi.',
+            'up_invoice.numeric' => 'Up Invoice harus berupa angka.',
+            'up_invoice.min' => 'Up Invoice tidak boleh kurang dari 0.',
+            'up_sph.required' => 'Up Sph harus diisi.',
+            'up_sph.numeric' => 'Up Sph harus berupa angka.',
+            'up_sph.min' => 'Up sph tidak boleh kurang dari 0.',
         ]);
         $data = [
             'nama_client' => $request->nama_client,
@@ -77,16 +81,19 @@ class DataClientController extends Controller
             'up_invoice_edit' => 'required|numeric|min:0',
             'up_sph_edit' => 'required|numeric|min:0',
         ], [
+            'nama_client_edit.required' => 'Nama Client harus diisi.',
+            'nama_client_edit.string' => 'Nama Client harus berupa teks.',
+
             'alamat_edit.required' => 'Alamat harus diisi.',
             'alamat_edit.string' => 'Alamat harus berupa teks.',
 
-            'up_invoice_edit.required' => 'HPP harus diisi.',
-            'up_invoice_edit.numeric' => 'HPP harus berupa angka.',
-            'up_invoice_edit.min' => 'HPP tidak boleh kurang dari 0.',
+            'up_invoice_edit.required' => 'Up Invoice harus diisi.',
+            'up_invoice_edit.numeric' => 'Up Invoice harus berupa angka.',
+            'up_invoice_edit.min' => 'Up Invoice tidak boleh kurang dari 0.',
 
-            'up_sph_edit.required' => 'RAB harus diisi.',
-            'up_sph_edit.numeric' => 'RAB harus berupa angka.',
-            'up_sph_edit.min' => 'RAB tidak boleh kurang dari 0.',
+            'up_sph_edit.required' => 'Up Sph harus diisi.',
+            'up_sph_edit.numeric' => 'Up Sph harus berupa angka.',
+            'up_sph_edit.min' => 'Up Sph tidak boleh kurang dari 0.',
         ]);
 
         // Update data dengan input yang sesuai

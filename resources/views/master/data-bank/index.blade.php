@@ -190,7 +190,7 @@
 
                 console.log('Client ID:', databank);
 
-                // Request AJAX untuk mendapatkan data project berdasarkan ID
+                // Request AJAX untuk mendapatkan data bank berdasarkan ID
                 $.get(url, function(data) {
                     // Isi field modal dengan data yang didapat dari server
                     $('#nama_bank_edit').val(data.nama_bank);

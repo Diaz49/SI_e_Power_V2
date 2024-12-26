@@ -195,7 +195,7 @@
 
                 console.log('Client ID:', dataclient);
 
-                // Request AJAX untuk mendapatkan data project berdasarkan ID
+                // Request AJAX untuk mendapatkan data client berdasarkan ID
                 $.get(url, function(data) {
                     // Isi field modal dengan data yang didapat dari server
                     $('#nama_client_edit').val(data.nama_client);
@@ -258,7 +258,7 @@
                         } else {
                             swal({
                                 title: 'Gagal!',
-                                text: 'Gagal mengedit project',
+                                text: 'Gagal mengedit data client',
                                 icon: 'error',
                                 button: 'OK'
                             });
@@ -280,7 +280,7 @@
                         $('#dataclient-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
-                            text: 'Project berhasil di tambah',
+                            text: 'Data Client berhasil di tambah',
                             icon: 'success',
                             button: 'OK'
                         });
@@ -319,7 +319,7 @@
                         } else {
                             swal({
                                 title: 'Gagal!',
-                                text: 'Gagal mengedit project',
+                                text: 'Gagal mengedit data client',
                                 icon: 'error',
                                 button: 'OK'
                             });

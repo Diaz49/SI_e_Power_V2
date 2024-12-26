@@ -11,17 +11,11 @@ use Illuminate\Validation\Rule;
 
 class BankController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(BankDataTable $dataTable)
     {
         return $dataTable->render('master.data-bank.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -30,6 +24,16 @@ class BankController extends Controller
             'nomer_rek' => 'required|string|max:50',
         ], [
             
+            'nama_bank.required' => 'Nama bank wajib diisi.',
+            'nama_bank.string' => 'Nama bank harus berupa teks.',
+            'nama_bank.max' => 'Nama bank tidak boleh lebih dari 50 karakter.',
+            'nama_rek.required' => 'Nama rekening wajib diisi.',
+            'nama_rek.string' => 'Nama rekening harus berupa teks.',
+            'nama_rek.max' => 'Nama rekening tidak boleh lebih dari 50 karakter.',
+            'nomer_rek.required' => 'Nomor rekening wajib diisi.',
+            'nomer_rek.string' => 'Nomor rekening harus berupa teks.',
+            'nomer_rek.max' => 'Nomor rekening tidak boleh lebih dari 50 karakter.',
+
         ]);
         
         $data = [
@@ -41,17 +45,6 @@ class BankController extends Controller
         return redirect()->back()->with('success', 'Data berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $bank = Bank::find($id);
@@ -59,9 +52,6 @@ class BankController extends Controller
         return response()->json($bank);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $bank = Bank::findOrFail($id); // tambahkan fail jika id tidak ditemukan
@@ -72,6 +62,18 @@ class BankController extends Controller
             'status_edit' => ['required', Rule::in(['use', 'not_use'])]
         ], [
             
+            'nama_bank_edit.required' => 'Nama bank (edit) wajib diisi.',
+            'nama_bank_edit.string' => 'Nama bank (edit) harus berupa teks.',
+            'nama_bank_edit.max' => 'Nama bank (edit) tidak boleh lebih dari 50 karakter.',
+            'nama_rek_edit.required' => 'Nama rekening (edit) wajib diisi.',
+            'nama_rek_edit.string' => 'Nama rekening (edit) harus berupa teks.',
+            'nama_rek_edit.max' => 'Nama rekening (edit) tidak boleh lebih dari 50 karakter.',
+            'nomer_rek_edit.required' => 'Nomor rekening (edit) wajib diisi.',
+            'nomer_rek_edit.string' => 'Nomor rekening (edit) harus berupa teks.',
+            'nomer_rek_edit.max' => 'Nomor rekening (edit) tidak boleh lebih dari 50 karakter.',
+            'status_edit.required' => 'Status (edit) wajib diisi.',
+            'status_edit.in' => 'Status (edit) harus bernilai "use" atau "not_use".',
+
         ]);
 
         // Update data dengan input yang sesuai
@@ -89,9 +91,6 @@ class BankController extends Controller
         // return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $bank = Bank::findOrFail($id);
