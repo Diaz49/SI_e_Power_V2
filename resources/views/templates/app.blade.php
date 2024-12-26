@@ -129,36 +129,11 @@
                                 </ul>
                             </div>
                         </li> --}}
-                        <li class="nav-item">
-                            <a href="#forms">
-                                <i class="fas fa-pen-square"></i>
+                        <li class="nav-item {{ Route::is('invoice') ? 'active' : '' }}">
+                            <a href="{{ route('invoice') }}" class="collapsed">
+                                <i class="fas fa-table"></i>
                                 <p>Invoice</p>
-                                <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="forms">
-                                <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="forms/forms.html">
-                                            <span class="sub-item">MPA</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="forms/forms.html">
-                                            <span class="sub-item">RAJATA</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="forms/forms.html">
-                                            <span class="sub-item">MARK</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="forms/forms.html">
-                                            <span class="sub-item">MULTI CREATION</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </li>
                         <li class="nav-item {{ Route::is('bast') ? 'active' : '' }}">
                             <a href="{{ route('bast') }}" class="collapsed">

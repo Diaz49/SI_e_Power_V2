@@ -11,6 +11,7 @@ use App\Http\Controllers\PurchaseOrder\PurchaseOrderController;
 use App\Http\Controllers\SPH\SphController;
 use App\Http\Controllers\SPH\DetailSphController;
 use App\Http\Controllers\BastController;
+use App\Http\Controllers\Invoice\InvoiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,12 +68,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('po/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('po.edit');
     Route::put('po/{id}', [PurchaseOrderController::class, 'update'])->name('po.update');
     Route::delete('po/delete/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.delete');
-    
+
     Route::post('po-item', [DetailPoController::class, 'store'])->name('po-item.store');
     Route::get('po-detail/{id}/edit', [DetailPoController::class, 'table'])->name('po-detail.table');
     Route::get('po-item/{id}/edit', [DetailPoController::class, 'edit'])->name('po-item.edit');
     Route::put('po-item/{id}', [DetailPoController::class, 'update'])->name('po-item.update');
     Route::delete('po-detail/delete/{id}', [DetailPoController::class, 'destroy'])->name('po-detail.destroy');
+
+    Route::get('invoice', [InvoiceController::class, 'index'])->name('invoice');
+    Route::post('invoice', [InvoiceController::class, 'store'])->name('invoice.store');
+    Route::get('invoice/{id}/edit', [InvoiceController::class, 'edit'])->name('invoice.edit');
+    Route::put('invoice/{id}', [InvoiceController::class, 'update'])->name('invoice.update');
+    Route::delete('invoice/delete/{id}', [InvoiceController::class, 'delete'])->name('invoice.delete');
 
     // sph
     Route::get('data-sph', [SphController::class, 'index'])->name('data-sph');
@@ -90,4 +97,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //bast
     Route::get('bast', [BastController::class, 'index'])->name('bast');
 });
-
