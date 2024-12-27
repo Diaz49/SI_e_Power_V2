@@ -13,27 +13,27 @@ return new class extends Migration
     {
         Schema::create('invoice', function (Blueprint $table) {
             $table->id();
-            $table->string('kd_invoice');
+            $table->string('kd_invoice', 100)->unique();
             $table->text('header_deskripsi');
             $table->date('tgl_invoice');
-            $table->unsignedBigInteger('client_id')->nullable();
-            $table->string('no_bast_1');
-            $table->string('no_bast_2')->nullable();
-            $table->string('no_bast_3')->nullable();
-            $table->string('no_bast_4')->nullable();
-            $table->string('no_bast_5')->nullable();
-            $table->string('kd_admin');
+            $table->unsignedBigInteger('client_id');
+            $table->string('no_bast_1', 100);
+            $table->string('no_bast_2',100)->nullable();
+            $table->string('no_bast_3',100)->nullable();
+            $table->string('no_bast_4',100)->nullable();
+            $table->string('no_bast_5',100)->nullable();
+            $table->string('kd_admin',50)->nullable();
             $table->enum('jenis_no', ['PO', 'Kontrak', 'SPK', 'SPPK', 'FPB']);
-            $table->string('no_1')->nullable();
-            $table->string('no_2')->nullable();
-            $table->string('no_3')->nullable();
-            $table->string('no_4')->nullable();
-            $table->string('no_5')->nullable();
+            $table->string('no_1',100);
+            $table->string('no_2',100)->nullable();
+            $table->string('no_3',100)->nullable();
+            $table->string('no_4',100)->nullable();
+            $table->string('no_5',100)->nullable();
             $table->date('due');
             $table->unsignedBigInteger('bank_id');
-            $table->string('no_fp');
+            $table->string('no_fp')->nullable();
             $table->enum('status',['paid','-'])->default('-');
-            $table->date('tgl_paid');
+            $table->date('tgl_paid')->nullable();
 
             $table->timestamps();
 
