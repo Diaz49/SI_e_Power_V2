@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_bank', 50);
             $table->string('nama_rek',50);
             $table->string('nomer_rek', 50);
-            $table->enum('status', ['use', 'not_use'])->nullable()->default('use');
+            $table->enum('status', ['use', 'no_use'])->nullable()->default('use');
             $table->timestamps();
         });
     }

@@ -23,19 +23,29 @@ class BankDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->addIndexColumn()
-        ->addColumn('status_display', function (Bank $bank) {
+        ->addColumn('status', function (Bank $bank) {
             if ($bank->status === 'use') {
                 return '<span class="badge bg-primary">Use</span>'; // Biru untuk 'use'
-            } elseif ($bank->status === 'not_use') {
-                return '<span class="badge bg-danger">Not Use</span>'; // Merah untuk 'not_use'
+            } elseif ($bank->status === 'no_use') {
+                return '<span class="badge bg-danger">No Use</span>'; // Merah untuk 'no_use'
             }
             return '<span class="badge bg-secondary">Unknown</span>'; // Abu-abu untuk status lainnya
         })
         ->addColumn('action', function (Bank $bank) {
             return view('master.data-bank.action', ['bank' => $bank]);
         })
+        ->filterColumn('status', function ($query, $keyword) {
+            $keyword = strtolower(trim($keyword)); // Ubah ke lowercase untuk case-insensitive
+            if (str_contains($keyword, 'use')) {
+                $query->where('status', 'use');
+            } elseif (str_contains($keyword, 'no use')) {
+                $query->where('status', 'no_use');
+            } elseif (str_contains($keyword, 'no')) {
+                $query->where('status', 'no_use');
+            }
+        })
         ->setRowId('id')
-        ->rawColumns(['status_display', 'action']); // Pastikan kolom ini di-raw untuk HTML
+        ->rawColumns(['status', 'action']); // Pastikan kolom ini di-raw untuk HTML
     }
 
     /**
@@ -84,9 +94,9 @@ class BankDataTable extends DataTable
             Column::make('nama_bank'),
             Column::make('nama_rek'),
             Column::make('nomer_rek'),
-            Column::computed('status_display') // Kolom baru untuk status
+            Column::computed('status') // Kolom baru untuk status
                 ->title('Status') // Ubah nama kolom menjadi "Status"
-                ->searchable(false)
+                ->searchable(true)
                 ->addClass('text-center'),
             Column::computed('action')
                 ->exportable(false)

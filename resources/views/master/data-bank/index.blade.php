@@ -105,7 +105,7 @@
                         <div class="mb-1 mt-2 label">Status</div>
                         <select class="form-control status-select" name="status_edit" id="status_edit">
                             <option value="use" {{ (isset($bank) && $bank->status === 'use') ? 'selected' : '' }}>Use</option>
-                            <option value="not_use" {{ (isset($bank) && $bank->status === 'not_use') ? 'selected' : '' }}>Not Use</option>
+                            <option value="no_use" {{ (isset($bank) && $bank->status === 'no_use') ? 'selected' : '' }}>Not Use</option>
                         </select>
                         @error('status_edit')
                             <div class="text-danger error">{{ $message }}</div>
