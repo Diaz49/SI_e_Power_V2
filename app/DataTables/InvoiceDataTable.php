@@ -22,7 +22,16 @@ class InvoiceDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'invoice.action')
+            ->addIndexColumn()
+            ->addColumn('action', function (Invoice $invoice) {
+                return view('invoice.action', ['invoice' => $invoice]);
+            })
+
+            ->editColumn('jumlah_item', function (Invoice $invoice) {
+                return $invoice->detail->count();
+            })->editColumn('jumlah_harga', function (Invoice $invoice) {
+                return $invoice->detail->sum('jumlah_harga');
+            })
             ->setRowId('id');
     }
 
@@ -40,20 +49,20 @@ class InvoiceDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('invoice-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('invoice-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -62,15 +71,27 @@ class InvoiceDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::computed('DT_RowIndex')
+                ->title('No.') // Ubah judul kolom menjadi "No."
+                ->searchable(false)
+                ->orderable(false)
+                ->width(30)
+                ->addClass('text-center')
+                ->searchable(false),
+            Column::make('tgl_invoice'),
+            Column::make('kd_invoice')->title('Kode Invoice'),
+            Column::make('client_id')->title('Nama Client'),
+            Column::make('header_deskripsi')->title('Deskripsi'),
+            Column::make('jumlah_item'),
+            Column::make('jumlah_harga'),
+            Column::make('no_fp')->title('FP'),
+            Column::make('status'),
+            Column::make('tgl_paid'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

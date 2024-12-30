@@ -93,7 +93,8 @@
                         value="" placeholder="Masukkan Nama Client">
                         <option value="">Pilih Client</option>
                         @foreach ($client as $item)
-                            <option value="{{ $item->id }}" data-alamat-client="{{ $item->alamat }}" data-nama-client="{{ $item->up_invoice }}">
+                            <option value="{{ $item->id }}" data-alamat-client="{{ $item->alamat }}"
+                                data-nama-client="{{ $item->up_invoice }}">
                                 {{ $item->nama_client }}
                             </option>
                         @endforeach
@@ -106,15 +107,15 @@
 
 
                     <div class="mb-1 mt-2 label">No. BAST</div>
-                    <input type="text" class="form-control" name="no_bast_1" id="no_bast_1" value=""
+                    <input type="text" class="form-control mt-1" name="no_bast_1" id="no_bast_1" value=""
                         placeholder="Nomor Bast 1">
-                    <input type="text" class="form-control" name="no_bast_2" id="no_bast_2" value=""
+                    <input type="text" class="form-control mt-1" name="no_bast_2" id="no_bast_2" value=""
                         placeholder="Nomor Bast 2">
-                    <input type="text" class="form-control" name="no_bast_3" id="no_bast_3" value=""
+                    <input type="text" class="form-control mt-1" name="no_bast_3" id="no_bast_3" value=""
                         placeholder="Nomor Bast 3">
-                    <input type="text" class="form-control" name="no_bast_4" id="no_bast_4" value=""
+                    <input type="text" class="form-control mt-1" name="no_bast_4" id="no_bast_4" value=""
                         placeholder="Nomor Bast 4">
-                    <input type="text" class="form-control" name="no_bast_5" id="no_bast_5" value=""
+                    <input type="text" class="form-control mt-1" name="no_bast_5" id="no_bast_5" value=""
                         placeholder="Nomor Bast 5">
 
 
@@ -129,16 +130,15 @@
                         <option value="SPPK">SPPK</option>
                         <option value="FPB">FPB</option>
                     </select>
-                    </select>
                     <input type="text" class="form-control" name="no_1" id="no_1" value=""
                         placeholder="Nomor 1">
-                    <input type="text" class="form-control" name="no_2" id="no_2" value=""
+                    <input type="text" class="form-control mt-1" name="no_2" id="no_2" value=""
                         placeholder="Nomor 2">
-                    <input type="text" class="form-control" name="no_3" id="no_3" value=""
+                    <input type="text" class="form-control mt-1" name="no_3" id="no_3" value=""
                         placeholder="Nomor 3">
-                    <input type="text" class="form-control" name="no_4" id="no_4" value=""
+                    <input type="text" class="form-control mt-1" name="no_4" id="no_4" value=""
                         placeholder="Nomor 4">
-                    <input type="text" class="form-control" name="no_5" id="no_5" value=""
+                    <input type="text" class="form-control mt-1" name="no_5" id="no_5" value=""
                         placeholder="Nomor 5">
 
 
@@ -158,7 +158,7 @@
                     </select>
                     <input type="text" class="form-control" name="nama_rek" disabled id="nama_rek" value=""
                         placeholder="A/N">
-                    <input type="text" class="form-control" disabled  name="no_rek" id="no_rek" value=""
+                    <input type="text" class="form-control" disabled name="no_rek" id="no_rek" value=""
                         placeholder="A/C">
                 </div>
 
@@ -194,20 +194,153 @@
         </div>
     </div>
 
+    <!-- Modal Edit Header -->
+    <form action="" method="POST" id="formEditHeader">
+        @method('PUT')
+        @csrf
+        <div class="modal fade" id="modalEditHeader" aria-labelledby="modalEditDetailLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalEditDetailLabel">Edit Data Header</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ps-4 me-2">
+                        <div class="row">
+
+                            <div class="col-md-6 ">
+                                <div class="mb-1 mt-2 label">Kode Invoice</div>
+                                <input type="text" class="form-control" name="edit_kode_invoice"
+                                    id="edit_kode_invoice" value="" placeholder="Masukkan Kode Invoice">
+
+                                <div class="mb-1 mt-2 label">Header Deskripsi</div>
+                                <input type="text" class="form-control" name="edit_header_deskripsi"
+                                    id="edit_header_deskripsi" value="" placeholder="Masukkan Deskripsi">
+
+                                <div class="mb-1 mt-2 label">Tanggal</div>
+                                <input type="date" class="form-control" name="edit_tanggal" id="edit_tanggal"
+                                    value="" placeholder="Pilih Tanggal">
+
+
+                                <div class="mb-1 mt-2 label">Nama Client</div>
+                                <select type="text" class="form-control js-example-basic-single"
+                                    name="edit_nama_client" id="edit_nama_client" value=""
+                                    placeholder="Masukkan Nama Client">
+                                    <option value="">Pilih Client</option>
+                                    @foreach ($client as $item)
+                                        <option value="{{ $item->id }}" data-alamat-client="{{ $item->alamat }}"
+                                            data-nama-client="{{ $item->up_invoice }}">
+                                            {{ $item->nama_client }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                <input type="text" class="form-control" name="edit_alamat_client" disabled
+                                    id="edit_alamat_client" value="" placeholder="Alamat Client">
+                                <input type="text" class="form-control" name="edit_kepada" disabled id="edit_kepada"
+                                    value="" placeholder="Kepada">
+
+
+                                <div class="mb-1 mt-2 label">No. BAST</div>
+                                <input type="text" class="form-control mt-1" name="edit_no_bast_1"
+                                    id="edit_no_bast_1" value="" placeholder="Nomor Bast 1">
+                                <input type="text" class="form-control mt-1" name="edit_no_bast_2"
+                                    id="edit_no_bast_2" value="" placeholder="Nomor Bast 2">
+                                <input type="text" class="form-control mt-1" name="edit_no_bast_3"
+                                    id="edit_no_bast_3" value="" placeholder="Nomor Bast 3">
+                                <input type="text" class="form-control mt-1" name="edit_no_bast_4"
+                                    id="edit_no_bast_4" value="" placeholder="Nomor Bast 4">
+                                <input type="text" class="form-control mt-1" name="edit_no_bast_5"
+                                    id="edit_no_bast_5" value="" placeholder="Nomor Bast 5">
+
+                                <div class="mb-1 mt-2 label">Kode Admin</div>
+                                <input type="text" class="form-control" name="edit_kode_admin" id="edit_kode_admin"
+                                    value="" placeholder="Masukkan Kode Admin">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-1 mt-2 label">Jenis No.</div>
+                                <select type="text" class="form-control js-example-basic-single" name="edit_jenis_no"
+                                    id="edit_jenis_no" value="" placeholder="Masukkan Nama Client">
+                                    <option value="">Pilih Jenis No.</option>
+
+                                    <option value="PO">PO</option>
+                                    <option value="Kontrak">Kontrak</option>
+                                    <option value="SPK">SPK</option>
+                                    <option value="SPPK">SPPK</option>
+                                    <option value="FPB">FPB</option>
+                                </select>
+                                </select>
+                                <input type="text" class="form-control" name="edit_no_1" id="edit_no_1"
+                                    value="" placeholder="Nomor 1">
+                                <input type="text" class="form-control mt-1" name="edit_no_2" id="edit_no_2"
+                                    value="" placeholder="Nomor 2">
+                                <input type="text" class="form-control mt-1" name="edit_no_3" id="edit_no_3"
+                                    value="" placeholder="Nomor 3">
+                                <input type="text" class="form-control mt-1" name="edit_no_4" id="edit_no_4"
+                                    value="" placeholder="Nomor 4">
+                                <input type="text" class="form-control mt-1" name="edit_no_5" id="edit_no_5"
+                                    value="" placeholder="Nomor 5">
+
+
+                                <div class="mb-1 mt-2 label">Due Date</div>
+                                <input type="date" class="form-control" name="edit_due_date" id="edit_due_date"
+                                    value="" placeholder="Pilih Tanggal">
+
+                                <div class="mb-1 mt-2 label">Nama Bank</div>
+                                <select type="text" class="form-control js-example-basic-single" name="edit_nama_bank"
+                                    id="edit_nama_bank" value="" placeholder="Masukkan Nama Bank">
+                                    <option value="">Pilih Bank</option>
+                                    @foreach ($bank as $item)
+                                        <option value="{{ $item->id }}" data-nama-rek="{{ $item->nama_rek }}"
+                                            data-no-rek="{{ $item->nomer_rek }}">{{ $item->nama_bank }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <input type="text" class="form-control" name="edit_nama_rek" disabled
+                                    id="edit_nama_rek" value="" placeholder="A/N">
+                                <input type="text" class="form-control" disabled name="edit_no_rek" id="edit_no_rek"
+                                    value="" placeholder="A/C">
+                                <div class="mb-1 mt-2 label">No. fp</div>
+                                <input type="text" class="form-control" name="edit_no_fp" id="edit_no_fp"
+                                    value="" placeholder="Masukkan No. fp">
+                                <div class="mb-1 mt-2 label">Status</div>
+                                <select type="text" class="form-control js-example-basic-single" name="edit_status"
+                                    id="edit_status" value="" placeholder="Masukkan Nama Client">
+                                    <option value="">Pilih Jenis Status</option>
+
+                                    <option value="-">-</option>
+                                    <option value="paid">PAID</option>
+
+                                </select>
+                                <div class="mb-1 mt-2 label">Tanggal Paid</div>
+                                <input type="date" class="form-control" name="edit_paid" id="edit_paid" disabled
+                                    value="" placeholder="Pilih Tanggal">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Edit Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
             let detailArray = [];
             let no = 1;
 
-            $(document).on('click', '#btnDeletePo', function() {
+            $(document).on('click', '#btnDeleteInvoice', function() {
                 var url = $(this).data('url');
                 var tableId = $(this).data('table-id');
                 var name = $(this).data('name');
 
                 // Tampilkan SweetAlert konfirmasi
                 swal({
-                    text: 'Apa kamu yakin ingin menghapus PO ' + name + '?',
+                    text: 'Apa kamu yakin ingin menghapus Invoice ' + name + '?',
                     icon: 'warning',
                     buttons: {
                         cancel: 'Batal',
@@ -234,7 +367,7 @@
                                 // Menampilkan SweetAlert sukses
                                 swal({
                                     title: 'Berhasil!',
-                                    text: 'PO ' + name + ' berhasil dihapus',
+                                    text: 'Invoice ' + name + ' berhasil dihapus',
                                     icon: 'success',
                                     button: 'OK'
                                 });
@@ -253,26 +386,37 @@
                 });
             });
 
-            $(document).on('click', 'a[data-bs-toggle="modal"]', function() {
+            $(document).on('click', 'a[data-bs-target="#modalEditHeader"]', function() {
 
                 $('.error').remove(); // Hapus error sebelumnya
-                var poId = $(this).data('id'); // Ambil ID dari tombol edit
-                var url = '/po/' + poId + '/edit'; // URL untuk ambil data
-                var updateUrl = '/po/' + poId; // URL untuk update data
+                var invoiceId = $(this).data('id'); // Ambil ID dari tombol edit
+                var url = '/invoice/' + invoiceId + '/edit'; // URL untuk ambil data
+                var updateUrl = '/invoice/' + invoiceId; // URL untuk update data
 
                 // Request AJAX untuk mendapatkan data Vendor berdasarkan ID
                 $.get(url, function(data) {
                     // Isi field modal dengan data yang didapat dari server
-                    $('#edit_kode_purchase_order').val(data.kode_po);
-                    $('#edit_tanggal').val(data.tanggal_po);
-                    $('#edit_nama_vendor').val(data.vendor_id).trigger('change');
-                    $('#edit_nama_buyer').val(data.buyer);
-                    $('#edit_perihal').val(data.perihal);
-                    $('#edit_catatan').val(data.catatan);
-                    $('#edit_catatan_2').val(data.catatan_2);
-                    $('#edit_diskon_rupiah').val(data.diskon);
-
-                    // Set URL action form pada modal
+                    $('#edit_kode_invoice').val(data.kd_invoice);
+                    $('#edit_header_deskripsi').val(data.header_deskripsi);
+                    $('#edit_tanggal').val(data.tgl_invoice);
+                    $('#edit_nama_client').val(data.client_id).trigger('change');
+                    $('#edit_no_bast_1').val(data.no_bast_1);
+                    $('#edit_no_bast_2').val(data.no_bast_2);
+                    $('#edit_no_bast_3').val(data.no_bast_3);
+                    $('#edit_no_bast_4').val(data.no_bast_4);
+                    $('#edit_no_bast_5').val(data.no_bast_5);
+                    $('#edit_jenis_no').val(data.jenis_no);
+                    $('#edit_due_date').val(data.due_date);
+                    $('#edit_nama_bank').val(data.bank_id).trigger('change');
+                    $('#edit_no_1').val(data.no_1);
+                    $('#edit_no_2').val(data.no_2);
+                    $('#edit_no_3').val(data.no_3);
+                    $('#edit_no_4').val(data.no_4);
+                    $('#edit_kode_admin').val(data.kd_admin);
+                    $('#edit_no_fp').val(data.no_fp);
+                    $('#edit_status').val(data.status).trigger('change');
+                    $('#edit_paid').val(data.tgl_paid);
+                    // Set URL acti.val(data.bank_id);on form pada modal
                     $('#formEditHeader').attr('action', updateUrl);
                 });
             });
@@ -316,7 +460,7 @@
                         // Reset form dan tabel detail
                         $('#formTambahHeader')[0].reset();
                         $('#detailTable tbody').html('');
-                        $('#purchaseorder-table').DataTable().ajax.reload();
+                        $('#invoice-table').DataTable().ajax.reload();
                         $('.error').remove();
                         detailArray = [];
                     },
@@ -328,37 +472,73 @@
                             $('.error').remove();
 
                             // Menampilkan pesan error baru
-                            if (errors['header.kode_purchase_order']) {
-                                $('#kode_purchase_order').after('<div class="text-danger error">' + errors[
-                                    'header.kode_purchase_order'][0] + '</div>');
+                            if (errors['header.kode_invoice']) {
+                                $('#kode_invoice').after('<div class="text-danger error">' + errors[
+                                    'header.kode_invoice'][0] + '</div>');
+                            }
+                            if (errors['header.header_deskripsi']) {
+                                $('#header_deskripsi').after('<div class="text-danger error">' + errors[
+                                    'header.header_deskripsi'][0] + '</div>');
                             }
                             if (errors['header.tanggal']) {
                                 $('#tanggal').after('<div class="text-danger error">' + errors[
                                     'header.tanggal'][0] + '</div>');
                             }
-                            if (errors['header.nama_vendor']) {
-                                $('#nama_vendor').after('<div class="text-danger error">' + errors[
-                                    'header.nama_vendor'][0] + '</div>');
+                            if (errors['header.nama_client']) {
+                                $('#nama_client').after('<div class="text-danger error">' + errors[
+                                    'header.nama_client'][0] + '</div>');
                             }
-                            if (errors['header.nama_buyer']) {
-                                $('#nama_buyer').after('<div class="text-danger error">' + errors[
-                                    'header.nama_buyer'][0] + '</div>');
+                            if (errors['header.no_bast_1']) {
+                                $('#no_bast_1').after('<div class="text-danger error">' + errors[
+                                    'header.no_bast_1'][0] + '</div>');
                             }
-                            if (errors['header.perihal']) {
-                                $('#perihal').after('<div class="text-danger error">' + errors[
-                                    'header.perihal'][0] + '</div>');
+                            if (errors['header.no_bast_2']) {
+                                $('#no_bast_2').after('<div class="text-danger error">' + errors[
+                                    'header.no_bast_2'][0] + '</div>');
                             }
-                            if (errors['header.catatan']) {
-                                $('#catatan').after('<div class="text-danger error">' + errors[
-                                    'header.catatan'][0] + '</div>');
+                            if (errors['header.no_bast_3']) {
+                                $('#no_bast_3').after('<div class="text-danger error">' + errors[
+                                    'header.no_bast_3'][0] + '</div>');
                             }
-                            if (errors['header.catatan_2']) {
-                                $('#catatan_2').after('<div class="text-danger error">' + errors[
-                                    'header.catatan_2'][0] + '</div>');
+                            if (errors['header.no_bast_4']) {
+                                $('#no_bast_4').after('<div class="text-danger error">' + errors[
+                                    'header.no_bast_4'][0] + '</div>');
                             }
-                            if (errors['header.diskon_rupiah']) {
-                                $('#diskon_rupiah').after('<div class="text-danger error">' + errors[
-                                    'header.diskon_rupiah'][0] + '</div>');
+                            if (errors['header.no_bast_5']) {
+                                $('#no_bast_5').after('<div class="text-danger error">' + errors[
+                                    'header.no_bast_5'][0] + '</div>');
+                            }
+                            if (errors['header.jenis_no']) {
+                                $('#jenis_no').after('<div class="text-danger error">' + errors[
+                                    'header.jenis_no'][0] + '</div>');
+                            }
+                            if (errors['header.due_date']) {
+                                $('#due_date').after('<div class="text-danger error">' + errors[
+                                    'header.due_date'][0] + '</div>');
+                            }
+                            if (errors['header.nama_bank']) {
+                                $('#nama_bank').after('<div class="text-danger error">' + errors[
+                                    'header.nama_bank'][0] + '</div>');
+                            }
+                            if (errors['header.no_1']) {
+                                $('#no_1').after('<div class="text-danger error">' + errors[
+                                    'header.no_1'][0] + '</div>');
+                            }
+                            if (errors['header.no_2']) {
+                                $('#no_2').after('<div class="text-danger error">' + errors[
+                                    'header.no_2'][0] + '</div>');
+                            }
+                            if (errors['header.no_3']) {
+                                $('#no_3').after('<div class="text-danger error">' + errors[
+                                    'header.no_3'][0] + '</div>');
+                            }
+                            if (errors['header.no_4']) {
+                                $('#no_4').after('<div class="text-danger error">' + errors[
+                                    'header.no_4'][0] + '</div>');
+                            }
+                            if (errors['header.no_5']) {
+                                $('#no_5').after('<div class="text-danger error">' + errors[
+                                    'header.no_5'][0] + '</div>');
                             }
                         }
                         if (xhr.status === 500) {
@@ -517,50 +697,24 @@
                 // $('#formTambah')[0].reset();
             })
 
-            function detailDisable() {
-                $('#nama_barang').prop('disabled', true);
-                $('#qty').prop('disabled', true);
-                $('#satuan').prop('disabled', true);
-                $('#harga_satuan').prop('disabled', true);
-                $('#btn_detail').prop('disabled', true);
-            }
-
-            function detailEnable() {
-                $('#nama_barang').prop('disabled', false);
-                $('#qty').prop('disabled', false);
-                $('#satuan').prop('disabled', false);
-                $('#harga_satuan').prop('disabled', false);
-                $('#btn_detail').prop('disabled', false);
-            }
-
-            function headerDisable() {
-                $('#kode_purchase_order').prop('disabled', true);
-                $('#tanggal').prop('disabled', true);
-                $('#nama_vendor').prop('disabled', true);
-                $('#nama_buyer').prop('disabled', true);
-                $('#perihal').prop('disabled', true);
-                $('#catatan').prop('disabled', true);
-                $('#catatan_2').prop('disabled', true);
-                $('#diskon_rupiah').prop('disabled', true);
-                $('#btn_header').prop('disabled', true);
-            }
-
-            function headerEnable() {
-                $('#kode_purchase_order').prop('disabled', false);
-                $('#tanggal').prop('disabled', false);
-                $('#nama_vendor').prop('disabled', false);
-                $('#nama_buyer').prop('disabled', false);
-                $('#perihal').prop('disabled', false);
-                $('#catatan').prop('disabled', false);
-                $('#catatan_2').prop('disabled', false);
-                $('#diskon_rupiah').prop('disabled', false);
-                $('#btn_header').prop('disabled', false);
-            }
             $(document).ready(function() {
                 $('#nama_client').select2();
                 $('#jenis_no').select2();
                 $('#nama_bank').select2();
-                $('#edit_nama_vendor').select2({
+
+                $('#edit_status').select2({
+                    dropdownParent: $('#modalEditHeader'),
+                    width: '100%'
+                });
+                $('#edit_nama_client').select2({
+                    dropdownParent: $('#modalEditHeader'),
+                    width: '100%'
+                });
+                $('#edit_jenis_no').select2({
+                    dropdownParent: $('#modalEditHeader'),
+                    width: '100%'
+                });
+                $('#edit_nama_bank').select2({
                     dropdownParent: $('#modalEditHeader'),
                     width: '100%'
                 });
@@ -590,7 +744,7 @@
 
                     // Cari data vendor berdasarkan ID (misalnya, dalam elemen data-* yang sudah ada di halaman)
                     var bank = $('#nama_bank option').filter(function() {
-                        return $(this).val() == bankId ;
+                        return $(this).val() == bankId;
                     }).data();
                     // Isi input dengan data yang sesuai
                     if (bankId) {
@@ -602,29 +756,53 @@
                         $('#nama_rek, #no_rek').val('');
                     }
                 });
-
-                $('#edit_nama_vendor').on('change', function() {
+                $('#edit_nama_client').on('change', function() {
                     // Ambil ID vendor yang dipilih
-                    var vendorId = $(this).val();
+                    var clientId = $(this).val();
 
                     // Cari data vendor berdasarkan ID (misalnya, dalam elemen data-* yang sudah ada di halaman)
-                    var vendor = $('#edit_nama_vendor option').filter(function() {
-                        return $(this).val() == vendorId;
+                    var client = $('#edit_nama_client option').filter(function() {
+                        return $(this).val() == clientId;
                     }).data();
 
                     // Isi input dengan data yang sesuai
-                    if (vendorId) {
-                        $('#edit_alamat_vendor').val(vendor.alamat);
-                        $('#edit_kota_vendor').val(vendor.kota);
-                        $('#edit_up_vendor').val(vendor.up);
-                        $('#edit_email_vendor').val(vendor.email);
-                        $('#edit_nomor_vendor').val(vendor.nomor);
+                    if (clientId) {
+                        $('#edit_alamat_client').val(client.alamatClient);
+                        $('#edit_kepada').val(client.namaClient);
+
                     } else {
                         // Kosongkan input jika tidak ada vendor yang dipilih
-                        $('#edit_alamat_vendor, #edit_kota_vendor, #edit_up_vendor, #edit_email_vendor, #edit_nomor_vendor')
-                            .val('');
+                        $('#edit_alamat_client, #edit_kepada').val('');
                     }
                 });
+                $('#edit_nama_bank').on('change', function() {
+                    // Ambil ID vendor yang dipilih
+                    var bankId = $(this).val();
+
+                    // Cari data vendor berdasarkan ID (misalnya, dalam elemen data-* yang sudah ada di halaman)
+                    var bank = $('#edit_nama_bank option').filter(function() {
+                        return $(this).val() == bankId;
+                    }).data();
+                    // Isi input dengan data yang sesuai
+                    if (bankId) {
+                        $('#edit_nama_rek').val(bank.namaRek);
+                        $('#edit_no_rek').val(bank.noRek);
+
+                    } else {
+                        // Kosongkan input jika tidak ada vendor yang dipilih
+                        $('#edit_nama_rek, #edit_no_rek').val('');
+                    }
+                });
+
+                $('#edit_status').on('change', function() {
+                    var paid = $('#edit_status').val();
+
+                    if (paid === 'paid') {
+                        $('#edit_paid').prop('disabled', false);
+                    } else {
+                        $('#edit_paid').prop('disabled', true)
+                    }
+                })
 
             });
             document.addEventListener('DOMContentLoaded', function() {
@@ -671,7 +849,7 @@
                     type: 'PUT',
                     data: $(this).serialize(),
                     success: function(result) {
-                        $('#purchaseorder-table').DataTable().ajax.reload();
+                        $('#invoice-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
                             text: 'Header berhasil diubah',
@@ -781,7 +959,7 @@
                                     class="ml-4 fas fa-pen"></i></a></li>
                         <li>
                             <button class="dropdown-item text-danger fw-bold d-flex justify-content-between py-2" id="btnDeleteDetailItem" type="button"
-                                data-table-id="purchaseorder-table" data-url="po-detail/delete/${detail.id}" data-id="${detail.id}"
+                                data-table-id="invoice-table" data-url="po-detail/delete/${detail.id}" data-id="${detail.id}"
                                 data-name="${detail.nama_barang}" data-action="delete">
                                 Delete <i class="fas fa-trash"></i>
                             </button>
@@ -848,7 +1026,7 @@
                                             1); // Kolom pertama diupdate
                                     });
 
-                                    $('#purchaseorder-table').DataTable().ajax
+                                    $('#invoice-table').DataTable().ajax
                                         .reload(); // Reload DataTable jika diperlukan
 
                                 });
@@ -899,7 +1077,7 @@
                     type: 'PUT',
                     data: $(this).serialize(),
                     success: function(result) {
-                        $('#purchaseorder-table').DataTable().ajax.reload();
+                        $('#invoice-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
                             text: 'Item berhasil diubah',
@@ -967,7 +1145,7 @@
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(result) {
-                        $('#purchaseorder-table').DataTable().ajax.reload();
+                        $('#invoice-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
                             text: 'Item berhasil ditambah',
