@@ -17,4 +17,9 @@ class Bank extends Model
         'nomer_rek',
         'status',
     ];
+
+    public function invoice(){
+        return $this->hasMany(Invoice::class, 'bank_id', 'id');
+    }
+
 }

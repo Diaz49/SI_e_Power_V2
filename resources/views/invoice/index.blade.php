@@ -302,14 +302,14 @@
                 dataToSend._token = '{{ csrf_token() }}';
                 // Kirim data menggunakan AJAX
                 $.ajax({
-                    url: '/po', // URL endpoint untuk menyimpan data
+                    url: '/invoice', // URL endpoint untuk menyimpan data
                     type: 'POST',
                     data: JSON.stringify(dataToSend),
                     contentType: 'application/json', // Pastikan data dikirim dalam format JSON
                     success: function(response) {
                         swal({
                             title: 'Berhasil!',
-                            text: 'Data purchase order berhasil disimpan!',
+                            text: 'Data Invoice berhasil disimpan!',
                             icon: 'success',
                             button: 'OK',
                         });
@@ -391,7 +391,6 @@
                 const qty = $('#qty').val();
                 const satuan = $('#satuan').val();
                 const harga_satuan = $('#harga_satuan').val();
-                const po_id = $('#po_id').val(); // Misalnya, ID PO sudah ada di form
                 const jumlah_harga = qty * harga_satuan;
 
                 // Hapus pesan error sebelumnya
@@ -430,7 +429,6 @@
                 // Semua validasi lolos, lanjutkan menambah detail
                 detailArray.push({
                     no,
-                    po_id,
                     nama_barang,
                     qty,
                     satuan,

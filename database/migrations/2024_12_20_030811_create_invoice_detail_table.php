@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('invoice_detail', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('invoice_id')->nullable(); 
+            $table->string('nama_barang', 100); 
+            $table->integer('qty'); 
+            $table->string('satuan', 50); 
+            $table->decimal('harga_satuan', 10, 2); 
+            $table->decimal('jumlah_harga', 20, 2); 
+            $table->timestamps(); 
+    
+            // Foreign key constraints
+            $table->foreign('invoice_id')->references('id')->on('invoice')->onDelete('cascade');
         });
     }
 

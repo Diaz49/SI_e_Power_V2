@@ -566,7 +566,6 @@
                 const qty = $('#qty').val();
                 const satuan = $('#satuan').val();
                 const harga_satuan = $('#harga_satuan').val();
-                const po_id = $('#po_id').val(); // Misalnya, ID PO sudah ada di form
                 const jumlah_harga = qty * harga_satuan;
 
                 // Hapus pesan error sebelumnya
@@ -605,7 +604,6 @@
                 // Semua validasi lolos, lanjutkan menambah detail
                 detailArray.push({
                     no,
-                    po_id,
                     nama_barang,
                     qty,
                     satuan,

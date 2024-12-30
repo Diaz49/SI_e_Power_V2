@@ -22,4 +22,8 @@ class DataClient extends Model
     {
         return $this->hasMany(Sph::class, 'data_client_id', 'id');
     }
+
+    public function invoice(){
+        return $this->hasMany(Invoice::class, 'client_id', 'id');
+    }
 }
