@@ -406,7 +406,7 @@
                     $('#edit_no_bast_4').val(data.no_bast_4);
                     $('#edit_no_bast_5').val(data.no_bast_5);
                     $('#edit_jenis_no').val(data.jenis_no);
-                    $('#edit_due_date').val(data.due_date);
+                    $('#edit_due_date').val(data.due);
                     $('#edit_nama_bank').val(data.bank_id).trigger('change');
                     $('#edit_no_1').val(data.no_1);
                     $('#edit_no_2').val(data.no_2);
@@ -866,48 +866,113 @@
                             $('.error').remove(); // Hapus error sebelumnya
 
                             // Menampilkan pesan error untuk masing-masing field
-                            if (errors.edit_kode_purchase_order) {
-                                $('#edit_kode_purchase_order').after('<div class="text-danger error">' +
+                            if (errors.edit_kode_invoice) {
+                                $('#edit_kode_invoice').after('<div class="text-danger error">' +
                                     errors
-                                    .edit_kode_purchase_order[0] + '</div>');
+                                    .edit_kode_invoice[0] + '</div>');
+                            }
+                            if (errors.edit_header_deskripsi) {
+                                $('#edit_header_deskripsi').after('<div class="text-danger error">' + errors
+                                    .edit_header_deskripsi[
+                                        0] + '</div>');
                             }
                             if (errors.edit_tanggal) {
                                 $('#edit_tanggal').after('<div class="text-danger error">' + errors
                                     .edit_tanggal[
                                         0] + '</div>');
                             }
-                            if (errors.edit_nama_vendor) {
-                                $('#edit_nama_vendor').after('<div class="text-danger error">' + errors
-                                    .edit_nama_vendor[
-                                        0] + '</div>');
-                            }
-                            if (errors.edit_nama_buyer) {
-                                $('#edit_nama_buyer').after('<div class="text-danger error">' + errors
-                                    .edit_nama_buyer[
+                            if (errors.edit_nama_client) {
+                                $('#edit_nama_client').after('<div class="text-danger error">' + errors
+                                    .edit_nama_client[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.edit_perihal) {
-                                $('#edit_perihal').after('<div class="text-danger error">' + errors
-                                    .edit_perihal[
+                            if (errors.edit_no_bast_1) {
+                                $('#edit_no_bast_1').after('<div class="text-danger error">' + errors
+                                    .edit_no_bast_1[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.edit_catatan) {
-                                $('#edit_catatan').after('<div class="text-danger error">' + errors
-                                    .edit_catatan[
+                            if (errors.edit_no_bast_2) {
+                                $('#edit_no_bast_2').after('<div class="text-danger error">' + errors
+                                    .edit_no_bast_2[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.edit_catatan_2) {
-                                $('#edit_catatan_2').after('<div class="text-danger error">' + errors
-                                    .edit_catatan_2[
+                            if (errors.edit_no_bast_3) {
+                                $('#edit_no_bast_3').after('<div class="text-danger error">' + errors
+                                    .edit_no_bast_3[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.edit_diskon_rupiah) {
-                                $('#edit_diskon_rupiah').after('<div class="text-danger error">' + errors
-                                    .edit_diskon_rupiah[
+                            if (errors.edit_no_bast_4) {
+                                $('#edit_no_bast_4').after('<div class="text-danger error">' + errors
+                                    .edit_no_bast_4[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_no_bast_5) {
+                                $('#edit_no_bast_5').after('<div class="text-danger error">' + errors
+                                    .edit_no_bast_5[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_jenis_no) {
+                                $('#edit_jenis_no').after('<div class="text-danger error">' + errors
+                                    .edit_jenis_no[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_no_1) {
+                                $('#edit_no_1').after('<div class="text-danger error">' + errors
+                                    .edit_no_1[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_no_2) {
+                                $('#edit_no_2').after('<div class="text-danger error">' + errors
+                                    .edit_no_2[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_no_3) {
+                                $('#edit_no_3').after('<div class="text-danger error">' + errors
+                                    .edit_no_3[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_no_4) {
+                                $('#edit_no_4').after('<div class="text-danger error">' + errors
+                                    .edit_no_4[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_no_5) {
+                                $('#edit_no_5').after('<div class="text-danger error">' + errors
+                                    .edit_no_5[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_due_date) {
+                                $('#edit_due_date').after('<div class="text-danger error">' + errors
+                                    .edit_due_date[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_nama_bank) {
+                                $('#edit_nama_bank').after('<div class="text-danger error">' + errors
+                                    .edit_nama_bank[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_paid) {
+                                $('#edit_paid').after('<div class="text-danger error">' + errors
+                                    .edit_paid[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_status) {
+                                $('#edit_status').after('<div class="text-danger error">' + errors
+                                    .edit_status[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_no_fp) {
+                                $('#edit_no_fp').after('<div class="text-danger error">' + errors
+                                    .edit_no_fp[
+                                        0] +
+                                    '</div>');
+                            }   if (errors.edit_kode_admin) {
+                                $('#edit_kode_admin').after('<div class="text-danger error">' + errors
+                                    .edit_kode_admin[
                                         0] +
                                     '</div>');
                             }

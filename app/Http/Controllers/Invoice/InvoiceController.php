@@ -9,6 +9,7 @@ use App\Models\DataClient;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class InvoiceController extends Controller
 {
@@ -125,6 +126,81 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($id);
         return  response()->json($invoice, 200);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        $request->validate([
+            'edit_kode_invoice' => ['required', 'max:100', Rule::unique('invoice', 'kd_invoice')->ignore($invoice->id)],
+            'edit_header_deskripsi' => 'required',
+            'edit_tanggal' => 'required|date',
+            'edit_nama_client' => 'required|max:50',
+            'edit_no_bast_1' => 'required|string',
+            'edit_no_bast_2' => 'nullable|string',
+            'edit_no_bast_3' => 'nullable|string',
+            'edit_no_bast_4' => 'nullable|string',
+            'edit_no_bast_5' => 'nullable|string',
+            'edit_jenis_no' => 'required|string',
+            'edit_due_date' => 'required|string',
+            'edit_nama_bank' => 'required|string',
+            'edit_no_1' => 'required|string',
+            'edit_no_2' => 'nullable|string',
+            'edit_no_3' => 'nullable|string',
+            'edit_no_4' => 'nullable|string',
+            'edit_no_5' => 'nullable|string',
+            'edit_kode_admin' => 'nullable|string',
+            'edit_status' => 'nullable|string',
+            'edit_paid' => 'nullable|string',
+            'edit_no_fp' => 'nullable|string',
+        ], [
+            'edit_kode_invoice.required' => 'Kode invoice wajib diisi.',
+            'edit_kode_invoice.max' => 'Kode invoice tidak boleh lebih dari 100 karakter.',
+            'edit_kode_invoice.unique' => 'Kode invoice sudah digunakan.',
+            'edit_header_deskripsi.required' => 'Deskripsi header wajib diisi.',
+            'edit_tanggal.required' => 'Tanggal wajib diisi.',
+            'edit_tanggal.date' => 'Format tanggal tidak valid.',
+            'edit_nama_client.required' => 'Nama client wajib diisi.',
+            'edit_nama_client.max' => 'Nama client tidak boleh lebih dari 50 karakter.',
+            'edit_no_bast_1.required' => 'Nomor BAST 1 wajib diisi.',
+            'edit_jenis_no.required' => 'Jenis nomor wajib diisi.',
+            'edit_jenis_no.string' => 'Jenis nomor harus berupa teks.',
+            'edit_due_date.required' => 'Tanggal jatuh tempo wajib diisi.',
+            'edit_due_date.string' => 'Tanggal jatuh tempo harus berupa teks.',
+            'edit_nama_bank.required' => 'Nama bank wajib diisi.',
+            'edit_nama_bank.string' => 'Nama bank harus berupa teks.',
+            'edit_no_1.required' => 'Nomor 1 wajib diisi.',
+            'edit_kode_admin.string' => 'Kode admin harus berupa teks.',
+            'edit_status.string' => 'Status harus berupa teks.',
+            'edit_paid.string' => 'Kolom Paid harus berupa teks.',
+            'edit_no_fp.string' => 'Nomor Faktur Pajak harus berupa teks.',
+        ]);
+
+        $invoice->update([
+            'kd_invoice' => $request->edit_kode_invoice,
+            'header_deskripsi' => $request->edit_header_deskripsi,
+            'tgl_invoice' => $request->edit_tanggal,
+            'client_id' => $request->edit_nama_client,
+            'no_bast_1' => $request->edit_no_bast_1,
+            'no_bast_2' => $request->edit_no_bast_2,
+            'no_bast_3' => $request->edit_no_bast_3,
+            'no_bast_4' => $request->edit_no_bast_4,
+            'no_bast_5' => $request->edit_no_bast_5,
+            'jenis_no' => $request->edit_jenis_no,
+            'no_1' => $request->edit_no_1,
+            'no_2' => $request->edit_no_2,
+            'no_3' => $request->edit_no_3,
+            'no_4' => $request->edit_no_4,
+            'no_5' => $request->edit_no_5,
+            'due' => $request->edit_due_date,
+            'bank_id' => $request->edit_nama_bank,
+            'tgl_paid' => $request->edit_paid,
+            'status' => $request->edit_status,
+            'no_fp' => $request->edit_no_fp,
+            'kd_admin' => $request->edit_kode_admin,
+        ]);
+
+        return response()->json();
     }
 
     public function delete(string $id)
