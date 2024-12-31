@@ -22,7 +22,10 @@ class PTDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'pt.action')
+            ->addIndexColumn()
+            ->addColumn('action', function (PT $pt) {
+                return view('pt.action', ['pt' => $pt]);
+            })
             ->setRowId('id');
     }
 
@@ -62,15 +65,20 @@ class PTDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::computed('DT_RowIndex')
+                ->title('No.') // Ubah judul kolom menjadi "No."
+                ->searchable(false)
+                ->orderable(false)
+                ->width(30)
+                ->addClass('text-center')
+                ->searchable(false),
+            Column::make('nama_pt'),
+            Column::make('kode_pt'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

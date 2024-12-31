@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('pt', function (Blueprint $table) {
             $table->id();
-            $table->sting('nama_pt');
-            $table->sting('kode_pt');
+            // $table->unsignedBigInteger('pt_id')->nullable(); 
+            $table->string('nama_pt');
+            $table->string('kode_pt');
             $table->timestamps();
+
+            // Foreign key constraints
         });
     }
 

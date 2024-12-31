@@ -86,7 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('pt', [PTController::class, 'store'])->name('pt.store');
     Route::get('pt/{id}/edit', [PTController::class, 'edit'])->name('pt.edit');
     Route::put('pt/{id}', [PTController::class, 'update'])->name('pt.update');
-    Route::delete('pt/delete/{id}', [PTController::class, 'delete'])->name('pt.delete');
+    Route::delete('pt/delete/{id}', [PTController::class, 'destroy'])->name('pt.delete');
 
     // sph
     Route::get('data-sph', [SphController::class, 'index'])->name('data-sph');

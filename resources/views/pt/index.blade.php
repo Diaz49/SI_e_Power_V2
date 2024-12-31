@@ -38,23 +38,16 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-1 label">Nama PT</div>
-                        <input type="text" class="form-control" name="nama_bank" id="nama_bank" value="{{ old('') }}"
+                        <input type="text" class="form-control" name="nama_pt" id="nama_pt" value="{{ old('') }}"
                             placeholder="Masukkan Nama PT">
-                        @error('nama_bank')
+                        @error('nama_pt')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Nama Rek.</div>
-                        <input type="text" class="form-control" name="nama_rek" id="nama_rek" value="{{ old('') }}"
-                            placeholder="Masukkan Nama Rekening">
-                        @error('nama_rek')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">Nomer Rek.</div>
-                        <input type="text" class="form-control" name="nomer_rek" id="nomer_rek" value="{{ old('') }}"
-                            placeholder="Masukkan Nomer Rekening">
-                        @error('nomer_rek')
+                        <div class="mb-1 mt-2 label">Kode PT</div>
+                        <input type="text" class="form-control" name="kode_pt" id="kode_pt" value="{{ old('') }}"
+                            placeholder="Masukkan Kode PT ">
+                        @error('kode_pt')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
 
@@ -82,33 +75,17 @@
                     <div class="modal-body">
 
                         <div class="mb-1 mt-2 label">Nama PT</div>
-                        <input type="text" class="form-control" name="nama_bank_edit" id="nama_bank_edit"
+                        <input type="text" class="form-control" name="nama_pt_edit" id="nama_pt_edit"
                             value="" placeholder="Masukkan Nama PT">
-                        @error('nama_bank_edit')
+                        @error('nama_pt_edit')
                             <div class="text-danger error ">{{ $message }}</div>
                         @enderror
 
-                        <div class="mb-1 mt-2 label">Nama Rek.</div>
-                        <input type="text" class="form-control" name="nama_rek_edit" id="nama_rek_edit" value=""
-                            placeholder="Masukkan Nomer Rekening">
-                        @error('nama_rek_edit')
+                        <div class="mb-1 mt-2 label">Kode PT</div>
+                        <input type="text" class="form-control" name="kode_pt_edit" id="kode_pt_edit" value=""
+                            placeholder="Masukkan Kode PT ">
+                        @error('kode_pt_edit')
                             <div class="text-danger error ">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">Nomer Rek.</div>
-                        <input type="text" class="form-control" name="nomer_rek_edit" id="nomer_rek_edit" value=""
-                            placeholder="Masukkan Nomer Rekening">
-                        @error('nomer_rek_edit')
-                            <div class="text-danger error ">{{ $message }}</div>
-                        @enderror
-
-                        <div class="mb-1 mt-2 label">Status</div>
-                        <select class="form-control status-select" name="status_edit" id="status_edit">
-                            <option value="use" {{ (isset($pt) && $pt->status === 'use') ? 'selected' : '' }}>Use</option>
-                            <option value="no_use" {{ (isset($pt) && $pt->status === 'no_use') ? 'selected' : '' }}>Not Use</option>
-                        </select>
-                        @error('status_edit')
-                            <div class="text-danger error">{{ $message }}</div>
                         @enderror
 
                     </div>
@@ -184,19 +161,17 @@
             });
             $(document).on('click', 'a[data-bs-toggle="modal"]', function() {
                 $('.error').remove(); // Hapus error sebelumnya
-                var databank = $(this).data('id'); // Ambil ID dari tombol edit
-                var url = '/pt/' + databank + '/edit'; // URL untuk ambil data
-                var updateUrl = '/pt/' + databank; // URL untuk update data
+                var datapt = $(this).data('id'); // Ambil ID dari tombol edit
+                var url = '/pt/' + datapt + '/edit'; // URL untuk ambil data
+                var updateUrl = '/pt/' + datapt; // URL untuk update data
 
-                console.log('Client ID:', databank);
+                console.log('Client ID:', datapt);
 
                 // Request AJAX untuk mendapatkan data pt berdasarkan ID
                 $.get(url, function(data) {
                     // Isi field modal dengan data yang didapat dari server
-                    $('#nama_bank_edit').val(data.nama_bank);
-                    $('#nama_rek_edit').val(data.nama_rek);
-                    $('#nomer_rek_edit').val(data.nomer_rek);
-                    $('#status_edit').val(data.status);
+                    $('#nama_pt_edit').val(data.nama_pt);
+                    $('#kode_pt_edit').val(data.kode_pt);
 
                     // Set URL action form pada modal
                     $('#formEdit').attr('action', updateUrl);
@@ -229,29 +204,18 @@
                             $('.error').remove(); // Hapus error sebelumnya
 
                             // Menampilkan pesan error untuk masing-masing field
-                            if (errors.nama_bank_edit) {
-                                $('#nama_bank_edit').after('<div class="text-danger error">' + errors
-                                    .nama_bank_edit[
+                            if (errors.nama_pt_edit) {
+                                $('#nama_pt_edit').after('<div class="text-danger error">' + errors
+                                    .nama_pt_edit[
                                         0] + '</div>');
                             }
-                            if (errors.nama_rek_edit) {
-                                $('#nama_rek_edit').after('<div class="text-danger error">' + errors
-                                    .nama_rek_edit[
+                            if (errors.kode_pt_edit) {
+                                $('#kode_pt_edit').after('<div class="text-danger error">' + errors
+                                    .kode_pt_edit[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.nomer_rek_edit) {
-                                $('#nomer_rek_edit').after('<div class="text-danger error">' + errors
-                                    .nomer_rek_edit[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.status_edit) {
-                                $('#status_edit').after('<div class="text-danger error">' + errors
-                                    .status_edit[
-                                        0] +
-                                    '</div>');
-                            }
+                           
                         } else {
                             swal({
                                 title: 'Gagal!',
@@ -292,22 +256,18 @@
                             $('.error').remove(); // Hapus error sebelumnya
 
                             // Menampilkan pesan error untuk masing-masing field
-                            if (errors.nama_bank) {
-                                $('#nama_bank').after('<div class="text-danger error">' + errors
-                                    .nama_bank[
+                            if (errors.nama_pt) {
+                                $('#nama_pt').after('<div class="text-danger error">' + errors
+                                    .nama_pt[
                                         0] + '</div>');
                             }
-                            if (errors.nama_rek) {
-                                $('#nama_rek').after('<div class="text-danger error">' + errors
-                                    .nama_rek[
+                            if (errors.kode_pt) {
+                                $('#kode_pt').after('<div class="text-danger error">' + errors
+                                    .kode_pt[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.nomer_rek) {
-                                $('#nomer_rek').after('<div class="text-danger error">' + errors.nomer_rek[
-                                        0] +
-                                    '</div>');
-                            }
+
                         } else {
                             swal({
                                 title: 'Gagal!',
@@ -325,3 +285,4 @@
             })
         </script>
 @endpush
+@endsection
