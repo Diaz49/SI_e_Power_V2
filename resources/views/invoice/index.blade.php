@@ -22,7 +22,7 @@
         <div class="card m-4">
             <div class="card-body">
                 <div class="table-responsive">
-                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
+                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive text-center']) !!}
 
                 </div>
             </div>

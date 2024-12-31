@@ -26,13 +26,22 @@ class InvoiceDataTable extends DataTable
             ->addColumn('action', function (Invoice $invoice) {
                 return view('invoice.action', ['invoice' => $invoice]);
             })
-
+            ->addColumn('status', function (Invoice $invoice) {
+                if ($invoice->status === 'paid') {
+                    return '<span class="badge bg-success fw-bolder">PAID</span>'; // Biru untuk 'use'
+                } elseif ($invoice->status === '-') {
+                    return '<span class="badge bg-danger">-</span>'; // Merah untuk 'not_use'
+                }
+                return '<span class="badge bg-secondary">Unknown</span>'; // Abu-abu untuk status lainnya
+            })
             ->editColumn('jumlah_item', function (Invoice $invoice) {
                 return $invoice->detail->count();
             })->editColumn('jumlah_harga', function (Invoice $invoice) {
                 return $invoice->detail->sum('jumlah_harga');
             })
-            ->setRowId('id');
+            ->setRowId('id')
+            ->rawColumns(['status'])
+        ;
     }
 
     /**

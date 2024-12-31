@@ -33,7 +33,7 @@ class InvoiceController extends Controller
             'header.no_bast_4' => 'nullable|string',
             'header.no_bast_5' => 'nullable|string',
             'header.jenis_no' => 'required|string',
-            'header.due_date' => 'required|string',
+            'header.due_date' => 'required|date',
             'header.nama_bank' => 'required|string',
             'header.no_1' => 'required|string',
             'header.no_2' => 'nullable|string',
@@ -57,7 +57,7 @@ class InvoiceController extends Controller
             'header.jenis_no.required' => 'Jenis nomor wajib diisi.',
             'header.jenis_no.string' => 'Jenis nomor harus berupa teks.',
             'header.due_date.required' => 'Tanggal jatuh tempo wajib diisi.',
-            'header.due_date.string' => 'Tanggal jatuh tempo harus berupa teks.',
+            'header.due_date.date' => 'Tanggal jatuh tempo harus berupa tanggal yang valid.',
             'header.nama_bank.required' => 'Nama bank wajib diisi.',
             'header.nama_bank.string' => 'Nama bank harus berupa teks.',
             'header.no_1.required' => 'Nomor 1 wajib diisi.',
@@ -142,7 +142,7 @@ class InvoiceController extends Controller
             'edit_no_bast_4' => 'nullable|string',
             'edit_no_bast_5' => 'nullable|string',
             'edit_jenis_no' => 'required|string',
-            'edit_due_date' => 'required|string',
+            'edit_due_date' => 'required|date',
             'edit_nama_bank' => 'required|string',
             'edit_no_1' => 'required|string',
             'edit_no_2' => 'nullable|string',
@@ -151,7 +151,7 @@ class InvoiceController extends Controller
             'edit_no_5' => 'nullable|string',
             'edit_kode_admin' => 'nullable|string',
             'edit_status' => 'nullable|string',
-            'edit_paid' => 'nullable|string',
+            'edit_paid' => 'required_if:edit_status,paid|date',
             'edit_no_fp' => 'nullable|string',
         ], [
             'edit_kode_invoice.required' => 'Kode invoice wajib diisi.',
@@ -166,17 +166,17 @@ class InvoiceController extends Controller
             'edit_jenis_no.required' => 'Jenis nomor wajib diisi.',
             'edit_jenis_no.string' => 'Jenis nomor harus berupa teks.',
             'edit_due_date.required' => 'Tanggal jatuh tempo wajib diisi.',
-            'edit_due_date.string' => 'Tanggal jatuh tempo harus berupa teks.',
+            'edit_due_date.date' => 'Tanggal jatuh tempo harus berupa tanggal yang valid.',
             'edit_nama_bank.required' => 'Nama bank wajib diisi.',
             'edit_nama_bank.string' => 'Nama bank harus berupa teks.',
             'edit_no_1.required' => 'Nomor 1 wajib diisi.',
             'edit_kode_admin.string' => 'Kode admin harus berupa teks.',
             'edit_status.string' => 'Status harus berupa teks.',
-            'edit_paid.string' => 'Kolom Paid harus berupa teks.',
+            'edit_paid.date' => 'Kolom Paid harus berupa tanggal yang valid.',
+            'edit_paid.required_if' => 'Tanggal paid harus di isi.',
             'edit_no_fp.string' => 'Nomor Faktur Pajak harus berupa teks.',
         ]);
-
-        $invoice->update([
+        $data = [
             'kd_invoice' => $request->edit_kode_invoice,
             'header_deskripsi' => $request->edit_header_deskripsi,
             'tgl_invoice' => $request->edit_tanggal,
@@ -194,11 +194,16 @@ class InvoiceController extends Controller
             'no_5' => $request->edit_no_5,
             'due' => $request->edit_due_date,
             'bank_id' => $request->edit_nama_bank,
-            'tgl_paid' => $request->edit_paid,
             'status' => $request->edit_status,
             'no_fp' => $request->edit_no_fp,
             'kd_admin' => $request->edit_kode_admin,
-        ]);
+        ];
+        if ($request->edit_status === 'paid') {
+            $data['tgl_paid'] = $request->edit_paid;
+        } else {
+            $data['tgl_paid'] = null;
+        }
+        $invoice->update($data);
 
         return response()->json();
     }
