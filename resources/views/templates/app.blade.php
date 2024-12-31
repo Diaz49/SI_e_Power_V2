@@ -76,13 +76,13 @@
                             </a>
                         </li>
                         <li
-                            class="nav-item {{ Route::is('project-id') ? 'active' : '' }}{{ Route::is('data-client') ? 'active' : '' }} {{ Route::is('data-vendor') ? 'active' : '' }} {{ Route::is('bank') ? 'active' : '' }}">
+                            class="nav-item {{ Route::is('project-id') ? 'active' : '' }}{{ Route::is('data-client') ? 'active' : '' }} {{ Route::is('data-vendor') ? 'active' : '' }} {{ Route::is('bank') ? 'active' : '' }} {{ Route::is('pt') ? 'show' : '' }}">
                             <a data-bs-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
                                 <p>Master</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse {{ Route::is('project-id') ? 'show' : '' }}{{ Route::is('data-client') ? 'show' : '' }} {{ Route::is('data-vendor') ? 'show' : '' }} {{ Route::is('bank') ? 'show' : '' }}"
+                            <div class="collapse {{ Route::is('project-id') ? 'show' : '' }}{{ Route::is('data-client') ? 'show' : '' }} {{ Route::is('data-vendor') ? 'show' : '' }} {{ Route::is('bank') ? 'show' : '' }} {{ Route::is('pt') ? 'show' : '' }}"
                                 id="base">
                                 <ul class="nav nav-collapse">
                                     <li class="{{ Route::is('project-id') ? 'active' : '' }}">
@@ -103,6 +103,11 @@
                                     <li class="{{ Route::is('bank') ? 'active' : '' }}">
                                         <a href="{{ route('bank') }}">
                                             <span class="sub-item">Data Bank</span>
+                                        </a>
+                                    </li>
+                                    <li class="{{ Route::is('pt') ? 'active' : '' }}">
+                                        <a href="{{ route('pt') }}">
+                                            <span class="sub-item">Data PT</span>
                                         </a>
                                     </li>
                                 </ul>
