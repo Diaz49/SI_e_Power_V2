@@ -2,6 +2,28 @@
 @section('content')
     @push('style')
     @endpush
+    <head>
+        <style>
+            .filter-container {
+        display: inline-flex;
+        align-items: center;
+        background-color: #007bff;
+        color: white;
+        border-radius: 50px;
+        padding: 15px;
+        /* font-size: 10px; */
+        font-weight: bold;
+    }
+    .filter-container span {
+        margin-left: 10px;
+        background: transparent;
+        border: none;
+        color: white;
+        font-weight: bold;
+        /* cursor: pointer; */
+    }
+        </style>
+    </head>
     <h4 class="text-primary fw-bolder fs-2 m-4">Data Client</h4>
     <div class="d-flex justify-content-end">
         <div class="row ">
@@ -18,6 +40,10 @@
         </div>
     </div>
     <div class="card m-4">
+        <!-- Filter Container -->
+        <div id="filterInfo" class="filter-container " style="width: 100px; height: 30px; margin-top: 20px; margin-left: 20px">
+            {{-- <p>Filtered by: <span id="selectedPT">None</span> | Date: <span id="selectedYear">All</span></p> --}}
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
