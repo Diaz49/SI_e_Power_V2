@@ -327,6 +327,136 @@
     </form>
 
 
+    <!-- Modal Edit Detail -->
+    <div class="modal fade" id="modalEditDetail" tabindex="-1" aria-labelledby="modalEditDetailLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalEditDetailLabel">Edit Data Detail</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4 table-responsive">
+                        <table class="table table-bordered " id="detailEditTable">
+                            <thead class="table-dark text-center">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Barang</th>
+                                    <th>Qty</th>
+                                    <th>Satuan</th>
+                                    <th>Harga Satuan</th>
+                                    <th>Jumlah</th>
+                                    <th>Aksi</th>
+                                </tr>
+
+                            </thead>
+                            <tbody class="table-group-divider text-center">
+                                <!-- Data detail akan ditambahkan di sini -->
+                            </tbody>
+                        </table>
+                        <div class="mt-2">
+                            <strong>Total Keseluruhan: Rp <span id="totalHarga">0</span></strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnTambahDetail" data-bs-target="#modalAddItem" data-bs-toggle="modal"
+                        class="btn btn-primary" data-add-invoice-id="">Tambah Detail</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Item -->
+    <form action="" method="POST" id="formAddItem">
+        @method('POST')
+        @csrf
+        <div class="modal fade" id="modalAddItem" tabindex="-1" aria-labelledby="modalAddItemLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p type="button" class="modal-title fw-bold me-2" id="btn-back" data-bs-toggle="modal"
+                            data-bs-target="#modalEditDetail"><i class="fas fa-arrow-left"></i></p>
+                        <h1 class="modal-title fs-5" id="modalAddItemLabel">Tambah Detail</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" name="add_invoice_id" id="add_invoice_id" hidden>
+
+                        <div class="mb-1 label">Deskripsi</div>
+                        <input type="text" class="form-control" name="add_nama_barang" id="add_nama_barang"
+                            value="" placeholder="Masukkan Nama Barang">
+
+
+                        <div class="mb-1 mt-2 label">Qty</div>
+                        <input type="text" class="form-control" name="add_qty" id="add_qty" value=""
+                            placeholder="Masukkan Qty">
+
+
+                        <div class="mb-1 mt-2 label">Satuan</div>
+                        <input type="text" class="form-control" name="add_satuan" id="add_satuan" value=""
+                            placeholder="Masukkan Satuan">
+
+
+                        <div class="mb-1 mt-2 label">Harga Satuan</div>
+                        <input type="text" class="form-control" name="add_harga_satuan" id="add_harga_satuan"
+                            value="" placeholder="Masukkan Harga Satuan">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Tambah Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Modal Edit Item -->
+    <form action="" method="POST" id="formEditItem">
+        @method('PUT')
+        @csrf
+        <div class="modal fade" id="modalEditItem" tabindex="-1" aria-labelledby="modalEditItemLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p type="button" class="modal-title fw-bold me-2" id="btn-back" data-bs-toggle="modal"
+                            data-bs-target="#modalEditDetail"><i class="fas fa-arrow-left"></i></p>
+                        <h1 class="modal-title fs-5" id="modalEditItemLabel">Edit Item</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" name="edit_invoice_id" id="edit_invoice_id" hidden>
+
+                        <div class="mb-1 label">Deskripsi</div>
+                        <input type="text" class="form-control" name="edit_nama_barang" id="edit_nama_barang"
+                            value="" placeholder="Masukkan Nama Barang">
+
+
+                        <div class="mb-1 mt-2 label">Qty</div>
+                        <input type="text" class="form-control" name="edit_qty" id="edit_qty" value=""
+                            placeholder="Masukkan Qty">
+
+
+                        <div class="mb-1 mt-2 label">Satuan</div>
+                        <input type="text" class="form-control" name="edit_satuan" id="edit_satuan" value=""
+                            placeholder="Masukkan Satuan">
+
+
+                        <div class="mb-1 mt-2 label">Harga Satuan</div>
+                        <input type="text" class="form-control" name="edit_harga_satuan" id="edit_harga_satuan"
+                            value="" placeholder="Masukkan Harga Satuan">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Edit Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
@@ -462,6 +592,9 @@
                         $('#detailTable tbody').html('');
                         $('#invoice-table').DataTable().ajax.reload();
                         $('.error').remove();
+                        $('#nama_client').val(null).trigger('change');
+                        $('#nama_bank').val(null).trigger('change');
+                        $('#jenis_no').val(null).trigger('change');
                         detailArray = [];
                     },
                     error: function(xhr) {
@@ -692,7 +825,9 @@
                 $('.error').remove();
                 $('#formTambahHeader')[0].reset();
                 $('#formTambahDetail')[0].reset();
-                $('#nama_vendor').val(null).trigger('change');
+                $('#nama_client').val(null).trigger('change');
+                $('#nama_bank').val(null).trigger('change');
+                $('#jenis_no').val(null).trigger('change');
 
                 // $('#formTambah')[0].reset();
             })
@@ -910,67 +1045,80 @@
                                     .edit_no_bast_4[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_no_bast_5) {
+                            }
+                            if (errors.edit_no_bast_5) {
                                 $('#edit_no_bast_5').after('<div class="text-danger error">' + errors
                                     .edit_no_bast_5[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_jenis_no) {
+                            }
+                            if (errors.edit_jenis_no) {
                                 $('#edit_jenis_no').after('<div class="text-danger error">' + errors
                                     .edit_jenis_no[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_no_1) {
+                            }
+                            if (errors.edit_no_1) {
                                 $('#edit_no_1').after('<div class="text-danger error">' + errors
                                     .edit_no_1[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_no_2) {
+                            }
+                            if (errors.edit_no_2) {
                                 $('#edit_no_2').after('<div class="text-danger error">' + errors
                                     .edit_no_2[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_no_3) {
+                            }
+                            if (errors.edit_no_3) {
                                 $('#edit_no_3').after('<div class="text-danger error">' + errors
                                     .edit_no_3[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_no_4) {
+                            }
+                            if (errors.edit_no_4) {
                                 $('#edit_no_4').after('<div class="text-danger error">' + errors
                                     .edit_no_4[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_no_5) {
+                            }
+                            if (errors.edit_no_5) {
                                 $('#edit_no_5').after('<div class="text-danger error">' + errors
                                     .edit_no_5[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_due_date) {
+                            }
+                            if (errors.edit_due_date) {
                                 $('#edit_due_date').after('<div class="text-danger error">' + errors
                                     .edit_due_date[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_nama_bank) {
+                            }
+                            if (errors.edit_nama_bank) {
                                 $('#edit_nama_bank').after('<div class="text-danger error">' + errors
                                     .edit_nama_bank[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_paid) {
+                            }
+                            if (errors.edit_paid) {
                                 $('#edit_paid').after('<div class="text-danger error">' + errors
                                     .edit_paid[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_status) {
+                            }
+                            if (errors.edit_status) {
                                 $('#edit_status').after('<div class="text-danger error">' + errors
                                     .edit_status[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_no_fp) {
+                            }
+                            if (errors.edit_no_fp) {
                                 $('#edit_no_fp').after('<div class="text-danger error">' + errors
                                     .edit_no_fp[
                                         0] +
                                     '</div>');
-                            }   if (errors.edit_kode_admin) {
+                            }
+                            if (errors.edit_kode_admin) {
                                 $('#edit_kode_admin').after('<div class="text-danger error">' + errors
                                     .edit_kode_admin[
                                         0] +
@@ -989,13 +1137,13 @@
             });
 
             $(document).on('click', '#btnEditDetail', function() {
-                let poId = $(this).data('id'); // Ambil ID PO dari tombol
-                $('#btnTambahDetail').attr('data-add-po-id', poId);
+                let invoiceId = $(this).data('id'); // Ambil ID PO dari tombol
+                $('#btnTambahDetail').attr('data-add-invoice-id', invoiceId);
 
 
                 // AJAX request untuk mengambil data detail
                 $.ajax({
-                    url: `/po-detail/${poId}/edit`, // Endpoint untuk method edit
+                    url: `/invoice-detail/${invoiceId}/edit`, // Endpoint untuk method edit
                     type: 'GET',
                     success: function(response) {
                         // Kosongkan tabel sebelum menambahkan data baru
@@ -1020,11 +1168,11 @@
                     <ul class="dropdown-menu">
                     
                         <li><a href="javascript:void(0)" id="btnEditItem"  class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
-                                data-id="${detail.id}" data-po-id="${poId}" type="button" data-bs-toggle="modal" data-bs-target="#modalEditItem">Edit Detail<i
+                                data-id="${detail.id}" data-invoice-id="${invoiceId}" type="button" data-bs-toggle="modal" data-bs-target="#modalEditItem">Edit Detail<i
                                     class="ml-4 fas fa-pen"></i></a></li>
                         <li>
                             <button class="dropdown-item text-danger fw-bold d-flex justify-content-between py-2" id="btnDeleteDetailItem" type="button"
-                                data-table-id="invoice-table" data-url="po-detail/delete/${detail.id}" data-id="${detail.id}"
+                                data-table-id="invoice-table" data-url="invoice-detail/delete/${detail.id}" data-id="${detail.id}"
                                 data-name="${detail.nama_barang}" data-action="delete">
                                 Delete <i class="fas fa-trash"></i>
                             </button>
@@ -1036,8 +1184,8 @@
                 </td>
                 </tr>
             `);
-                            updateTotalHarga();
                         });
+                        updateTotalHarga();
 
                         // Tampilkan modal
                         $('#modalEditDetail1').modal('show');
@@ -1114,14 +1262,14 @@
 
                 $('.error').remove(); // Hapus error sebelumnya
                 var itemId = $(this).data('id'); // Ambil ID dari tombol edit
-                var poId = $(this).data('po-id'); // Ambil ID dari tombol edit
-                var url = '/po-item/' + itemId + '/edit'; // URL untuk ambil data
-                var updateUrl = '/po-item/' + itemId; // URL untuk update data
+                var invoiceId = $(this).data('invoice-id'); // Ambil ID dari tombol edit
+                var url = '/invoice-item/' + itemId + '/edit'; // URL untuk ambil data
+                var updateUrl = '/invoice-item/' + itemId; // URL untuk update data
 
                 // Request AJAX untuk mendapatkan data Vendor berdasarkan ID
                 $.get(url, function(data) {
                     // Isi field modal dengan data yang didapat dari server
-                    $('#edit_po_id').val(poId);
+                    $('#edit_invoice_id').val(invoiceId);
                     $('#edit_nama_barang').val(data.nama_barang);
                     $('#edit_qty').val(data.qty);
                     $('#edit_satuan').val(data.satuan);
@@ -1196,14 +1344,14 @@
                 });
             });
             $('#btnTambahDetail').on('click', function() {
-                let poId = $(this).attr('data-add-po-id');
+                let invoiceId = $(this).attr('data-add-invoice-id');
                 $('#formAddItem')[0].reset();
-                $('#add_po_id').val(poId);
+                $('#add_invoice_id').val(invoiceId);
 
             })
             $('#formAddItem').on('submit', function(event) {
                 event.preventDefault();
-                var createUrl = '/po-item';
+                var createUrl = '/invoice-item';
 
                 $.ajax({
                     url: createUrl,
@@ -1267,6 +1415,7 @@
                 // Loop melalui semua baris tabel dan tambahkan nilai kolom jumlah_harga
                 $('#detailEditTable tbody tr').each(function() {
                     let jumlahHarga = parseFloat($(this).find('td:nth-child(6)').text()); // Ambil kolom jumlah_harga
+
                     if (!isNaN(jumlahHarga)) {
                         total += jumlahHarga;
                     }

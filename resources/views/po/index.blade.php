@@ -492,6 +492,7 @@
                         $('#formTambahHeader')[0].reset();
                         $('#detailTable tbody').html('');
                         $('#purchaseorder-table').DataTable().ajax.reload();
+                        $('#nama_vendor').val(null).trigger('change');
                         $('.error').remove();
                         detailArray = [];
                     },
@@ -690,47 +691,8 @@
                 $('#nama_vendor').val(null).trigger('change');
 
                 // $('#formTambah')[0].reset();
-            })
+            });
 
-            function detailDisable() {
-                $('#nama_barang').prop('disabled', true);
-                $('#qty').prop('disabled', true);
-                $('#satuan').prop('disabled', true);
-                $('#harga_satuan').prop('disabled', true);
-                $('#btn_detail').prop('disabled', true);
-            }
-
-            function detailEnable() {
-                $('#nama_barang').prop('disabled', false);
-                $('#qty').prop('disabled', false);
-                $('#satuan').prop('disabled', false);
-                $('#harga_satuan').prop('disabled', false);
-                $('#btn_detail').prop('disabled', false);
-            }
-
-            function headerDisable() {
-                $('#kode_purchase_order').prop('disabled', true);
-                $('#tanggal').prop('disabled', true);
-                $('#nama_vendor').prop('disabled', true);
-                $('#nama_buyer').prop('disabled', true);
-                $('#perihal').prop('disabled', true);
-                $('#catatan').prop('disabled', true);
-                $('#catatan_2').prop('disabled', true);
-                $('#diskon_rupiah').prop('disabled', true);
-                $('#btn_header').prop('disabled', true);
-            }
-
-            function headerEnable() {
-                $('#kode_purchase_order').prop('disabled', false);
-                $('#tanggal').prop('disabled', false);
-                $('#nama_vendor').prop('disabled', false);
-                $('#nama_buyer').prop('disabled', false);
-                $('#perihal').prop('disabled', false);
-                $('#catatan').prop('disabled', false);
-                $('#catatan_2').prop('disabled', false);
-                $('#diskon_rupiah').prop('disabled', false);
-                $('#btn_header').prop('disabled', false);
-            }
             $(document).ready(function() {
                 $('#nama_vendor').select2();
                 $('#edit_nama_vendor').select2({
@@ -950,8 +912,8 @@
                     </td>
                     </tr>
                 `);
-                updateTotalHarga();
                         });
+                        updateTotalHarga();
 
                         // Tampilkan modal
                         $('#modalEditDetail1').modal('show');
