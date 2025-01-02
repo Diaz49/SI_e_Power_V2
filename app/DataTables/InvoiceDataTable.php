@@ -26,6 +26,9 @@ class InvoiceDataTable extends DataTable
             ->addColumn('action', function (Invoice $invoice) {
                 return view('invoice.action', ['invoice' => $invoice]);
             })
+            ->editColumn('client_id', function(Invoice $invoice){
+                return $invoice->client->nama_client;
+            })
             ->addColumn('status', function (Invoice $invoice) {
                 if ($invoice->status === 'paid') {
                     return '<span class="badge bg-success fw-bolder">PAID</span>'; // Biru untuk 'use'
