@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('pt', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('pt_id')->nullable(); 
             $table->string('nama_pt');
             $table->string('kode_pt');
             $table->timestamps();
