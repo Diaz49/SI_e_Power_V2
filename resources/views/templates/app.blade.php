@@ -131,7 +131,7 @@
                         </li> --}}
                         <li class="nav-item {{ Route::is('invoice') ? 'active' : '' }}">
                             <a href="{{ route('invoice') }}" class="collapsed">
-                                <i class="fas fa-table"></i>
+                                <i class="fas fa-file-invoice-dollar"></i>
                                 <p>Invoice</p>
                             </a>
                         </li>
