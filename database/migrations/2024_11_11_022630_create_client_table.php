@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('up_invoice', 50);
             $table->string('up_sph', 50);
             $table->timestamps();
+
+            $table->foreignId('pt_id')->constrained('pt')->onDelete('cascade');
         });
     }
 

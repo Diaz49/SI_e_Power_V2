@@ -16,4 +16,9 @@ class PT extends Model
         'kode_pt', 
     ];
 
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+
 }

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('kode_pt');
             $table->timestamps();
 
-            // Foreign key constraints
         });
     }
 
