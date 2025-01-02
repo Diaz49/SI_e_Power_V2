@@ -89,6 +89,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('invoice-item/{id}', [DetailInvoiceController::class, 'update'])->name('invoice-item.update');
     Route::delete('invoice-detail/delete/{id}', [DetailInvoiceController::class, 'destroy'])->name('invoice-detail.destroy');
 
+    Route::get('pt', [PTController::class, 'index'])->name('pt');
+    Route::post('pt', [PTController::class, 'store'])->name('pt.store');
+    Route::get('pt/{id}/edit', [PTController::class, 'edit'])->name('pt.edit');
+    Route::put('pt/{id}', [PTController::class, 'update'])->name('pt.update');
+    Route::delete('pt/delete/{id}', [PTController::class, 'destroy'])->name('pt.delete');
+
     // sph
     Route::get('data-sph', [SphController::class, 'index'])->name('data-sph');
     Route::post('data-sph', [SphController::class, 'store'])->name('data-sph.store');
