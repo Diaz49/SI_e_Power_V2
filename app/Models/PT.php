@@ -18,7 +18,7 @@ class PT extends Model
 
     public function clients()
     {
-        return $this->hasMany(Client::class);
+        return $this->hasMany(DataClient::class);
     }
 
 }

@@ -29,7 +29,7 @@ class DataClient extends Model
 
     public function pt()
     {
-        return $this->belongsTo(Pt::class);
+        return $this->belongsTo(PT::class);
     }   
 
 }

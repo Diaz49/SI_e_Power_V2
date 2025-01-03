@@ -7,6 +7,7 @@ use App\Models\Projectid;
 use App\Models\User;
 use App\Models\DataClient;
 use App\Models\Bank;
+use App\Models\PT;
 use App\Models\DataVendor;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -21,11 +22,11 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+            //     'name' => 'Test User',
+            //     'email' => 'test@example.com',
+            // ]);
 
-    // Projectid::create([
+            // Projectid::create([
     //     'project_id' => 'FNB-00001',
     //     'nama_project' => 'test',
     //     'nama_client' => 'gua',
@@ -33,13 +34,28 @@ class DatabaseSeeder extends Seeder
     //     'hpp' => 19000,
     //     'rab' => 20000,
     // ]);
-
+    
         User::create([
             'name' => 'LALALALALA',
             'username' => 'admin',
             'password' => Hash::make('123')
         ]);
-
+        
+        $pts = [
+            ['nama_pt' => 'Multi Power Abadi', 'kode_pt' => 'MPA'],
+            ['nama_pt' => 'Rajata Wedding', 'kode_pt' => 'RJT'],
+            ['nama_pt' => 'Ramada Event Organizer', 'kode_pt' => 'REO'],
+            ['nama_pt' => 'Naismedia', 'kode_pt' => 'NM'],
+            ['nama_pt' => 'MARK', 'kode_pt' => 'MARK'],
+            ['nama_pt' => 'Multi Creation', 'kode_pt' => 'MC'],
+        ];
+    
+        foreach ($pts as $index => $pt) {
+            PT::create([
+                'nama_pt' => $pt['nama_pt'],
+                'kode_pt' => $pt['kode_pt'],
+            ]);
+        }
         // Seeder for Bank
         foreach (['BRI', 'BNI', 'Mandiri', 'BCA', 'CIMB Niaga', 'Danamon', 'Permata', 'Maybank', 'Panin', 'Mega'] as $index => $bankName) {
             Bank::create([
@@ -49,7 +65,7 @@ class DatabaseSeeder extends Seeder
                 'status' => $index % 2 == 0 ? 'use' : 'no_use',
             ]);
         }
-
+        
         // Seeder for DataClient
         $clients = [
             ['nama_client' => 'PT Sumber Sejahtera', 'alamat' => 'Jl. Sudirman No. 12, Jakarta', 'kota' => 'Jakarta'],
@@ -65,11 +81,15 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($clients as $index => $client) {
+            // Mengambil pt_id secara acak dari tabel PT
+            $pt = PT::inRandomOrder()->first(); // Mengambil 1 data PT secara acak
+        
             DataClient::create([
                 'nama_client' => $client['nama_client'],
                 'alamat' => $client['alamat'],
                 'up_invoice' => "UP Invoice $index",
                 'up_sph' => "UP SPH $index",
+                'pt_id' => $pt ? $pt->id : null, // Jika ditemukan PT, gunakan ID PT tersebut
             ]);
         }
 
@@ -109,5 +129,7 @@ class DatabaseSeeder extends Seeder
                 'rab' => rand(5000000, 10000000),
             ]);
         }
+
+
     }
 }
