@@ -37,9 +37,9 @@ class InvoiceDataTable extends DataTable
                 }
                 return '<span class="badge bg-secondary">Unknown</span>'; // Abu-abu untuk status lainnya
             })
-            ->editColumn('jumlah_item', function (Invoice $invoice) {
+            ->addColumn('jumlah_item', function (Invoice $invoice) {
                 return $invoice->detail->count();
-            })->editColumn('jumlah_harga', function (Invoice $invoice) {
+            })->addColumn('jumlah_harga', function (Invoice $invoice) {
                 return $invoice->detail->sum('jumlah_harga');
             })
             ->setRowId('id')
