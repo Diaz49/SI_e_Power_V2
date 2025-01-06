@@ -78,7 +78,7 @@ class InvoiceDataTable extends DataTable
     }
 
     /**
-     * Get the dataTable columns definition.
+     * Get the dataTable columns definition. 
      */
     public function getColumns(): array
     {
