@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\DataClient;
 use App\Models\Invoice;
+use App\Models\PT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -16,8 +17,9 @@ class InvoiceController extends Controller
     public function index(InvoiceDataTable $dataTable)
     {
         $client = DataClient::all();
+        $pt = PT::all();
         $bank = Bank::all();
-        return $dataTable->render('invoice.index', compact('client', 'bank'));
+        return $dataTable->render('invoice.index', compact('client', 'bank','pt'));
     }
 
     public function store(Request $request)
@@ -27,6 +29,7 @@ class InvoiceController extends Controller
             'header.header_deskripsi' => 'required',
             'header.tanggal' => 'required|date',
             'header.nama_client' => 'required|max:50',
+            'header.nama_pt' => 'required|max:50',
             'header.no_bast_1' => 'required|string',
             'header.no_bast_2' => 'nullable|string',
             'header.no_bast_3' => 'nullable|string',
@@ -53,6 +56,8 @@ class InvoiceController extends Controller
             'header.tanggal.date' => 'Format tanggal tidak valid.',
             'header.nama_client.required' => 'Nama client wajib diisi.',
             'header.nama_client.max' => 'Nama client tidak boleh lebih dari 50 karakter.',
+            'header.nama_pt.required' => 'Nama PT wajib diisi.',
+            'header.nama_pt.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
             'header.no_bast_1.required' => 'Nomor BAST 1 wajib diisi.',
             'header.jenis_no.required' => 'Jenis nomor wajib diisi.',
             'header.jenis_no.string' => 'Jenis nomor harus berupa teks.',
@@ -101,6 +106,7 @@ class InvoiceController extends Controller
                 'no_5' => $request->input('header.no_5'),
                 'due' => $request->input('header.due_date'),
                 'bank_id' => $request->input('header.nama_bank'),
+                'pt_id' => $request->input('header.nama_pt'),
             ]);
 
             // Simpan data detail
@@ -136,6 +142,7 @@ class InvoiceController extends Controller
             'edit_header_deskripsi' => 'required',
             'edit_tanggal' => 'required|date',
             'edit_nama_client' => 'required|max:50',
+            'edit_nama_pt' => 'required|max:50',
             'edit_no_bast_1' => 'required|string',
             'edit_no_bast_2' => 'nullable|string',
             'edit_no_bast_3' => 'nullable|string',
@@ -162,6 +169,8 @@ class InvoiceController extends Controller
             'edit_tanggal.date' => 'Format tanggal tidak valid.',
             'edit_nama_client.required' => 'Nama client wajib diisi.',
             'edit_nama_client.max' => 'Nama client tidak boleh lebih dari 50 karakter.',
+            'edit_nama_pt.required' => 'Nama PT wajib diisi.',
+            'edit_nama_pt.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
             'edit_no_bast_1.required' => 'Nomor BAST 1 wajib diisi.',
             'edit_jenis_no.required' => 'Jenis nomor wajib diisi.',
             'edit_jenis_no.string' => 'Jenis nomor harus berupa teks.',
@@ -181,6 +190,7 @@ class InvoiceController extends Controller
             'header_deskripsi' => $request->edit_header_deskripsi,
             'tgl_invoice' => $request->edit_tanggal,
             'client_id' => $request->edit_nama_client,
+            'pt_id' => $request->edit_nama_pt,
             'no_bast_1' => $request->edit_no_bast_1,
             'no_bast_2' => $request->edit_no_bast_2,
             'no_bast_3' => $request->edit_no_bast_3,
