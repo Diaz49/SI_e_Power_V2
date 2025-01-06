@@ -59,7 +59,7 @@ class BankController extends Controller
             'nama_bank_edit' => 'required|string|max:50',
             'nama_rek_edit' => 'required|string|max:50',
             'nomer_rek_edit' => 'required|string|max:50',
-            'status_edit' => ['required', Rule::in(['use', 'not_use'])]
+            'status_edit' => ['required', Rule::in(['use', 'no_use'])]
         ], [
             
             'nama_bank_edit.required' => 'Nama bank (edit) wajib diisi.',
@@ -72,7 +72,7 @@ class BankController extends Controller
             'nomer_rek_edit.string' => 'Nomor rekening (edit) harus berupa teks.',
             'nomer_rek_edit.max' => 'Nomor rekening (edit) tidak boleh lebih dari 50 karakter.',
             'status_edit.required' => 'Status (edit) wajib diisi.',
-            'status_edit.in' => 'Status (edit) harus bernilai "use" atau "not_use".',
+            'status_edit.in' => 'Status (edit) harus bernilai "use" atau "no_use".',
 
         ]);
 

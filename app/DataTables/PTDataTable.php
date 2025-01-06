@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataTables\Master;
+namespace App\DataTables;
 
-use App\Models\Bank;
+use App\Models\PT;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class BankDataTable extends DataTable
+class PTDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,36 +22,17 @@ class BankDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addIndexColumn()
-        ->addColumn('status', function (Bank $bank) {
-            if ($bank->status === 'use') {
-                return '<span class="badge bg-primary">Use</span>'; // Biru untuk 'use'
-            } elseif ($bank->status === 'no_use') {
-                return '<span class="badge bg-danger">No Use</span>'; // Merah untuk 'no_use'
-            }
-            return '<span class="badge bg-secondary">Unknown</span>'; // Abu-abu untuk status lainnya
-        })
-        ->addColumn('action', function (Bank $bank) {
-            return view('master.data-bank.action', ['bank' => $bank]);
-        })
-        ->filterColumn('status', function ($query, $keyword) {
-            $keyword = strtolower(trim($keyword)); // Ubah ke lowercase untuk case-insensitive
-            if (str_contains($keyword, 'use')) {
-                $query->where('status', 'use');
-            } elseif (str_contains($keyword, 'no use')) {
-                $query->where('status', 'no_use');
-            } elseif (str_contains($keyword, 'no')) {
-                $query->where('status', 'no_use');
-            }
-        })
-        ->setRowId('id')
-        ->rawColumns(['status', 'action']); // Pastikan kolom ini di-raw untuk HTML
+            ->addIndexColumn()
+            ->addColumn('action', function (PT $pt) {
+                return view('pt.action', ['pt' => $pt]);
+            })
+            ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Bank $model): QueryBuilder
+    public function query(PT $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -62,7 +43,7 @@ class BankDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('bank-table')
+                    ->setTableId('pt-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -91,13 +72,8 @@ class BankDataTable extends DataTable
                 ->width(30)
                 ->addClass('text-center')
                 ->searchable(false),
-            Column::make('nama_bank'),
-            Column::make('nama_rek'),
-            Column::make('nomer_rek'),
-            Column::computed('status') // Kolom baru untuk status
-                ->title('Status') // Ubah nama kolom menjadi "Status"
-                ->searchable(true)
-                ->addClass('text-center'),
+            Column::make('nama_pt'),
+            Column::make('kode_pt'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -111,6 +87,6 @@ class BankDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Bank_' . date('YmdHis');
+        return 'PT_' . date('YmdHis');
     }
 }

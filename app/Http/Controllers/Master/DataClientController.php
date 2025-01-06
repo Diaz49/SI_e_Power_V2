@@ -27,7 +27,7 @@ class DataClientController extends Controller
         $request->validate([
             'nama_client' => 'required|string|max:100',
             'alamat' => 'required|string|max:255',
-            'up_invoice' => 'required|numeric|min:0',
+            'up_invoice' => 'required|string|min:0',
             'up_sph' => 'required|numeric|min:0',
         ], [
             'nama_client.required' => 'Nama Client harus diisi.',
@@ -35,7 +35,7 @@ class DataClientController extends Controller
             'alamat.required' => 'Alamat harus diisi.',
             'alamat.string' => 'Alamat harus berupa teks.',
             'up_invoice.required' => 'Up Invoice harus diisi.',
-            'up_invoice.numeric' => 'Up Invoice harus berupa angka.',
+            'up_invoice.string' => 'Up Invoice harus berupa teks.',
             'up_invoice.min' => 'Up Invoice tidak boleh kurang dari 0.',
             'up_sph.required' => 'Up Sph harus diisi.',
             'up_sph.numeric' => 'Up Sph harus berupa angka.',
@@ -78,7 +78,7 @@ class DataClientController extends Controller
         $request->validate([
             'nama_client_edit' => 'required|string|max:100',
             'alamat_edit' => 'required|string|max:255',
-            'up_invoice_edit' => 'required|numeric|min:0',
+            'up_invoice_edit' => 'required|string|min:0',
             'up_sph_edit' => 'required|numeric|min:0',
         ], [
             'nama_client_edit.required' => 'Nama Client harus diisi.',
@@ -88,7 +88,7 @@ class DataClientController extends Controller
             'alamat_edit.string' => 'Alamat harus berupa teks.',
 
             'up_invoice_edit.required' => 'Up Invoice harus diisi.',
-            'up_invoice_edit.numeric' => 'Up Invoice harus berupa angka.',
+            'up_invoice_edit.string' => 'Up Invoice harus berupa teks.',
             'up_invoice_edit.min' => 'Up Invoice tidak boleh kurang dari 0.',
 
             'up_sph_edit.required' => 'Up Sph harus diisi.',

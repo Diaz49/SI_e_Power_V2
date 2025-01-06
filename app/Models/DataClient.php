@@ -26,4 +26,10 @@ class DataClient extends Model
     public function invoice(){
         return $this->hasMany(Invoice::class, 'client_id', 'id');
     }
+
+    public function pt()
+    {
+        return $this->belongsTo(PT::class);
+    }   
+
 }

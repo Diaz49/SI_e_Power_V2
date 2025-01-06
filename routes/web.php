@@ -13,6 +13,7 @@ use App\Http\Controllers\SPH\DetailSphController;
 use App\Http\Controllers\BastController;
 use App\Http\Controllers\Invoice\DetailInvoiceController;
 use App\Http\Controllers\Invoice\InvoiceController;
+use App\Http\Controllers\PTController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -87,6 +88,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('invoice-item/{id}/edit', [DetailInvoiceController::class, 'edit'])->name('invoice-item.edit');
     Route::put('invoice-item/{id}', [DetailInvoiceController::class, 'update'])->name('invoice-item.update');
     Route::delete('invoice-detail/delete/{id}', [DetailInvoiceController::class, 'destroy'])->name('invoice-detail.destroy');
+
+    Route::get('pt', [PTController::class, 'index'])->name('pt');
+    Route::post('pt', [PTController::class, 'store'])->name('pt.store');
+    Route::get('pt/{id}/edit', [PTController::class, 'edit'])->name('pt.edit');
+    Route::put('pt/{id}', [PTController::class, 'update'])->name('pt.update');
+    Route::delete('pt/delete/{id}', [PTController::class, 'destroy'])->name('pt.delete');
 
     // sph
     Route::get('data-sph', [SphController::class, 'index'])->name('data-sph');

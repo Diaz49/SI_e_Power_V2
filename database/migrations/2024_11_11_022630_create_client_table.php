@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('up_invoice', 50);
             $table->string('up_sph', 50);
             $table->timestamps();
+            
+            $table->unsignedBigInteger('pt_id');
+            $table->foreign('pt_id')->references('id')->on('pt')->onDelete('cascade');
         });
     }
 
