@@ -22,8 +22,14 @@ class BastDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'bast.action')
-            ->setRowId('id');
+        ->addIndexColumn()
+        ->addColumn('action', function(Bast $bast) {
+            return view('bast.action', ['bast' => $bast]);
+        })
+        ->addColumn('kd_invoice', function (Bast $bast) {
+            return $bast->Invoice->kd_invoice;
+        })
+        ->setRowId('id');
     }
 
     /**
@@ -62,15 +68,26 @@ class BastDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::computed('DT_RowIndex')
+                ->title('No.') // Ubah judul kolom menjadi "No."
+                ->searchable(false)
+                ->orderable(false)
+                ->width(30)
+                ->addClass('text-center')
+                ->searchable(false),
+            Column::make('tanggal')->titel('Tanggal Bast'),
+            Column::make('kd_invoice'),
+            Column::make('deskripsi'),
+            Column::make('kd_invoice'),
+            Column::make('nama'),
+            Column::make('jabatan'),
+            Column::make('jumlah_item'),
+            Column::make('total_invoice'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
