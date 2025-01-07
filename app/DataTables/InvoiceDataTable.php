@@ -58,7 +58,7 @@ class InvoiceDataTable extends DataTable
         return $model->newQuery()
             ->select('invoice.*') // Pastikan kolom yang dibutuhkan
             ->when($filterYear, function ($query, $filterYear) {
-                return $query->whereYear('invoice.created_at', $filterYear);
+                return $query->whereYear('invoice.tgl_invoice', $filterYear);
             })
             ->when($filterPtId, function ($query, $filterPtId) {
                 return $query->where('invoice.pt_id', $filterPtId);

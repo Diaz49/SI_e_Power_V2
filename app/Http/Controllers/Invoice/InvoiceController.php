@@ -19,7 +19,7 @@ class InvoiceController extends Controller
         $client = DataClient::all();
         $pt = PT::all();
         $bank = Bank::all();
-        $years = Invoice::selectRaw('YEAR(created_at) as year')
+        $years = Invoice::selectRaw('YEAR(tgl_invoice) as year')
             ->distinct()
             ->orderBy('year', 'desc')
             ->pluck('year'); // Mengambil nilai tahun unik
