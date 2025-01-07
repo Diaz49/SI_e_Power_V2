@@ -16,11 +16,11 @@ return new class extends Migration
             $table->date('tanggal');
             $table->unsignedBigInteger('invoice_id');
             $table->string('deskripsi',255);
-            $table->string('nama');
-            $table->string('jabatan');
-            $table->string('jumlah_item');
-            $table->string('harga_satuan');
-            $table->string('total_invoice');
+            $table->string('nama', 50);
+            $table->string('jabatan', 255);
+            $table->string('jumlah_item', 50);
+            $table->decimal('harga_satuan', 10, 2);
+            $table->decimal('total_invoice', 20, 2);
             $table->timestamps();
 
             $table->foreign('invoice_id')->references('id')->on('invoice')->onDelete('cascade');
