@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Po;
 use App\Models\PurchaseOrder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -43,6 +44,21 @@ class PurchaseOrderDataTable extends DataTable
             })->addColumn('jumlah_harga', function (Po $po) {
                 return $po->detail->sum('jumlah_harga');
             })
+            ->filterColumn('vendor_id',  function ($query, $keyword) {
+                $query->whereHas('vendor', function ($q) use ($keyword) {
+                    $q->where('nama_vendor', 'like', "%$keyword%");
+                });
+            })->filterColumn('up_vendor',  function ($query, $keyword) {
+                $query->whereHas('vendor', function ($q) use ($keyword) {
+                    $q->where('up', 'like', "%$keyword%");
+                });
+            })
+            ->filterColumn('jumlah_item', function ($query, $keyword) {
+                $query->whereRaw('(SELECT COUNT(*) FROM po_detail WHERE po_detail.po_id = po.id) LIKE ?', ["%$keyword%"]);
+            })
+            ->filterColumn('jumlah_harga', function ($query, $keyword) {
+                $query->whereRaw('(SELECT SUM(jumlah_harga) FROM po_detail WHERE po_detail.po_id = po.id) LIKE ?', ["%$keyword%"]);
+            })
             ->setRowId('id');
     }
 
@@ -51,7 +67,12 @@ class PurchaseOrderDataTable extends DataTable
      */
     public function query(Po $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()
+            ->select([
+                'po.*', // Kolom utama dari tabel `po`
+                DB::raw('(SELECT COUNT(*) FROM po_detail WHERE po_detail.po_id = po.id) as jumlah_item'), // Subquery untuk jumlah item
+                DB::raw('(SELECT SUM(jumlah_harga) FROM po_detail WHERE po_detail.po_id = po.id) as jumlah_harga'), // Subquery untuk total harga
+            ]);
     }
 
     /**
