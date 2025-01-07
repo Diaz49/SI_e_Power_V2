@@ -19,7 +19,11 @@ class InvoiceController extends Controller
         $client = DataClient::all();
         $pt = PT::all();
         $bank = Bank::all();
-        return $dataTable->render('invoice.index', compact('client', 'bank','pt'));
+        $years = Invoice::selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year'); // Mengambil nilai tahun unik
+        return $dataTable->render('invoice.index', compact('client', 'bank', 'pt', 'years'));
     }
 
     public function store(Request $request)

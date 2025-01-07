@@ -26,7 +26,7 @@ class InvoiceDataTable extends DataTable
             ->addColumn('action', function (Invoice $invoice) {
                 return view('invoice.action', ['invoice' => $invoice]);
             })
-            ->editColumn('client_id', function(Invoice $invoice){
+            ->editColumn('client_id', function (Invoice $invoice) {
                 return $invoice->client->nama_client;
             })
             ->addColumn('status', function (Invoice $invoice) {
@@ -52,9 +52,19 @@ class InvoiceDataTable extends DataTable
      */
     public function query(Invoice $model): QueryBuilder
     {
-        return $model->newQuery();
+        $filterYear = request('created_at'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
+        $filterPtId = request('pt_id'); // Filter PT ID
+    
+        return $model->newQuery()
+            ->select('invoice.*') // Pastikan kolom yang dibutuhkan
+            ->when($filterYear, function ($query, $filterYear) {
+                return $query->whereYear('invoice.created_at', $filterYear);
+            })
+            ->when($filterPtId, function ($query, $filterPtId) {
+                return $query->where('invoice.pt_id', $filterPtId);
+            });
     }
-
+    
     /**
      * Optional method if you want to use the html builder.
      */
