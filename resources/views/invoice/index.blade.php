@@ -79,6 +79,16 @@
                     <input type="text" class="form-control" name="kode_invoice" id="kode_invoice" value=""
                         placeholder="Masukkan Kode Invoice">
 
+                    <div class="mb-1 mt-2 label">PT</div>
+                    <select type="text" class="form-control js-example-basic-single" name="nama_pt" id="nama_pt"
+                        value="" placeholder="Masukkan Nama PT">
+                        <option value="">Pilih PT</option>
+                        @foreach ($pt as $item)
+                            <option value="{{ $item->id }}" >
+                                {{ $item->nama_pt }}
+                            </option>
+                        @endforeach
+                    </select>
                     <div class="mb-1 mt-2 label">Header Deskripsi</div>
                     <input type="text" class="form-control" name="header_deskripsi" id="header_deskripsi" value=""
                         placeholder="Masukkan Deskripsi">
@@ -89,8 +99,8 @@
 
 
                     <div class="mb-1 mt-2 label">Nama Client</div>
-                    <select type="text" class="form-control js-example-basic-single" name="nama_client" id="nama_client"
-                        value="" placeholder="Masukkan Nama Client">
+                    <select type="text" class="form-control js-example-basic-single" name="nama_client"
+                        id="nama_client" value="" placeholder="Masukkan Nama Client">
                         <option value="">Pilih Client</option>
                         @foreach ($client as $item)
                             <option value="{{ $item->id }}" data-alamat-client="{{ $item->alamat }}"
@@ -213,6 +223,17 @@
                                 <input type="text" class="form-control" name="edit_kode_invoice"
                                     id="edit_kode_invoice" value="" placeholder="Masukkan Kode Invoice">
 
+                                <div class="mb-1 mt-2 label">PT</div>
+                                <select type="text" class="form-control js-example-basic-single"
+                                    name="edit_nama_pt" id="edit_nama_pt" value=""
+                                    placeholder="Masukkan Nama pt">
+                                    <option value="">Pilih PT</option>
+                                    @foreach ($pt as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->nama_pt }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <div class="mb-1 mt-2 label">Header Deskripsi</div>
                                 <input type="text" class="form-control" name="edit_header_deskripsi"
                                     id="edit_header_deskripsi" value="" placeholder="Masukkan Deskripsi">
@@ -528,6 +549,7 @@
                     // Isi field modal dengan data yang didapat dari server
                     $('#edit_kode_invoice').val(data.kd_invoice);
                     $('#edit_header_deskripsi').val(data.header_deskripsi);
+                    $('#edit_nama_pt').val(data.pt_id).trigger('change');
                     $('#edit_tanggal').val(data.tgl_invoice);
                     $('#edit_nama_client').val(data.client_id).trigger('change');
                     $('#edit_no_bast_1').val(data.no_bast_1);
@@ -593,6 +615,7 @@
                         $('#invoice-table').DataTable().ajax.reload();
                         $('.error').remove();
                         $('#nama_client').val(null).trigger('change');
+                        $('#nama_pt').val(null).trigger('change');
                         $('#nama_bank').val(null).trigger('change');
                         $('#jenis_no').val(null).trigger('change');
                         detailArray = [];
@@ -751,20 +774,20 @@
 
                 // Render data ke tabel
                 var rowDetail = `
-            <tr>
-                <td>${no++}</td>
-                <td>${nama_barang}</td>
-                <td>${qty}</td>
-                <td>${satuan}</td>
-                <td>Rp. ${harga_satuan}</td>
-                <td class="jumlah">Rp. ${jumlah_harga}</td> <!-- Class 'jumlah' untuk mempermudah seleksi -->
-                <td>
-                    <button class="btn btn-danger btn-sm btn-delete-detail" data-index="${detailArray.length - 1}">
-                                <i class="fas fa-trash"></i> 
-                    </button>
-                </td>
-            </tr>
-            `;
+                <tr>
+                    <td>${no++}</td>
+                    <td>${nama_barang}</td>
+                    <td>${qty}</td>
+                    <td>${satuan}</td>
+                    <td>Rp. ${harga_satuan}</td>
+                    <td class="jumlah">Rp. ${jumlah_harga}</td> <!-- Class 'jumlah' untuk mempermudah seleksi -->
+                    <td>
+                        <button class="btn btn-danger btn-sm btn-delete-detail" data-index="${detailArray.length - 1}">
+                                    <i class="fas fa-trash"></i> 
+                        </button>
+                    </td>
+                </tr>
+                `;
 
                 // Menambahkan row detail ke dalam tabel
                 $('#detailTable tbody').append(rowDetail);
@@ -801,11 +824,11 @@
 
                 // Menambahkan row subtotal
                 var subtotalRow = `
-            <tr class="subtotal">
-                <td colspan="6" class=" fw-bold">Subtotal:</td>
-                <td  class="fw-bold">Rp. ${total.toLocaleString('id-ID')}</td> <!-- Format angka dengan Rupiah -->
-            </tr>
-                `;
+                <tr class="subtotal">
+                    <td colspan="6" class=" fw-bold">Subtotal:</td>
+                    <td  class="fw-bold">Rp. ${total.toLocaleString('id-ID')}</td> <!-- Format angka dengan Rupiah -->
+                </tr>
+                    `;
 
                 // Menambahkan row subtotal
                 $('#detailTable tbody').append(subtotalRow);
@@ -826,6 +849,7 @@
                 $('#formTambahHeader')[0].reset();
                 $('#formTambahDetail')[0].reset();
                 $('#nama_client').val(null).trigger('change');
+                $('#nama_pt').val(null).trigger('change');
                 $('#nama_bank').val(null).trigger('change');
                 $('#jenis_no').val(null).trigger('change');
 

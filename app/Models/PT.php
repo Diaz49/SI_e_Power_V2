@@ -21,4 +21,8 @@ class PT extends Model
         return $this->hasMany(DataClient::class);
     }
 
+    public function invoice(){
+        return $this->hasMany(Invoice::class, 'pt_id','id');
+    }
+
 }

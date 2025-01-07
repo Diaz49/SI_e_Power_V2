@@ -15,6 +15,7 @@ class Invoice extends Model
         'header_deskripsi',
         'tgl_invoice',
         'client_id',
+        'pt_id',
         'no_bast_1',
         'no_bast_2',
         'no_bast_3',
@@ -47,5 +48,9 @@ class Invoice extends Model
     public function bank()
     {
         return $this->belongsTo(Bank::class, foreignKey: 'bank_id');
+    }
+
+    public function pt(){
+        return $this->belongsTo(PT::class, 'pt_id');
     }
 }

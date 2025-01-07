@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('header_deskripsi');
             $table->date('tgl_invoice');
             $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('pt_id');
             $table->string('no_bast_1', 100);
             $table->string('no_bast_2',100)->nullable();
             $table->string('no_bast_3',100)->nullable();
@@ -40,6 +41,7 @@ return new class extends Migration
 
             $table->foreign('client_id')->references('id')->on('client')->onDelete('cascade');
             $table->foreign('bank_id')->references('id')->on('bank')->onDelete('cascade');
+            $table->foreign('pt_id')->references('id')->on('pt')->onDelete('cascade');
         });
     }
 
