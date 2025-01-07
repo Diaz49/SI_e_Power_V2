@@ -1490,7 +1490,6 @@
                 // Perbarui elemen total harga
                 $('#totalHarga').text(total.toLocaleString('id-ID'));
             }
-
             function reloadDataTable() {
                 // Ambil nilai radio button PT yang dipilih
                 let pt = $('input[name="pt"]:checked').val();
@@ -1535,11 +1534,6 @@
                 reloadDataTable();
                 $('#modalFilter').modal('hide');
             });
-
-
-            // Event listener untuk tombol OK
-
-
             // Fungsi untuk render badge filter aktif
             function renderBadges() {
                 const container = $('#active-filters');
@@ -1549,14 +1543,13 @@
                 for (const key in selectedFilters) {
                     const filter = selectedFilters[key];
                     container.append(`
-                    <span class=" bg-primary text-white rounded-pill p-2 d-flex align-items-center justify-content-center me-2 mb-2">
+                    <span class=" bg-primary text-white rounded-pill py-1 ps-3 pe-2 d-flex align-items-center justify-content-center me-2 mb-3 fw-bold">
                         ${filter.label}
                         <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close" onclick="removeFilter('${key}')"></button>
                     </span>
                 `);
                 }
             }
-
             // Fungsi untuk menghapus filter dari badge
             function removeFilter(filterType) {
                 delete selectedFilters[filterType]; // Hapus filter dari daftar
@@ -1574,6 +1567,8 @@
                 // Update DataTable
                 reloadDataTable();
             }
+
+
         </script>
     @endpush
 @endsection
