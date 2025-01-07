@@ -32,7 +32,7 @@
                         class="fas fa-plus"></i> Tambah Data Client</button>
             </div>
             <div class="col-12 d-flex justify-content-end">
-                <button class="btn btn-outline-secondary btn-sm " onclick="return swal('Title', 'Text', 'success')"><i
+                <button class="btn btn-outline-secondary btn-sm " data-bs-target="#modalFilter" data-bs-toggle="modal"><i
                         class="fas fa-filter"></i> Filter</button>
                 <button class="btn btn-outline-secondary btn-sm ms-3 me-4"><i class="fas fa-download"></i> Export</button>
             </div>
@@ -48,6 +48,23 @@
             <div class="table-responsive">
                 {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
 
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalFilter">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 me-2" id="exampleModalLabel">Filter Data</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2> PT </h2>
+
+                    <h2> Tahun </h2>
+                    
+                </div>
             </div>
         </div>
     </div>

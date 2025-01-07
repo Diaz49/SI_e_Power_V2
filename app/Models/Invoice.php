@@ -53,4 +53,8 @@ class Invoice extends Model
     public function pt(){
         return $this->belongsTo(PT::class, 'pt_id');
     }
+
+    public function bast(){
+        return $this->hasMany(Bast::class, 'invoice_id', 'id');
+    }
 }
