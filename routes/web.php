@@ -110,4 +110,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //bast
     Route::get('bast', [BastController::class, 'index'])->name('bast');
+    Route::post('bast', [BastController::class, 'store'])->name('bast.store');
+    Route::get('bast/{id}/edit', [BastController::class, 'edit'])->name('bast.edit');
+    Route::put('bast/{id}', [BastController::class, 'update'])->name('bast.update');
+    Route::delete('bast/delete/{id}', [BastController::class, 'destroy'])->name('bast.destroy');
 });
