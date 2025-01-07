@@ -97,7 +97,7 @@ class BastController extends Controller
             'jabatan_edit' => 'required|string|max:50',
             'jumlah_item_edit' => 'required|numeric|max:10',
             'harga_satuan_edit' => 'required|numeric',
-            'total_invoice_edit' => 'required|numeric' . ($request->jumlah_item_edit * $request->harga_satuan_edit),
+            'total_invoice_edit' => 'required|numeric',
         ], [
             'tanggal_edit.required' => 'Tanggal wajib diisi.',
             'tanggal_edit.date' => 'Tanggal harus berupa format tanggal yang valid.',

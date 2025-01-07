@@ -125,7 +125,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Bank</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Bast</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -386,7 +386,7 @@
                         } else {
                             swal({
                                 title: 'Gagal!',
-                                text: 'Gagal mengedit data bank',
+                                text: 'Gagal mengedit data bast',
                                 icon: 'error',
                                 button: 'OK'
                             });
@@ -408,7 +408,7 @@
                         $('#bast-table').DataTable().ajax.reload();
                         swal({
                             title: 'Berhasil!',
-                            text: 'Data Bank berhasil di tambah',
+                            text: 'Data Bast berhasil di tambah',
                             icon: 'success',
                             button: 'OK'
                         });
@@ -466,7 +466,7 @@
                         } else {
                             swal({
                                 title: 'Gagal!',
-                                text: 'Gagal mengedit data bank',
+                                text: 'Gagal mengedit data bast',
                                 icon: 'error',
                                 button: 'OK'
                             });
