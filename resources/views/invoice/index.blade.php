@@ -498,7 +498,7 @@
 
 
                     </div>
-                    <p class="pt-4">Pilih Tahun</p>
+                    <p class="fs-6 pt-4">Pilih Tahun</p>
                     <div class="ps-3 pe-3">
                         <input type="radio" id="year_all" name="year" value="">
                         <label class="fw-bold pb-2" for="year_all">All</label><br>
@@ -508,9 +508,9 @@
                             <label class="fw-bold pb-2" for="year_{{ $item }}">{{ $item }}</label><br>
                         @endforeach
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="filterBtn" class="btn btn-primary">OK</button>
+                    <div class="w-100 d-flex justify-content-end mt-2">
+                        <button type="button" id="filterBtn" class="btn btn-primary">OK</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -896,8 +896,8 @@
             })
 
             $(document).ready(function() {
-                $('#all').prop('checked', true); 
-                $('#year_all').prop('checked', true); 
+                $('#all').prop('checked', true);
+                $('#year_all').prop('checked', true);
 
                 $('#nama_client').select2();
                 $('#jenis_no').select2();
@@ -1022,16 +1022,6 @@
                 btnCancel.addEventListener('click', function() {
                     formSection.style.display = 'none'; // Sembunyikan form
                     datatableSection.style.display = 'block'; // Tampilkan DataTable
-                });
-            });
-
-            document.addEventListener('DOMContentLoaded', function() {
-                const input1 = document.getElementById('id');
-                const input2 = document.getElementById('detail_kode_po');
-
-                // Event untuk mendeteksi perubahan pada Input 1
-                input1.addEventListener('input', function() {
-                    input2.value = input1.value; // Set nilai Input 2 sama dengan Input 1
                 });
             });
 
@@ -1490,6 +1480,7 @@
                 // Perbarui elemen total harga
                 $('#totalHarga').text(total.toLocaleString('id-ID'));
             }
+
             function reloadDataTable() {
                 // Ambil nilai radio button PT yang dipilih
                 let pt = $('input[name="pt"]:checked').val();
@@ -1567,8 +1558,6 @@
                 // Update DataTable
                 reloadDataTable();
             }
-
-
         </script>
     @endpush
 @endsection

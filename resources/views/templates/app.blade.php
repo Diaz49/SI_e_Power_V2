@@ -67,8 +67,8 @@
                 <!-- End Logo Header -->
             </div>
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
-                <div class="sidebar-content">
-                    <ul class="nav nav-secondary">
+                <div class="sidebar-content h-100 d-flex flex-column">
+                    <ul class="nav nav-secondary flex-grow-1">
                         <li class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
                             <a href="{{ route('dashboard') }}">
                                 <i class="fas fa-home"></i>
@@ -113,27 +113,7 @@
                                 </ul>
                             </div>
                         </li>
-                        {{-- <li class="nav-item active submenu">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
-                                <i class="fas fa-th-list"></i>
-                                <p>Sidebar Layouts</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse show" id="sidebarLayouts">
-                                <ul class="nav nav-collapse">
-                                    <li class="active">
-                                        <a href="sidebar-style-2.html">
-                                            <span class="sub-item">Sidebar Style 2</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="icon-menu.html">
-                                            <span class="sub-item">Icon Menu</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> --}}
+
                         <li class="nav-item {{ Route::is('invoice') ? 'active' : '' }}">
                             <a href="{{ route('invoice') }}" class="collapsed">
                                 <i class="fas fa-file-invoice-dollar"></i>
@@ -146,14 +126,7 @@
                                 <p>BAST</p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item" 
-                        {{ Route::is('bakn') ? 'active' : '' }} 
-                        >
-                            <a href="#maps" class="collapsed">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <p>BAKN</p>
-                            </a>
-                        </li> --}}
+
                         <li class="nav-item {{ Route::is('po') ? 'active' : '' }}">
                             <a href="{{ route('po') }}" class="collapsed">
                                 <i class="far fa-chart-bar"></i>
@@ -168,7 +141,18 @@
                                 {{-- <span class="badge badge-success">4</span> --}}
                             </a>
                         </li>
+
                     </ul>
+                    <div class="sidebar-footer mt-auto">
+                        <ul class="nav nav-secondary flex-grow-1">
+                            <li class="nav-item {{ Route::is('logout') ? 'active' : '' }}">
+                                <a href="{{ route('logout') }}" class="collapsed" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <p>Logout</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -551,7 +535,30 @@
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
-
+    <script>
+        $('#logoutBtn').on('click', function(event) {
+            event.preventDefault();
+            swal({
+                text: 'Apa kamu yakin ingin keluar?',
+                icon: 'warning',
+                buttons: {
+                    cancel: 'Batal',
+                    confirm: {
+                        text: 'Ya, keluar',
+                        value: true,
+                        visible: true,
+                        className: 'btn btn-danger',
+                    }
+                },
+                dangerMode: true,
+            }).then(willLogout => {
+                if (willLogout) {
+                    window.location.href =
+                    "{{ route('logout') }}"; // Ganti dengan rute logout yang sesuai                
+                }
+            })
+        })
+    </script>
     <script>
         $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
             type: "line",
