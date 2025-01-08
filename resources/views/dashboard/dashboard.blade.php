@@ -178,8 +178,8 @@
               <div class="card">
                 <div class="card-header">
                   <div class="card-head-row">
-                    <div class="card-title">User Statistics</div>
-                    <div class="card-tools">
+                    <div class="card-title">Invoice Statistics</div>
+                    {{-- <div class="card-tools">
                       <a
                         href="#"
                         class="btn btn-label-success btn-round btn-sm me-2"
@@ -195,12 +195,13 @@
                         </span>
                         Print
                       </a>
-                    </div>
+                    </div> --}}
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="chart-container" style="min-height: 375px">
-                    <canvas id="statisticsChart"></canvas>
+                    {{-- <canvas id="statisticsChart"></canvas> --}}
+                    <canvas id="invoiceChart"></canvas>
                   </div>
                   <div id="myChartLegend"></div>
                 </div>
@@ -244,7 +245,7 @@
                               </div>
                           </div>
                       </div>
-                  </div> -->
+          </div> -->
           <!-- <div class="row">
                       <div class="col-md-4">
                           <div class="card">
@@ -393,8 +394,8 @@
                               </div>
                           </div>
                       </div>
-                  </div> -->
-          <div class="row">
+          </div> -->
+          {{-- <div class="row">
             <div class="col-md-8">
               <div class="card">
                 <div class="card-header">
@@ -553,8 +554,57 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </body>
+    <!-- Chart JS -->
+    <script src="{{ asset('assets/js/plugin/chart.js/chart.min.js') }}"></script>
+
+    {{-- <!-- Chart Circle -->
+    <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script> --}}
+    
+    <script>
+      // Data untuk grafik
+      const invoiceData = {
+        labels: [
+          'January', 'February', 'March', 'April', 'May', 'June', 
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ],
+        datasets: [{
+          label: 'Total Invoices',
+          data: [12, 19, 3, 5, 2, 3, 10, 15, 8, 7, 12, 16], // Contoh data
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      };
+    
+      // Konfigurasi grafik
+      const config = {
+        type: 'line', // Jenis grafik: 'line', 'bar', 'pie', dll.
+        data: invoiceData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Invoice Statistics - 1 Year'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      };
+    
+      // Inisialisasi grafik
+      const ctx = document.getElementById('invoiceChart').getContext('2d');
+      new Chart(ctx, config);
+    </script>    
 @endsection

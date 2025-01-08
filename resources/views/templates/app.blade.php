@@ -544,13 +544,14 @@
 
     <!-- Kaiadmin JS -->
     <script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>
+
     @stack('scripts')
     <!-- Select2! -->
     <script src="{{ asset('select2/select2.js') }}"></script>
 
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    {{-- <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
-    <script src="assets/js/demo.js"></script>
+    <script src="assets/js/demo.js"></script> --}}
 
     <script>
         $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
