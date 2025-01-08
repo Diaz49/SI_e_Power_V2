@@ -26,21 +26,26 @@ class InvoiceDataTable extends DataTable
             ->addColumn('action', function (Invoice $invoice) {
                 return view('invoice.action', ['invoice' => $invoice]);
             })
-            ->editColumn('client_id', function(Invoice $invoice){
+            ->editColumn('client_id', function (Invoice $invoice) {
                 return $invoice->client->nama_client;
             })
             ->addColumn('status', function (Invoice $invoice) {
                 if ($invoice->status === 'paid') {
-                    return '<span class="badge bg-success fw-bolder">PAID</span>'; // Biru untuk 'use'
+                    return '<span class=" bg-success rounded-pill px-2 py-1 text-white  fw-bolder">PAID</span>'; // Biru untuk 'use'
                 } elseif ($invoice->status === '-') {
-                    return '<span class="badge bg-danger">-</span>'; // Merah untuk 'not_use'
+                    return '<span class=" bg-danger rounded-pill px-2 py-1 text-white ">-</span>'; // Merah untuk 'not_use'
                 }
-                return '<span class="badge bg-secondary">Unknown</span>'; // Abu-abu untuk status lainnya
+                return '<span class=" bg-secondary rounded-pill px-2 py-1 text-white ">Unknown</span>'; // Abu-abu untuk status lainnya
             })
             ->addColumn('jumlah_item', function (Invoice $invoice) {
                 return $invoice->detail->count();
             })->addColumn('jumlah_harga', function (Invoice $invoice) {
                 return $invoice->detail->sum('jumlah_harga');
+            })
+            ->filterColumn('client_id',  function ($query, $keyword) {
+                $query->whereHas('client', function ($q) use ($keyword) {
+                    $q->where('nama_client', 'like', "%$keyword%");
+                });
             })
             ->setRowId('id')
             ->rawColumns(['status'])
@@ -52,7 +57,17 @@ class InvoiceDataTable extends DataTable
      */
     public function query(Invoice $model): QueryBuilder
     {
-        return $model->newQuery();
+        $filterYear = request('created_at'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
+        $filterPtId = request('pt_id'); // Filter PT ID
+
+        return $model->newQuery()
+            ->select('invoice.*') // Pastikan kolom yang dibutuhkan
+            ->when($filterYear, function ($query, $filterYear) {
+                return $query->whereYear('invoice.tgl_invoice', $filterYear);
+            })
+            ->when($filterPtId, function ($query, $filterPtId) {
+                return $query->where('invoice.pt_id', $filterPtId);
+            });
     }
 
     /**
