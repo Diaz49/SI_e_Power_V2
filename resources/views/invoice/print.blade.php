@@ -326,7 +326,7 @@
 
                 <tr>
                     @php
-                        $totalHarga = $jumlahHarga +- $ppn;
+                        $totalHarga = $jumlahHarga + $ppn;
                         $totalHargaTerbilang = app(
                             'App\Http\Controllers\Invoice\PrintInvoiceController',
                         )->angkaTerbilang($totalHarga);
