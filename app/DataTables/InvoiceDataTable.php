@@ -47,6 +47,12 @@ class InvoiceDataTable extends DataTable
                     $q->where('nama_client', 'like', "%$keyword%");
                 });
             })
+            ->filterColumn('jumlah_item', function ($query, $keyword) {
+                $query->whereRaw('(SELECT COUNT(*) FROM invoice_detail WHERE invoice_detail.invoice_id = invoice.id) LIKE ?', ["%$keyword%"]);
+            })
+            ->filterColumn('jumlah_harga', function ($query, $keyword) {
+                $query->whereRaw('(SELECT SUM(jumlah_harga) FROM invoice_detail WHERE invoice_detail.invoice_id = invoice.id) LIKE ?', ["%$keyword%"]);
+            })
             ->setRowId('id')
             ->rawColumns(['status'])
         ;
