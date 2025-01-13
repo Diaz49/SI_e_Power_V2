@@ -27,7 +27,7 @@ class DetailInvoiceController extends Controller
             'add_nama_barang' => 'required|string|max:255',
             'add_qty' => 'required|integer|min:1',
             'add_satuan' => 'required|string|max:50',
-            'add_harga_satuan' => 'required|numeric|min:0',
+            'add_harga_satuan' => 'required|numeric',
         ], [
             'add_nama_barang.required' => 'Nama barang pada detail wajib diisi.',
             'add_nama_barang.string' => 'Nama barang pada detail harus berupa teks.',
@@ -68,7 +68,7 @@ class DetailInvoiceController extends Controller
             'edit_nama_barang' => 'required|string|max:255',
             'edit_qty' => 'required|integer|min:1',
             'edit_satuan' => 'required|string|max:50',
-            'edit_harga_satuan' => 'required|numeric|min:0',
+            'edit_harga_satuan' => 'required|numeric',
         ], [
             'edit_nama_barang.required' => 'Nama barang pada detail wajib diisi.',
             'edit_nama_barang.string' => 'Nama barang pada detail harus berupa teks.',

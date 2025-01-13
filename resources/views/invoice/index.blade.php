@@ -793,7 +793,7 @@
                 }
 
                 // Validasi Harga Satuan
-                if (!harga_satuan || isNaN(harga_satuan) || harga_satuan < 0 || harga_satuan >
+                if (!harga_satuan || isNaN(harga_satuan) || harga_satuan >
                     99999999999999999999.99) {
                     $('#harga_satuan').after(
                         '<div class="text-danger error">Harga satuan harus berupa angka .</div>'

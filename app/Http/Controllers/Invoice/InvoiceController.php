@@ -50,7 +50,7 @@ class InvoiceController extends Controller
             'details.*.nama_barang' => 'required|string|max:255',
             'details.*.qty' => 'required|integer|min:1',
             'details.*.satuan' => 'required|string|max:50',
-            'details.*.harga_satuan' => 'required|numeric|min:0',
+            'details.*.harga_satuan' => 'required|numeric',
         ]);
         DB::beginTransaction();
 
