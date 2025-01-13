@@ -14,19 +14,8 @@
                 data-bs-target="#modalEditDetail">Edit Detail<i class="ml-4 fas fa-pen"></i></a></li>
         <li><a href="javascript:void(0)" id="btnEditDetail"
                 class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
-                data-id="{{ $invoice->id }}" type="button" data-bs-toggle="modal"
-                data-bs-target="#modalEditPajak">Faktur Pajak<i class="ml-4 fas fa-pen"></i></a></li>
-        <li><a href="javascript:void(0)" id="btnEditDetail"
-                class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
-                data-id="{{ $invoice->id }}" type="button" data-bs-toggle="modal"
-                data-bs-target="#modalEditPaid">PAID<i class="ml-4 fas fa-pen"></i></a></li>
-        <li><a href="javascript:void(0)" id="btnEditDetail"
-                class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
                 data-id="{{ $invoice->id }}" type="button" data-bs-toggle="modal" data-bs-target="#modalEditTtd">TTD<i
                     class="ml-4 fas fa-pen"></i></a></li>
-        <li><a href="javascript:void(0)" class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
-                data-id="{{ $invoice->id }}" type="button" data-bs-toggle="modal" data-bs-target="#modalEdit">Bast
-                Completion <i class="ml-4 fas fa-print"></i></a></li>
         <li><a href="{{ route('print.invoice', $invoice->id) }}"
                 class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
                 data-id="{{ $invoice->id }}" type="button">Print

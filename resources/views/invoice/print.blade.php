@@ -108,7 +108,8 @@
                     <td class="small" colspan="2"><span class="style9"><strong>No. Invoice</strong></span>
                     </td>
                     <td class="small">:</td>
-                    <td class="small" colspan="2"><span class="style9">{{$invoice->pt->kode_pt}}{{$invoice->kode}}/Dir.01/INV/XII/{{\Carbon\Carbon::parse($invoice->tgl_invoice)->translatedFormat('Y')}}</span>
+                    <td class="small" colspan="2"><span
+                            class="style9">{{ $invoice->pt->kode_pt }}{{ $invoice->kode }}/Dir.01/INV/XII/{{ \Carbon\Carbon::parse($invoice->tgl_invoice)->translatedFormat('Y') }}</span>
                     </td>
                     <td class="small">
                     </td>
@@ -423,7 +424,7 @@
                     </td>
                     <td colspan="3">
                         <div align="center" class="style9"><b>Surabaya,
-                                {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</b>
+                                {{ \Carbon\Carbon::parse($invoice->tgl_invoice)->translatedFormat('d F Y') }}</b>
                         </div>
                     </td>
                 </tr>
@@ -434,8 +435,14 @@
                         <p><span class="style19b"></span></p>
                         <center>
                             <center>
-                                <img src="{{ asset('img/ttddanstemp.png') }}" alt="" width="184"
-                                    height="91" class="post-img" align="middle" img="disable">
+                                @if ($invoice->ttd === 'true')
+                                    <img src="{{ asset('img/ttddanstemp.png') }}" alt="" width="184"
+                                        height="91" class="post-img" align="middle" img="disable">
+                                @else
+                                    <div  alt="" width="184"
+                                        height="91" class="post-img" align="middle"></div>
+                                @endif
+
                             </center>
                         </center>
                         <p></p>

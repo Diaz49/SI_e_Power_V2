@@ -406,8 +406,14 @@
                         <p><span class="style19b"></span></p>
                         <center>
                             <center>
-                                <img src="{{ asset('img/ttddanstemp.png') }}" alt="" width="184"
-                                    height="91" class="post-img" align="middle" img="disable">
+                                @if ($invoice->ttd === 'true')
+                                    <img src="{{ asset('img/ttddanstemp.png') }}" alt="" width="184"
+                                        height="91" class="post-img" align="middle" img="disable">
+                                @else
+                                    <div alt="" width="184" height="91" class="post-img"
+                                        align="middle"></div>
+                                @endif
+
                             </center>
                         </center>
                         <p></p>

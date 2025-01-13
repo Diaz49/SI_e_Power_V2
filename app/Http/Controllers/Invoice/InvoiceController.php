@@ -196,6 +196,25 @@ class InvoiceController extends Controller
         return response()->json();
     }
 
+
+    public function viewTtd(string $id)
+    {
+        $ttd = Invoice::where('id', $id)->value('ttd');
+        return response()->json($ttd, 200);
+    }
+    public function updateTtd(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
+            'ttd' => 'required|in:true,false', // Hanya menerima 'true' atau 'false' // Validasi input radio button
+        ]);
+
+        // Update kolom ttd pada baris dengan ID yang sesuai
+        Invoice::where('id', $id)->update(['ttd' => $validatedData['ttd']]);
+
+        return response()->json(['message' => 'TTD updated successfully.'], 200);
+    }
+
+
     public function delete(string $id)
     {
         $invoice = Invoice::findOrFail($id);

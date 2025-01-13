@@ -17,6 +17,7 @@ class Invoice extends Model
         'tgl_invoice',
         'client_id',
         'pt_id',
+        'ttd',
         'no_bast_1',
         'no_bast_2',
         'no_bast_3',

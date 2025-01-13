@@ -312,7 +312,7 @@
                                     id="edit_nama_bank" value="" placeholder="Masukkan Nama Bank">
                                     <option value="">Pilih Bank</option>
                                     @foreach ($bank as $item)
-                                        <option value="{{ $item->id }}" data-nama-rek="{{ $item->nama_rek }}"
+                                        <option value="{{ $item->id }}" data-nama-rek="{{ $item->nama_rek }}"div
                                             data-no-rek="{{ $item->nomer_rek }}">{{ $item->nama_bank }}
                                         </option>
                                     @endforeach
@@ -515,6 +515,34 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal TTD --}}
+    <form class="modal fade" id="modalEditTtd" tabindex="-1" aria-labelledby="modalEditTtd" aria-hidden="true"
+        action="" method="POST">
+        @csrf
+        @method('PUT')
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalEditTtd">TTD</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="fs-6">Pilihan TTD</p>
+                    <div class="ps-3 pe-3">
+                        <input type="radio" id="true" name="ttd" value="true">
+                        <label class="fw-bold pb-2" for="true">Ttd</label><br>
+                        <input type="radio" id="false" name="ttd" value="">
+                        <label class="fw-bold pb-2" for="false">Blank</label><br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnUpdateTtd">Simpan</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
 
     @push('scripts')
         {{ $dataTable->scripts() }}
@@ -1558,6 +1586,52 @@
                 // Update DataTable
                 reloadDataTable();
             }
+
+            $(document).on('click', 'a[data-bs-target="#modalEditTtd"]', function() {
+                var invoiceId = $(this).data('id'); // Ambil ID dari tombol
+                var url = '/invoice-ttd/' + invoiceId + '/edit'; // URL untuk fetch data
+                var updateUrl = '/invoice-ttd/' + invoiceId; // URL untuk update data
+
+                // Fetch data untuk view (opsional jika modal butuh data sebelumnya)
+                $.get(url, function(data) {
+                    // Jika Anda ingin mengisi nilai radio button sesuai dengan data yang ada
+                    if (data === 'true') {
+                        $('#true').prop('checked', true);
+                    } else {
+                        $('#false').prop('checked', true);
+                    }
+                });
+
+                // Submit update TTD
+                $('#modalEditTtd .modal-footer button').on('click', function() {
+                    var selectedTtd = $('input[name="ttd"]:checked')
+                        .val(); // Ambil nilai radio button yang dipilih
+                    var formData = {
+                        ttd: selectedTtd === "true"
+                    }; // Konversi string menjadi boolean
+
+                    $.ajax({
+                        url: updateUrl,
+                        type: 'PUT',
+                        data: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            $('#modalEditTtd').modal('hide'); // Tutup modal
+                            swal({
+                                title: 'Berhasil!',
+                                text: 'TTD berhasil disimpan!',
+                                icon: 'success',
+                                button: 'OK',
+                            });
+                        },
+                        error: function(xhr) {
+                            alert('Error: ' + xhr.responseJSON.message); // Notifikasi error
+                        }
+                    });
+                });
+            });
         </script>
     @endpush
 @endsection

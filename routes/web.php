@@ -87,7 +87,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('print-non/{id}', [PrintInvoiceController::class, 'viewNon'])->name('print.invoice-non');
     Route::get('kwitansi/{id}', [PrintInvoiceController::class, 'kwitansi'])->name('print.kwitansi');
     Route::get('kwitansi-non/{id}', [PrintInvoiceController::class, 'kwitansiNon'])->name('print.kwitansi-non');
-
+    Route::get('invoice-ttd/{id}/edit', [InvoiceController::class, 'viewTtd'])->name('invoice-ttd.edit');
+    Route::put('invoice-ttd/{id}', [InvoiceController::class, 'updateTtd'])->name('invoice-ttd.update');
 
     Route::post('invoice-item', [DetailInvoiceController::class, 'store'])->name('invoice-item.store');
     Route::get('invoice-detail/{id}/edit', [DetailInvoiceController::class, 'table'])->name('invoice-detail.table');

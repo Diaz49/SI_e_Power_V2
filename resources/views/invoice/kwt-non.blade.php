@@ -234,7 +234,7 @@
                                             </u></b>
                                     </td>
                                     <td colspan="10" class="style9b"><b>Surabaya,
-                                            {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</b>
+                                            {{ \Carbon\Carbon::parse($invoice->tgl_invoice)->translatedFormat('d F Y') }}</b>
                                         <div align="center"></div>
                                     </td>
                                 </tr>

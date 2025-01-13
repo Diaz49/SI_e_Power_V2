@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('no_3',100)->nullable();
             $table->string('no_4',100)->nullable();
             $table->string('no_5',100)->nullable();
+            $table->enum('ttd', ['true', 'false'])->default('false');
             $table->date('due');
             $table->unsignedBigInteger('bank_id');
             $table->string('no_fp')->nullable();
