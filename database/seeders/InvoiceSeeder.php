@@ -16,7 +16,7 @@ class InvoiceSeeder extends Seeder
     public function run()
     {
             
-        for ($i = 1; $i <= 1000; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             // Ambil ID acak dari tabel client, pt, dan bank
             $client_id = DB::table('client')->inRandomOrder()->value('id');
             $pt_id = DB::table('pt')->inRandomOrder()->value('id');
