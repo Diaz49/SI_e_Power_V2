@@ -2,7 +2,7 @@
 @section('content')
     @push('style')
     @endpush
-    <head>
+    {{-- <head>
         <style>
             .filter-container {
         display: inline-flex;
@@ -23,7 +23,7 @@
         /* cursor: pointer; */
     }
         </style>
-    </head>
+    </head> --}}
     <h4 class="text-primary fw-bolder fs-2 m-4">Data Client</h4>
     <div class="d-flex justify-content-end">
         <div class="row ">
@@ -41,7 +41,6 @@
     </div>
     <div class="card m-4">
         <div class="card-body">
-            <!-- Filter Container -->
             <div id="active-filters" class="d-flex"></div>
             <div class="table-responsive">
                 {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
@@ -422,6 +421,13 @@
                 $('.error').remove();
                 // $('#formTambah')[0].reset();
             })
+            
+            $(document).ready(function() {
+                // console.log('Inisialisasi berjalan');
+                $('#all').prop('checked', true);
+                $('#year_all').prop('checked', true);
+            });
+
             function reloadDataTable() {
                 // Ambil nilai radio button PT yang dipilih
                 let pt = $('input[name="pt"]:checked').val();
