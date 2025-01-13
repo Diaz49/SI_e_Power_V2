@@ -42,7 +42,8 @@ class PurchaseOrderDataTable extends DataTable
             })->addColumn('jumlah_item', function (Po $po) {
                 return $po->detail->count();
             })->addColumn('jumlah_harga', function (Po $po) {
-                return $po->detail->sum('jumlah_harga');
+                $jumlah= floor($po->detail->sum('jumlah_harga'));
+                return 'Rp.'. $jumlah ;
             })
             ->filterColumn('vendor_id',  function ($query, $keyword) {
                 $query->whereHas('vendor', function ($q) use ($keyword) {

@@ -258,8 +258,8 @@
                                     <th>Nama Barang</th>
                                     <th>Qty</th>
                                     <th>Satuan</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Jumlah</th>
+                                    <th>Harga Satuan (Rp)</th>
+                                    <th>Jumlah (Rp)</th>
                                     <th>Aksi</th>
                                 </tr>
 
@@ -885,8 +885,8 @@
                         <td>${detail.nama_barang}</td>
                         <td>${detail.qty}</td>
                         <td>${detail.satuan}</td>
-                        <td>${detail.harga_satuan}</td>
-                        <td>${detail.jumlah_harga}</td>
+                        <td>${Math.floor(detail.harga_satuan)}</td>
+                        <td>${Math.floor(detail.jumlah_harga)}</td>
                     <td>
                         <div class="dropdown">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
