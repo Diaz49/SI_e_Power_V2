@@ -84,6 +84,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('invoice/{id}', [InvoiceController::class, 'update'])->name('invoice.update');
     Route::delete('invoice/delete/{id}', [InvoiceController::class, 'delete'])->name('invoice.delete');
     Route::get('print/{id}', [PrintInvoiceController::class, 'view'])->name('print.invoice');
+    Route::get('print-non/{id}', [PrintInvoiceController::class, 'viewNon'])->name('print.invoice-non');
 
 
     Route::post('invoice-item', [DetailInvoiceController::class, 'store'])->name('invoice-item.store');
