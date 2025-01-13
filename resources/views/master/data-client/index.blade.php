@@ -2,28 +2,6 @@
 @section('content')
     @push('style')
     @endpush
-    {{-- <head>
-        <style>
-            .filter-container {
-        display: inline-flex;
-        align-items: center;
-        background-color: #007bff;
-        color: white;
-        border-radius: 50px;
-        padding: 15px;
-        /* font-size: 10px; */
-        font-weight: bold;
-    }
-    .filter-container span {
-        margin-left: 10px;
-        background: transparent;
-        border: none;
-        color: white;
-        font-weight: bold;
-        /* cursor: pointer; */
-    }
-        </style>
-    </head> --}}
     <h4 class="text-primary fw-bolder fs-2 m-4">Data Client</h4>
     <div class="d-flex justify-content-end">
         <div class="row ">
@@ -34,7 +12,9 @@
             <div class="col-12 d-flex justify-content-end">
                 <button class="btn btn-outline-secondary btn-sm " data-bs-target="#modalFilter" data-bs-toggle="modal"
                         style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
-                <button class="btn btn-outline-secondary btn-sm ms-3 me-4"><i class="fas fa-download"></i> Export</button>
+                        <button class="btn btn-outline-secondary btn-sm ms-3 me-4" onclick="exportClients()">
+                            <i class="fas fa-download"></i> Export
+                        </button>
             </div>
 
         </div>
@@ -504,6 +484,37 @@
 
                 // Update DataTable
                 reloadDataTable();
+            }
+            function exportClients() {
+                swal({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Data klien akan diunduh sebagai file Excel.',
+                    icon: 'warning',
+                    buttons: {
+                        cancel: {
+                            text: 'Tidak',
+                            value: null,
+                            visible: true,
+                            className: 'btn btn-danger',
+                            closeModal: true,
+                        },
+                        confirm: {
+                            text: 'Ya',
+                            value: true,
+                            visible: true,
+                            className: 'btn btn-success',
+                            closeModal: true,
+                        }
+                    }
+                }).then((willDownload) => {
+                    if (willDownload) {
+                        // Lanjutkan ke proses unduh
+                        window.location.href = '{{ route('data-client.export') }}';
+                    } else {
+                        // Tampilkan pesan jika batal
+                        swal('Batal!', 'Proses unduhan dibatalkan.', 'info');
+                    }
+                });
             }
         </script>
     @endpush

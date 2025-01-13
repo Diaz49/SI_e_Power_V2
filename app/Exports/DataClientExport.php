@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\DataClient;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 class DataClientExport implements FromCollection
@@ -11,6 +12,7 @@ class DataClientExport implements FromCollection
     */
     public function collection()
     {
-        //
+        // Ambil semua data klien
+        return DataClient::all();
     }
 }

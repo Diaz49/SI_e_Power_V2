@@ -7,14 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Models\DataClient;
 use App\Models\PT;
 use Illuminate\Http\Request;
+use App\Exports\DataClientExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use function Termwind\render;
 
 class DataClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(DataClientDataTable $dataTable)
     {
         $pt = PT::all();
@@ -25,9 +24,6 @@ class DataClientController extends Controller
         return $dataTable->render('master.data-client.index', compact('pt','years'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -62,17 +58,6 @@ class DataClientController extends Controller
         return redirect()->back()->with('success', 'Data berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $dataclient = DataClient::find($id);
@@ -80,9 +65,6 @@ class DataClientController extends Controller
         return response()->json($dataclient);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $dataclient = DataClient::findOrFail($id); // tambahkan fail jika id tidak ditemukan
@@ -128,9 +110,6 @@ class DataClientController extends Controller
         // return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $dataclient = DataClient::findOrFail($id);
@@ -138,5 +117,10 @@ class DataClientController extends Controller
         return response()->json([
             'success' => 'Data karyawan berhasil dihapus!'
         ], 200);    
+    }
+
+    public function exportToExcel()
+    {
+        return Excel::download(new DataClientExport, 'dataclients.xlsx');
     }
 }
