@@ -6,6 +6,9 @@ use App\DataTables\Master\DataProjectIdDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Projectid;
 use Illuminate\Http\Request;
+use App\Models\PT;
+use App\Exports\ProjectIdExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 use function Termwind\render;
@@ -13,13 +16,19 @@ use function Termwind\render;
 class ProjectIdController extends Controller
 {
     public function index(DataProjectIdDataTable $dataTable)
-    {
-        return $dataTable->render('master.data-project-id.index');
+    {   
+        $pt = PT::all();
+        $years = Projectid::selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+        return $dataTable->render('master.data-project-id.index', compact('pt','years'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'nama_pt' => 'required|max:50',
             'project_id' => 'required|string|unique:project_id,project_id|max:50',
             'nama_project' => 'required|string|max:100',
             'nama_client' => 'required|string|max:100',
@@ -27,6 +36,9 @@ class ProjectIdController extends Controller
             'hpp' => 'required|numeric|min:0',
             'rab' => 'required|numeric|min:0',
         ], [
+            'nama_pt.required' => 'Nama PT wajib diisi.',
+            'nama_pt.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
+            
             'project_id.required' => 'ID project harus diisi.',
             'project_id.string' => 'ID project harus berupa teks.',
             'project_id.unique' => 'ID project sudah terdaftar.',
@@ -53,6 +65,7 @@ class ProjectIdController extends Controller
         ]);
 
         $data = [
+            'pt_id' => $request->nama_pt,
             'project_id' => $request->project_id,
             'nama_project' => $request->nama_project,
             'nama_client' => $request->nama_client,
@@ -74,6 +87,7 @@ class ProjectIdController extends Controller
     {
         $projectid = Projectid::findOrFail($id); // tambahkan fail jika id tidak ditemukan
         $request->validate([
+            'nama_pt_edit' => 'required|max:50',
             'project_id_edit' => 'required|string|max:50',
             'nama_project_edit' => 'required|string|max:100',
             'nama_client_edit' => 'required|string|max:100',
@@ -81,6 +95,9 @@ class ProjectIdController extends Controller
             'hpp_edit' => 'required|numeric|min:0',
             'rab_edit' => 'required|numeric|min:0',
         ], [
+            'nama_pt_edit.required' => 'Nama PT wajib diisi.',
+            'nama_pt_edit.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
+
             'project_id_edit.required' => 'ID project harus diisi.',
             'project_id_edit.string' => 'ID project harus berupa teks.',
             'project_id_edit.max' => 'ID project tidak boleh lebih dari 50 karakter.',
@@ -108,6 +125,7 @@ class ProjectIdController extends Controller
 
         // Update data dengan input yang sesuai
         $projectid->update([
+            'pt_id' => $request->nama_pt_edit,
             'project_id' => $request->project_id_edit,
             'nama_project' => $request->nama_project_edit,
             'nama_client' => $request->nama_client_edit,
@@ -123,7 +141,6 @@ class ProjectIdController extends Controller
         // return redirect()->back();
     }
 
-
     public function delete(string $id)
     {
         $projectid = Projectid::findOrFail($id);
@@ -131,5 +148,10 @@ class ProjectIdController extends Controller
         return response()->json([
             'success' => 'Data project berhasil dihapus!'
         ], 200);
+    }
+
+    public function exportToExcel()
+    {
+        return Excel::download(new ProjectIdExport, 'projectid.xlsx');
     }
 }

@@ -29,4 +29,9 @@ class PT extends Model
         return $this->hasMany(Bast::class, 'pt_id','id');
     }
 
+    public function project_id()
+    {
+        return $this->hasMany(Projectid::class);
+    }
+
 }

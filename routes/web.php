@@ -48,13 +48,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('project-id/{id}', [ProjectIdController::class, 'update'])->name('project-id.update');
     Route::delete('project-id/delete/{id}', [ProjectIdController::class, 'delete'])->name('project-id.delete');
 
+    Route::get('/export-project-id', [ProjectIdController::class, 'exportToExcel'])->name('project-id.export');
+
     Route::get('data-client', [DataClientController::class, 'index'])->name('data-client');
     Route::post('data-client', [DataClientController::class, 'store'])->name('data-client.store');
     Route::get('data-client/{id}/edit', [DataClientController::class, 'edit'])->name('data-client.edit');
     Route::put('data-client/{id}', [DataClientController::class, 'update'])->name('data-client.update');
     Route::delete('data-client/delete/{id}', [DataClientController::class, 'destroy'])->name('data-client.delete');
 
-    Route::get('/export-dataclients', [DataClientController::class, 'exportToExcel'])->name('data-client.export');;
+    Route::get('/export-dataclients', [DataClientController::class, 'exportToExcel'])->name('data-client.export');
 
     Route::get('bank', [BankController::class, 'index'])->name('bank');
     Route::post('bank', [BankController::class, 'store'])->name('bank.store');

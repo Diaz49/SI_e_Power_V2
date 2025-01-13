@@ -36,7 +36,17 @@ class DataProjectIdDataTable extends DataTable
      */
     public function query(Projectid $model): QueryBuilder
     {
-        return $model->newQuery();
+        $filterYear = request('created_at'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
+        $filterPtId = request('pt_id'); // Filter PT ID
+
+        return $model->newQuery()
+            ->select('project_id.*') // Pastikan kolom yang dibutuhkan
+            ->when($filterYear, function ($query, $filterYear) {
+                return $query->whereYear('project_id.created_at', $filterYear);
+            })
+            ->when($filterPtId, function ($query, $filterPtId) {
+                return $query->where('project_id.pt_id', $filterPtId);
+            });
     }
 
     /**

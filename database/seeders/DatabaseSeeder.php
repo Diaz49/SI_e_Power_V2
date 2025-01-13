@@ -128,6 +128,7 @@ class DatabaseSeeder extends Seeder
                 'alamat' => "Alamat Project $index",
                 'hpp' => rand(1000000, 5000000),
                 'rab' => rand(5000000, 10000000),
+                'pt_id' => $pt ? $pt->id : null, // Jika ditemukan PT, gunakan ID PT tersebut
             ]);
         }
 
