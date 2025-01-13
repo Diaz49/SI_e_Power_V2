@@ -51,49 +51,20 @@ class InvoiceController extends Controller
             'details.*.qty' => 'required|integer|min:1',
             'details.*.satuan' => 'required|string|max:50',
             'details.*.harga_satuan' => 'required|numeric|min:0',
-        ], [
-            'header.kode_invoice.required' => 'Kode invoice wajib diisi.',
-            'header.kode_invoice.max' => 'Kode invoice tidak boleh lebih dari 100 karakter.',
-            'header.kode_invoice.unique' => 'Kode invoice sudah digunakan.',
-            'header.header_deskripsi.required' => 'Deskripsi header wajib diisi.',
-            'header.tanggal.required' => 'Tanggal wajib diisi.',
-            'header.tanggal.date' => 'Format tanggal tidak valid.',
-            'header.nama_client.required' => 'Nama client wajib diisi.',
-            'header.nama_client.max' => 'Nama client tidak boleh lebih dari 50 karakter.',
-            'header.nama_pt.required' => 'Nama PT wajib diisi.',
-            'header.nama_pt.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
-            'header.no_bast_1.required' => 'Nomor BAST 1 wajib diisi.',
-            'header.jenis_no.required' => 'Jenis nomor wajib diisi.',
-            'header.jenis_no.string' => 'Jenis nomor harus berupa teks.',
-            'header.due_date.required' => 'Tanggal jatuh tempo wajib diisi.',
-            'header.due_date.date' => 'Tanggal jatuh tempo harus berupa tanggal yang valid.',
-            'header.nama_bank.required' => 'Nama bank wajib diisi.',
-            'header.nama_bank.string' => 'Nama bank harus berupa teks.',
-            'header.no_1.required' => 'Nomor 1 wajib diisi.',
-
-            'details.*.nama_barang.required' => 'Nama barang pada detail wajib diisi.',
-            'details.*.nama_barang.string' => 'Nama barang pada detail harus berupa teks.',
-            'details.*.nama_barang.max' => 'Nama barang pada detail maksimal 255 karakter.',
-
-            'details.*.qty.required' => 'Jumlah barang pada detail wajib diisi.',
-            'details.*.qty.integer' => 'Jumlah barang pada detail harus berupa angka.',
-            'details.*.qty.min' => 'Jumlah barang pada detail minimal 1.',
-
-            'details.*.satuan.required' => 'Satuan barang pada detail wajib diisi.',
-            'details.*.satuan.string' => 'Satuan barang pada detail harus berupa teks.',
-            'details.*.satuan.max' => 'Satuan barang pada detail maksimal 50 karakter.',
-
-            'details.*.harga_satuan.required' => 'Harga satuan barang wajib diisi.',
-            'details.*.harga_satuan.numeric' => 'Harga satuan barang harus berupa angka.',
-            'details.*.harga_satuan.min' => 'Harga satuan barang tidak boleh kurang dari 0.',
         ]);
-        DB::beginTransaction(); // Mulai transaksi
-        // Simpan data header
+        DB::beginTransaction();
+
 
         try {
-
+            // Simpan data header
+            $ptId = $request->input('header.nama_pt');
+            $dataTerakhir = Invoice::where('pt_id', $ptId)->latest('id')->first();
+            $lastId = $dataTerakhir ? $dataTerakhir->kode : 0;
+            $nextNumber = $lastId + 1;
+            $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
             $invoice = Invoice::create([
                 'kd_invoice' => $request->input('header.kode_invoice'),
+                'kode' => $kode,
                 'header_deskripsi' => $request->input('header.header_deskripsi'),
                 'tgl_invoice' => $request->input('header.tanggal'),
                 'client_id' => $request->input('header.nama_client'),
@@ -124,11 +95,12 @@ class InvoiceController extends Controller
                     'jumlah_harga' => $jumlah_harga,
                 ]);
             }
+
             DB::commit();
-            return response()->json(['message' => 'Purchase order berhasil disimpan.']);
+            return response()->json(['message' => 'Invoice berhasil disimpan.']);
         } catch (\Exception $e) {
-            DB::rollBack(); // Batalkan semua perubahan jika ada error
-            return response()->json(['message' => 'Gagal menyimpan purchase order: ' . $e->getMessage()], 500);
+            DB::rollBack();
+            return response()->json(['message' => 'Terjadi kesalahan saat menyimpan invoice.'], 500);
         }
     }
 
@@ -189,6 +161,8 @@ class InvoiceController extends Controller
             'edit_paid.required_if' => 'Tanggal paid harus di isi.',
             'edit_no_fp.string' => 'Nomor Faktur Pajak harus berupa teks.',
         ]);
+
+
         $data = [
             'kd_invoice' => $request->edit_kode_invoice,
             'header_deskripsi' => $request->edit_header_deskripsi,
