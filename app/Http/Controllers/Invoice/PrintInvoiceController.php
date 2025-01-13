@@ -20,6 +20,18 @@ class PrintInvoiceController extends Controller
 
         return view('invoice.inv-non')->with('invoice', $invoice);
     }
+    public function kwitansi(string $id)
+    {
+        $invoice = Invoice::with('detail')->findOrFail($id);
+
+        return view('invoice.kwt')->with('invoice', $invoice);
+    }
+    public function kwitansiNon(string $id)
+    {
+        $invoice = Invoice::with('detail')->findOrFail($id);
+
+        return view('invoice.kwt-non')->with('invoice', $invoice);
+    }
 
     public function angkaTerbilang($angka)
     {

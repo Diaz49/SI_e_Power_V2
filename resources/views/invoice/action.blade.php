@@ -35,13 +35,15 @@
                 class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
                 data-id="{{ $invoice->id }}" type="button">Print
                 Invoice Non<i class="ml-4 fas fa-print"></i></a></li>
-
-        <li><a href="javascript:void(0)" class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
-                data-id="{{ $invoice->id }}" type="button" data-bs-toggle="modal" data-bs-target="#modalEdit">Print
+        <li><a href="{{ route('print.kwitansi', $invoice->id) }}"
+                class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
+                data-id="{{ $invoice->id }}" type="button">Print
                 Kwitansi <i class="ml-4 fas fa-print"></i></a></li>
-        <li><a href="javascript:void(0)" class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
-                data-id="{{ $invoice->id }}" type="button" data-bs-toggle="modal" data-bs-target="#modalEdit">Print
+        <li><a href="{{ route('print.kwitansi-non', $invoice->id) }}"
+                class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
+                data-id="{{ $invoice->id }}" type="button">Print
                 Kwitansi Non<i class="ml-4 fas fa-print"></i></a></li>
+
 
 
         <li>
