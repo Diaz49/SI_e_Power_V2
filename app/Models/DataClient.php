@@ -17,6 +17,7 @@ class DataClient extends Model
         'no_tlp',
         'up_invoice',
         'up_sph',
+        'pt_id',
     ];
 
     public function sphs()

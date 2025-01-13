@@ -27,12 +27,15 @@ class DataClientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'nama_pt' => 'required|max:50',
             'nama_client' => 'required|string|max:100',
             'alamat' => 'required|string|max:255',
             'no_tlp' => 'required|numeric|digits_between:10,14',
             'up_invoice' => 'required|string|min:0',
             'up_sph' => 'required|numeric|min:0',
         ], [
+            'nama_pt.required' => 'Nama PT wajib diisi.',
+            'nama_pt.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
             'nama_client.required' => 'Nama Client harus diisi.',
             'nama_client.string' => 'Nama Client harus berupa teks.',
             'alamat.required' => 'Alamat harus diisi.',
@@ -48,6 +51,7 @@ class DataClientController extends Controller
             'up_sph.min' => 'Up sph tidak boleh kurang dari 0.',
         ]);
         $data = [
+            'pt_id' => $request->nama_pt,
             'nama_client' => $request->nama_client,
             'alamat' => $request->alamat,
             'no_tlp' => $request->no_tlp,
@@ -69,12 +73,16 @@ class DataClientController extends Controller
     {
         $dataclient = DataClient::findOrFail($id); // tambahkan fail jika id tidak ditemukan
         $request->validate([
+            'nama_pt_edit' => 'required|max:50',
             'nama_client_edit' => 'required|string|max:100',
             'alamat_edit' => 'required|string|max:255',
             'no_tlp_edit' => 'required|numeric|digits_between:10,14',
             'up_invoice_edit' => 'required|string|min:0',
             'up_sph_edit' => 'required|numeric|min:0',
         ], [
+            'nama_pt_edit.required' => 'Nama PT wajib diisi.',
+            'nama_pt_edit.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
+            
             'nama_client_edit.required' => 'Nama Client harus diisi.',
             'nama_client_edit.string' => 'Nama Client harus berupa teks.',
 
@@ -96,6 +104,7 @@ class DataClientController extends Controller
 
         // Update data dengan input yang sesuai
         $dataclient->update([
+            'pt_id' => $request->nama_pt_edit,
             'nama_client' => $request->nama_client_edit,
             'alamat' => $request->alamat_edit,
             'no_tlp' => $request->no_tlp_edit,

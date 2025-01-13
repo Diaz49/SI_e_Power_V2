@@ -12,9 +12,9 @@
             <div class="col-12 d-flex justify-content-end">
                 <button class="btn btn-outline-secondary btn-sm " data-bs-target="#modalFilter" data-bs-toggle="modal"
                         style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
-                        <button class="btn btn-outline-secondary btn-sm ms-3 me-4" onclick="exportClients()">
-                            <i class="fas fa-download"></i> Export
-                        </button>
+                <button class="btn btn-outline-secondary btn-sm ms-3 me-4" onclick="exportClients()">
+                        <i class="fas fa-download"></i> Export
+                </button>
             </div>
 
         </div>
@@ -79,7 +79,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-1 label">Nama Client</div>
+                        <div class="mb-1 mt-2 label">PT</div>
+                        <select type="text" class="form-control js-example-basic-single" name="nama_pt" id="nama_pt"
+                            value="" placeholder="Masukkan Nama PT">
+                            <option value="">Pilih PT</option>
+                            @foreach ($pt as $item)
+                                <option value="{{ $item->id }}">
+                                    {{ $item->nama_pt }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <div class="mb-1 mt-2 label">Nama Client</div>
                         <input type="text" class="form-control" name="nama_client" id="nama_client" value="{{ old('') }}"
                             placeholder="Masukkan Nama Client">
                         @error('nama_client')
@@ -95,7 +106,7 @@
 
                         <div class="mb-1 mt-2 label">No Telpon</div>
                         <input type="text" class="form-control" name="no_tlp" id="no_tlp" value="{{ old('no_tlp') }}"
-                            placeholder="Masukkan Alamat">
+                            placeholder="Masukkan Nomor Telpon">
                         @error('no_tlp')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -137,6 +148,17 @@
                     </div>
                     <div class="modal-body">
 
+                        <div class="mb-1 mt-2 label">PT</div>
+                        <select type="text" class="form-control js-example-basic-single" name="nama_pt_edit" id="nama_pt_edit"
+                            value="" placeholder="Masukkan Nama PT">
+                            <option value="">Pilih PT</option>
+                            @foreach ($pt as $item)
+                                <option value="{{ $item->id }}">
+                                    {{ $item->nama_pt }}
+                                </option>
+                            @endforeach
+                        </select>
+
                         <div class="mb-1 mt-2 label">Nama Client</div>
                         <input type="text" class="form-control" name="nama_client_edit" id="nama_client_edit"
                             value="" placeholder="Masukkan Nama Client">
@@ -153,7 +175,7 @@
 
                         <div class="mb-1 mt-2 label">No Telpon</div>
                         <textarea type="text" class="form-control" name="no_tlp_edit" id="no_tlp_edit" value=""
-                            placeholder="Masukkan Alamat"></textarea>
+                            placeholder="Masukkan Nomor Telpon"></textarea>
                         @error('no_tlp_edit')
                             <div class="text-danger error ">{{ $message }}</div>
                         @enderror
@@ -255,6 +277,7 @@
                 // Request AJAX untuk mendapatkan data client berdasarkan ID
                 $.get(url, function(data) {
                     // Isi field modal dengan data yang didapat dari server
+                    $('#nama_pt_edit').val(data.pt_id);
                     $('#nama_client_edit').val(data.nama_client);
                     $('#alamat_edit').val(data.alamat);
                     $('#no_tlp_edit').val(data.no_tlp);
@@ -292,6 +315,11 @@
                             $('.error').remove(); // Hapus error sebelumnya
 
                             // Menampilkan pesan error untuk masing-masing field
+                            if (errors.nama_pt_edit) {
+                                $('#nama_pt_edit').after('<div class="text-danger error">' + errors
+                                    .nama_pt_edit[
+                                        0] + '</div>');
+                            }
                             if (errors.nama_client_edit) {
                                 $('#nama_client_edit').after('<div class="text-danger error">' + errors
                                     .nama_client_edit[
@@ -359,6 +387,11 @@
                             $('.error').remove(); // Hapus error sebelumnya
 
                             // Menampilkan pesan error untuk masing-masing field
+                            if (errors.nama_pt) {
+                                $('#nama_pt').after('<div class="text-danger error">' + errors
+                                    .nama_pt[
+                                        0] + '</div>');
+                            }
                             if (errors.nama_client) {
                                 $('#nama_client').after('<div class="text-danger error">' + errors
                                     .nama_client[
@@ -389,7 +422,7 @@
                         } else {
                             swal({
                                 title: 'Gagal!',
-                                text: 'Gagal mengedit data client',
+                                text: 'Gagal menambahkan data client',
                                 icon: 'error',
                                 button: 'OK'
                             });
@@ -406,6 +439,7 @@
                 // console.log('Inisialisasi berjalan');
                 $('#all').prop('checked', true);
                 $('#year_all').prop('checked', true);
+
             });
 
             function reloadDataTable() {
@@ -488,7 +522,7 @@
             function exportClients() {
                 swal({
                     title: 'Apakah Anda yakin?',
-                    text: 'Data klien akan diunduh sebagai file Excel.',
+                    text: 'Data Client akan diunduh sebagai file Excel.',
                     icon: 'warning',
                     buttons: {
                         cancel: {
