@@ -68,12 +68,17 @@ class PurchaseOrderDataTable extends DataTable
      */
     public function query(Po $model): QueryBuilder
     {
+        $filterYear = request('tanggal_po'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
+
         return $model->newQuery()
             ->select([
                 'po.*', // Kolom utama dari tabel `po`
                 DB::raw('(SELECT COUNT(*) FROM po_detail WHERE po_detail.po_id = po.id) as jumlah_item'), // Subquery untuk jumlah item
                 DB::raw('(SELECT SUM(jumlah_harga) FROM po_detail WHERE po_detail.po_id = po.id) as jumlah_harga'), // Subquery untuk total harga
-            ]);
+            ])
+            ->when($filterYear, function ($query, $filterYear) {
+                return $query->whereYear('po.tanggal_po', $filterYear);
+            });
     }
 
     /**
