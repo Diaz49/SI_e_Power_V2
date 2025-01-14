@@ -87,6 +87,7 @@ class DatabaseSeeder extends Seeder
             DataClient::create([
                 'nama_client' => $client['nama_client'],
                 'alamat' => $client['alamat'],
+                'no_tlp' => '08' . rand(1111111111, 9999999999), // Nomor telepon acak
                 'up_invoice' => "UP Invoice $index",
                 'up_sph' => "UP SPH $index",
                 'pt_id' => $pt ? $pt->id : null, // Jika ditemukan PT, gunakan ID PT tersebut
@@ -127,6 +128,7 @@ class DatabaseSeeder extends Seeder
                 'alamat' => "Alamat Project $index",
                 'hpp' => rand(1000000, 5000000),
                 'rab' => rand(5000000, 10000000),
+                'pt_id' => $pt ? $pt->id : null, // Jika ditemukan PT, gunakan ID PT tersebut
             ]);
         }
 

@@ -38,7 +38,7 @@
     @stack('styles')
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="assets/css/demo.css" />
+    {{-- <link rel="stylesheet" href="assets/css/demo.css" /> --}}
 </head>
 
 <body>
@@ -528,37 +528,15 @@
 
     <!-- Kaiadmin JS -->
     <script src="{{ asset('assets/js/kaiadmin.min.js') }}"></script>
+
     @stack('scripts')
     <!-- Select2! -->
     <script src="{{ asset('select2/select2.js') }}"></script>
 
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    {{-- <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
-    <script src="assets/js/demo.js"></script>
-    <script>
-        $('#logoutBtn').on('click', function(event) {
-            event.preventDefault();
-            swal({
-                text: 'Apa kamu yakin ingin keluar?',
-                icon: 'warning',
-                buttons: {
-                    cancel: 'Batal',
-                    confirm: {
-                        text: 'Ya, keluar',
-                        value: true,
-                        visible: true,
-                        className: 'btn btn-danger',
-                    }
-                },
-                dangerMode: true,
-            }).then(willLogout => {
-                if (willLogout) {
-                    window.location.href =
-                    "{{ route('logout') }}"; // Ganti dengan rute logout yang sesuai                
-                }
-            })
-        })
-    </script>
+    <script src="assets/js/demo.js"></script> --}}
+
     <script>
         $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
             type: "line",

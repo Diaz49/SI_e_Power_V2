@@ -14,8 +14,10 @@ class DataClient extends Model
     protected $fillable = [
         'nama_client',
         'alamat',
+        'no_tlp',
         'up_invoice',
         'up_sph',
+        'pt_id',
     ];
 
     public function sphs()

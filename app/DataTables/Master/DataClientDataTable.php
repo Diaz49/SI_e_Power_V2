@@ -35,7 +35,17 @@ class DataClientDataTable extends DataTable
      */
     public function query(DataClient $model): QueryBuilder
     {
-        return $model->newQuery();
+        $filterYear = request('created_at'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
+        $filterPtId = request('pt_id'); // Filter PT ID
+
+        return $model->newQuery()
+            ->select('client.*') // Pastikan kolom yang dibutuhkan
+            ->when($filterYear, function ($query, $filterYear) {
+                return $query->whereYear('client.created_at', $filterYear);
+            })
+            ->when($filterPtId, function ($query, $filterPtId) {
+                return $query->where('client.pt_id', $filterPtId);
+            });
     }
 
     /**
@@ -75,6 +85,7 @@ class DataClientDataTable extends DataTable
                 ->searchable(false),
             Column::make('nama_client'),
             Column::make('alamat'),
+            Column::make('no_tlp')->title('No Telpon'),
             Column::make('up_invoice'),
             Column::make('up_sph'),
             Column::computed('action')

@@ -8,178 +8,52 @@
           >
             <div>
               <h3 class="fw-bold mb-3">Dashboard</h3>
-              {{-- <h6 class="op-7 mb-2">Free Bootstrap 5 Admin Dashboard</h6> --}}
             </div>
-            {{-- <div class="ms-md-auto py-2 py-md-0">
-              <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
-              <a href="#" class="btn btn-primary btn-round">Add Customer</a>
-            </div> --}}
           </div>
+        
           <div class="row row-card-no-pd">
-            <div class="col-12 col-sm-6 col-md-6 col-xl-2">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <h6><b>Invoice</b></h6>
-                      <p class="text-muted">All Data MPA</p>
+            @foreach ($comparisonData as $data)
+            <div class="col-12 col-sm-6 col-md-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                          <div class="d-flex justify-content-between">
+                            <div class="col-5">
+                                <h6><b>Invoice</b></h6>
+                                <p class="text-muted">Laporan Data, {{ $data['nama_pt'] }}</p>
+                            </div>
+                            <div class="col-7 text-end">
+                                <h4 class="text-{{ $data['percentageChange'] >= 0 ? 'success' : 'danger' }} fw-bold">
+                                    Rp{{ number_format($data['changeDifference'], 2, ',', '.') }}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="progress progress-sm">
+                            <div
+                                class="progress-bar bg-{{ $data['percentageChange'] >= 0 ? 'success' : 'danger' }}"
+                                role="progressbar"
+                                style="width: {{ abs($data['percentageChange']) }}%"
+                                aria-valuenow="{{ abs($data['percentageChange']) }}"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            ></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <p class="text-muted mb-0">Evaluasi Bulanan</p>
+                            <p class="text-muted mb-0">{{ round($data['percentageChange'], 2) }}%</p>
+                        </div>
                     </div>
-                    <h4 class="text-info fw-bold">$170</h4>
-                  </div>
-                  <div class="progress progress-sm">
-                    <div
-                      class="progress-bar bg-info w-75"
-                      role="progressbar"
-                      aria-valuenow="75"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                  <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">75%</p>
-                  </div>
                 </div>
-              </div>
             </div>
-            <div class="col-12 col-sm-6 col-md-6 col-xl-2">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <h6><b>Invoice</b></h6>
-                      <p class="text-muted">All Data RAJATA</p>
-                    </div>
-                    <h4 class="text-success fw-bold">$120</h4>
-                  </div>
-                  <div class="progress progress-sm">
-                    <div
-                      class="progress-bar bg-success w-100"
-                      role="progressbar"
-                      aria-valuenow="100"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                  <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">90%</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-xl-2">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <h6><b>Invoice</b></h6>
-                      <p class="text-muted">All Data Ramada</p>
-                    </div>
-                    <h4 class="text-danger fw-bold">15</h4>
-                  </div>
-                  <div class="progress progress-sm">
-                    <div
-                      class="progress-bar bg-danger w-50"
-                      role="progressbar"
-                      aria-valuenow="50"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                  <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">50%</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-xl-2">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <h6><b>Invoice</b></h6>
-                      <p class="text-muted">All Data Nainsmedia</p>
-                    </div>
-                    <h4 class="text-secondary fw-bold">12</h4>
-                  </div>
-                  <div class="progress progress-sm">
-                    <div
-                      class="progress-bar bg-secondary w-25"
-                      role="progressbar"
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                  <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">25%</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-xl-2">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <h6><b>Invoice</b></h6>
-                      <p class="text-muted">All Data Mark</p>
-                    </div>
-                    <h4 class="text-secondary fw-bold">12</h4>
-                  </div>
-                  <div class="progress progress-sm">
-                    <div
-                      class="progress-bar bg-secondary w-25"
-                      role="progressbar"
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                  <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">25%</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-6 col-xl-2">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <h6><b>Invoice</b></h6>
-                      <p class="text-muted">All Data Multi Creation</p>
-                    </div>
-                    <h4 class="text-secondary fw-bold">12</h4>
-                  </div>
-                  <div class="progress progress-sm">
-                    <div
-                      class="progress-bar bg-secondary w-25"
-                      role="progressbar"
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                  <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">25%</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            @endforeach
           </div>
+
           <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
                   <div class="card-head-row">
-                    <div class="card-title">User Statistics</div>
-                    <div class="card-tools">
+                    <div class="card-title">Invoice Statistics</div>
+                    {{-- <div class="card-tools">
                       <a
                         href="#"
                         class="btn btn-label-success btn-round btn-sm me-2"
@@ -195,18 +69,20 @@
                         </span>
                         Print
                       </a>
-                    </div>
+                    </div> --}}
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="chart-container" style="min-height: 375px">
-                    <canvas id="statisticsChart"></canvas>
+                    <canvas id="ptChart"></canvas>
+                    {{-- <canvas id="invoiceChart"></canvas> --}}
                   </div>
-                  <div id="myChartLegend"></div>
+                  {{-- <div id="myChartLegend"></div> --}}
                 </div>
               </div>
             </div>
           </div>
+
           <!-- <div class="row">
                       <div class="col-md-4">
                           <div class="card">
@@ -244,7 +120,7 @@
                               </div>
                           </div>
                       </div>
-                  </div> -->
+          </div> -->
           <!-- <div class="row">
                       <div class="col-md-4">
                           <div class="card">
@@ -393,8 +269,8 @@
                               </div>
                           </div>
                       </div>
-                  </div> -->
-          <div class="row">
+          </div> -->
+          {{-- <div class="row">
             <div class="col-md-8">
               <div class="card">
                 <div class="card-header">
@@ -553,8 +429,143 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </body>
+    <!-- Chart JS -->
+    <script src="{{ asset('assets/js/plugin/chart.js/chart.min.js') }}"></script>
+
+    {{-- <!-- Chart Circle -->
+    <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script> --}}
+    
+    {{-- <script>
+      // Data untuk grafik
+      const invoiceData = {
+        labels: [
+          'January', 'February', 'March', 'April', 'May', 'June', 
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ],
+        datasets: [
+          {
+            label: 'MPA',
+            data: [5, 10, 8, 6, 9, 15, 12, 11, 13, 10, 14], // Data MPA
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Dataset 1',
+            data: [7, 11, 9, 5, 6, 12, 10, 15, 9, 7, 11, 13], // Dataset tambahan
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Dataset 2',
+            data: [6, 8, 7, 12, 10, 8, 9, 11, 14, 13, 10, 12], // Dataset tambahan
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Dataset 3',
+            data: [9, 7, 11, 10, 8, 6, 5, 14, 13, 12, 9, 8], // Dataset tambahan
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Dataset 4',
+            data: [12, 15, 10, 8, 6, 7, 9, 10, 11, 13, 14, 15], // Dataset tambahan
+            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+            borderColor: 'rgba(255, 206, 86, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Dataset 5',
+            data: [10, 9, 12, 15, 14, 13, 11, 7, 6, 5, 8, 9], // Dataset tambahan
+            backgroundColor: 'rgba(201, 203, 207, 0.2)',
+            borderColor: 'rgba(201, 203, 207, 1)',
+            borderWidth: 1
+          },
+        ]
+      };
+    
+      // Konfigurasi grafik
+      const config = {
+        type: 'line', // Jenis grafik: 'line', 'bar', 'pie', dll.
+        data: invoiceData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Invoice Statistics - 1 Year'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      };
+    
+      // Inisialisasi grafik
+      const ctx = document.getElementById('invoiceChart').getContext('2d');
+      new Chart(ctx, config);
+    </script>     --}}
+
+    <script>
+      const chartData = @json($chartData);
+  
+      const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  
+      const datasets = chartData.map(data => ({
+          label: data.nama_pt,
+          data: data.monthlyData,
+          borderColor: getRandomColor(),
+          backgroundColor: getRandomColor(0.2),
+          // backgroundColor: getRandomColor(0.7), //setting untuk bar
+          borderWidth: 2,
+      }));
+  
+      function getRandomColor(opacity = 1) {
+          const r = Math.floor(Math.random() * 255);
+          const g = Math.floor(Math.random() * 255);
+          const b = Math.floor(Math.random() * 255);
+          return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+      }
+  
+      const ctx = document.getElementById('ptChart').getContext('2d');
+      new Chart(ctx, {
+          type: 'line', // Bisa diganti 'bar', 'radar', dll.
+          data: {
+              labels: labels,
+              datasets: datasets
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: {
+                      position: 'top'
+                  },
+                  title: {
+                      display: true,
+                      text: 'Grafik Jumlah Harga Per Bulan Berdasarkan PT'
+                  }
+              },
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  </script>
+
 @endsection

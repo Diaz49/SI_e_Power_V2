@@ -26,8 +26,8 @@ class BastDataTable extends DataTable
         ->addColumn('action', function(Bast $bast) {
             return view('bast.action', ['bast' => $bast]);
         })
-        ->addColumn('kd_invoice', function (Bast $bast) {
-            return $bast->Invoice->kd_invoice;
+        ->addColumn('invoice_id', function (Bast $bast) {
+            return $bast->invoice->kd_invoice;
         })
         ->setRowId('id');
     }
@@ -76,9 +76,8 @@ class BastDataTable extends DataTable
                 ->addClass('text-center')
                 ->searchable(false),
             Column::make('tanggal')->titel('Tanggal Bast'),
-            Column::make('kd_invoice'),
+            Column::make('invoice_id')->titel('Nomer Invoice'),
             Column::make('deskripsi'),
-            Column::make('kd_invoice'),
             Column::make('nama'),
             Column::make('jabatan'),
             Column::make('jumlah_item'),

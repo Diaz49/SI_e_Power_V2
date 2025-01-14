@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_client', 100);
             $table->text('alamat');
+            $table->string('no_tlp');
             $table->string('up_invoice', 50);
             $table->string('up_sph', 50);
             $table->timestamps();

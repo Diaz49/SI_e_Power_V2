@@ -14,6 +14,7 @@ class Bast extends Model
     protected $fillable = [
         'tanggal',
         'invoice_id',
+        'pt_id',
         'deskripsi',
         'nama',
         'jabatan',
@@ -23,6 +24,9 @@ class Bast extends Model
     ];
 
     public function invoice(){
-        return $this->belongTo(Invoice::class, 'invoice_id');
+        return $this->belongsTo(Invoice::class, 'invoice_id');
+    }
+    public function pt(){
+        return $this->belongsTo(PT::class, 'pt_id');
     }
 }
