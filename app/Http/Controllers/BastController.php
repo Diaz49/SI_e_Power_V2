@@ -10,6 +10,8 @@ use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use App\Exports\BastExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BastController extends Controller
 {
@@ -18,7 +20,11 @@ class BastController extends Controller
     {
         $invoice = Invoice::all();
         $pt = PT::all();
-        return $dataTable->render('bast.index', compact('invoice','pt'));
+        $years = Bast::selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+        return $dataTable->render('bast.index', compact('invoice','pt','years'));
     }
 
     public function store(Request $request)
@@ -141,7 +147,6 @@ class BastController extends Controller
         ], 200);
     }
 
-
     public function destroy(string $id)
     {
         $bast = Bast::findOrFail($id);
@@ -149,5 +154,10 @@ class BastController extends Controller
         return response()->json([
             'success' => 'Data Bank berhasil dihapus!'
         ], 200);    
+    }
+
+    public function exportToExcel()
+    {
+        return Excel::download(new BastExport, 'Data Bast.xlsx');
     }
 }

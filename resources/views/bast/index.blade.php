@@ -13,19 +13,60 @@
                     </button>
                 </div>
                 <div class="col-12 d-flex justify-content-end">
-                    <button class="btn btn-outline-secondary btn-sm " onclick="return swal('Title', 'Text', 'success')"
-                        style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
-                    <button class="btn btn-outline-secondary btn-sm ms-3 me-4" style="--bs-btn-bg:white;"><i
-                            class="fas fa-download"></i> Export</button>
+                    <button class="btn btn-outline-secondary btn-sm " data-bs-target="#modalFilter" data-bs-toggle="modal"
+                            style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
+                    <button class="btn btn-outline-secondary btn-sm ms-3 me-4" onclick="exportClients()">
+                            <i class="fas fa-download"></i> Export
+                    </button>
                 </div>
 
             </div>
         </div>
         <div class="card m-4">
             <div class="card-body">
+                <div id="active-filters" class="d-flex"></div>
                 <div class="table-responsive">
                     {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal Filter --}}
+    <div class="modal fade" id="modalFilter" tabindex="-1" aria-labelledby="modalFilterLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalFilterLabel">Select PT & Year</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="fs-6">Pilihan PT</p>
+                    <div class="ps-3 pe-3">
+                        <input type="radio" id="all" name="pt" value="">
+                        <label class="fw-bold pb-2" for="all">All</label><br>
+                        @foreach ($pt as $item)
+                            <input type="radio" id="{{ $item->nama_pt }}" name="pt"
+                                value="{{ $item->id }}">
+                            <label class="fw-bold pb-2" for="{{ $item->nama_pt }}">{{ $item->nama_pt }}</label><br>
+                        @endforeach
+
+
+                    </div>
+                    <p class="fs-6 pt-4">Pilih Tahun</p>
+                    <div class="ps-3 pe-3">
+                        <input type="radio" id="year_all" name="year" value="">
+                        <label class="fw-bold pb-2" for="year_all">All</label><br>
+                        @foreach ($years as $item)
+                            <input type="radio" id="year_{{ $item }}" name="year"
+                                value="{{ $item }}">
+                            <label class="fw-bold pb-2" for="year_{{ $item }}">{{ $item }}</label><br>
+                        @endforeach
+                    </div>
+                    <div class="w-100 d-flex justify-content-end mt-2">
+                        <button type="button" id="filterBtn" class="btn btn-primary">OK</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,7 +84,7 @@
                     </div>
                     <div class="modal-body">
                         <div>
-                            <div class="mb-1 label">Tanggal</div>
+                            <div class="mb-1 mt-2 label">Tanggal</div>
                             <input type="date" class="form-control" name="tanggal" id="tanggal" value="{{ old('') }}"
                                 placeholder="Masukkan Tanggal">
                             @error('tanggal')
@@ -70,37 +111,37 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <div class="mb-1 label">Deskripsi</div>
+                            <div class="mb-1 mt-2 label">Deskripsi</div>
                             <input type="text" class="form-control" name="deskripsi" id="deskripsi" value="{{ old('') }}"
                                 placeholder="Masukkan Deskripsi">
                             @error('deskripsi')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Nama</div>
+                            <div class="mb-1 mt-2 label">Nama</div>
                             <input type="text" class="form-control" name="nama" id="nama" value="{{ old('') }}"
                                 placeholder="Masukkan Nama">
                             @error('nama')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Jabatan</div>
+                            <div class="mb-1 mt-2 label">Jabatan</div>
                             <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{ old('') }}"
                                 placeholder="Masukkan Jabatan">
                             @error('jabatan')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Jumlah item</div>
+                            <div class="mb-1 mt-2 label">Jumlah item</div>
                             <input type="text" class="form-control" name="jumlah_item" id="jumlah_item" value="{{ old('') }}"
                                 placeholder="Masukkan Jumlah Item">
                             @error('jumlah_item')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Harga satuan</div>
+                            <div class="mb-1 mt-2 label">Harga satuan</div>
                             <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value="{{ old('') }}"
                                 placeholder="Masukkan Harga Satuan">
                             @error('harga_satuan')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Total invoice</div>
+                            <div class="mb-1 mt-2 label">Total invoice</div>
                             <input type="text" class="form-control" name="total_invoice" id="total_invoice" value="{{ old('') }}"
                                 placeholder="Masukkan Total Invoice" readonly>
                             @error('total_invoice')
@@ -131,7 +172,7 @@
                     <div class="modal-body">
 
                         <div>
-                            <div class="mb-1 label">Tanggal</div>
+                            <div class="mb-1 mt-2 label">Tanggal</div>
                             <input type="date" class="form-control" name="tanggal_edit" id="tanggal_edit" value="{{ old('') }}"
                                 placeholder="Masukkan Tanggal">
                             @error('tanggal_edit')
@@ -159,37 +200,37 @@
                                         </option>
                                     @endforeach
                                 </select>
-                            <div class="mb-1 label">Deskripsi</div>
+                            <div class="mb-1 mt-2 label">Deskripsi</div>
                             <input type="text" class="form-control" name="deskripsi_edit" id="deskripsi_edit" value="{{ old('') }}"
                                 placeholder="Masukkan Deskripsi">
                             @error('deskripsi_edit')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Nama</div>
+                            <div class="mb-1 mt-2 label">Nama</div>
                             <input type="text" class="form-control" name="nama_edit" id="nama_edit" value="{{ old('') }}"
                                 placeholder="Masukkan Nama">
                             @error('nama_edit')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Jabatan</div>
+                            <div class="mb-1 mt-2 label">Jabatan</div>
                             <input type="text" class="form-control" name="jabatan_edit" id="jabatan_edit" value="{{ old('') }}"
                                 placeholder="Masukkan Jabatan">
                             @error('jabatan_edit')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Jumlah item</div>
+                            <div class="mb-1 mt-2 label">Jumlah item</div>
                             <input type="text" class="form-control" name="jumlah_item_edit" id="jumlah_item_edit" value="{{ old('') }}"
                                 placeholder="Masukkan Jumlah item">
                             @error('jumlah_item_edit')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Harga satuan</div>
+                            <div class="mb-1 mt-2 label">Harga satuan</div>
                             <input type="text" class="form-control" name="harga_satuan_edit" id="harga_satuan_edit" value="{{ old('') }}"
                                 placeholder="Masukkan Harga satuan">
                             @error('harga_satuan_edit')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="mb-1 label">Total invoice</div>
+                            <div class="mb-1 mt-2 label">Total invoice</div>
                             <input type="text" class="form-control" name="total_invoice_edit" id="total_invoice_edit" value="{{ old('') }}"
                                 placeholder="Masukkan Total Invoice" readonly>
                             @error('total_invoice_edit')
@@ -210,6 +251,7 @@
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
+            let selectedFilters = {};
             document.addEventListener('DOMContentLoaded', function() {
                 @if (session('success'))
                     swal('Berhasil!', '{{ session('success') }}', 'success');
@@ -478,6 +520,121 @@
                 $('.error').remove();
                 // $('#formTambah')[0].reset();
             })
+            $(document).ready(function() {
+                // console.log('Inisialisasi berjalan');
+                $('#all').prop('checked', true);
+                $('#year_all').prop('checked', true);
+
+            });
+
+            function reloadDataTable() {
+                // Ambil nilai radio button PT yang dipilih
+                let pt = $('input[name="pt"]:checked').val();
+                // Ambil nilai radio button Year yang dipilih
+                let year = $('input[name="year"]:checked').val();
+                let url = "{{ route('bast') }}";
+
+                window.LaravelDataTables['bast-table'].ajax.url(
+                        `${url}?created_at=${year}&pt_id=${pt}`)
+                    .load();
+            }
+            $('#filterBtn').on('click', function() {
+                const ptValue = $('input[name="pt"]:checked').val();
+                const ptLabel = $('input[name="pt"]:checked').next('label').text();
+
+                // Ambil filter Tahun yang dipilih
+                const yearValue = $('input[name="year"]:checked').val();
+                const yearLabel = $('input[name="year"]:checked').next('label').text();
+
+                // Simpan filter PT jika dipilih
+                if (ptValue !== undefined && ptValue !== "") {
+                    selectedFilters.pt = {
+                        value: ptValue,
+                        label: ptLabel
+                    };
+                } else {
+                    delete selectedFilters.pt; // Hapus jika tidak ada pilihan PT
+                }
+
+                // Simpan filter Tahun jika dipilih
+                if (yearValue !== "") {
+                    selectedFilters.year = {
+                        value: yearValue,
+                        label: yearLabel
+                    };
+                } else {
+                    delete selectedFilters.year; // Hapus jika tidak ada pilihan Tahun
+                }
+
+                // Render badge untuk filter yang aktif
+                renderBadges();
+                reloadDataTable();
+                $('#modalFilter').modal('hide');
+            });
+            // Fungsi untuk render badge filter aktif
+            function renderBadges() {
+                const container = $('#active-filters');
+                container.empty(); // Kosongkan badge sebelumnya
+
+                // Tambahkan badge untuk setiap filter aktif
+                for (const key in selectedFilters) {
+                    const filter = selectedFilters[key];
+                    container.append(`
+                    <span class=" bg-primary text-white rounded-pill py-1 ps-3 pe-2 d-flex align-items-center justify-content-center me-2 mb-3 fw-bold">
+                        ${filter.label}
+                        <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close" onclick="removeFilter('${key}')"></button>
+                    </span>
+                `);
+                }
+            }
+            // Fungsi untuk menghapus filter dari badge
+            function removeFilter(filterType) {
+                delete selectedFilters[filterType]; // Hapus filter dari daftar
+
+                // Hapus pilihan pada elemen input/filter
+                if (filterType === "pt") {
+                    $('#all').prop('checked', true); // Reset pilihan radio PT
+                } else if (filterType === "year") {
+                    $('#year_all').prop('checked', true); // Reset pilihan select Tahun
+                }
+
+                // Render ulang badge
+                renderBadges();
+
+                // Update DataTable
+                reloadDataTable();
+            }
+            function exportClients() {
+                swal({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Data Bast akan diunduh sebagai file Excel.',
+                    icon: 'warning',
+                    buttons: {
+                        cancel: {
+                            text: 'Tidak',
+                            value: null,
+                            visible: true,
+                            className: 'btn btn-danger',
+                            closeModal: true,
+                        },
+                        confirm: {
+                            text: 'Ya',
+                            value: true,
+                            visible: true,
+                            className: 'btn btn-success',
+                            closeModal: true,
+                        }
+                    }
+                }).then((willDownload) => {
+                    if (willDownload) {
+                        // Lanjutkan ke proses unduh
+                        window.location.href = '{{ route('bast.export') }}';
+                    } else {
+                        // Tampilkan pesan jika batal
+                        swal('Batal!', 'Proses unduhan dibatalkan.', 'info');
+                    }
+                });
+            }
         </script>
     @endpush
 
