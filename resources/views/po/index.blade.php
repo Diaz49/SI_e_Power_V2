@@ -26,7 +26,7 @@
             <div class="card-body">
                 <div id="active-filters" class="d-flex"></div>
                 <div class="table-responsive">
-                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
+                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive text-center']) !!}
 
                 </div>
             </div>
@@ -1169,6 +1169,7 @@
 
             function updateTotalHarga() {
                 let total = 0;
+                let diskon = 
 
                 // Loop melalui semua baris tabel dan tambahkan nilai kolom jumlah_harga
                 $('#detailEditTable tbody tr').each(function() {

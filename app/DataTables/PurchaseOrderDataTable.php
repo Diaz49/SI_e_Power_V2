@@ -41,9 +41,14 @@ class PurchaseOrderDataTable extends DataTable
                 return $po->vendor->no_tlp;
             })->addColumn('jumlah_item', function (Po $po) {
                 return $po->detail->count();
-            })->addColumn('jumlah_harga', function (Po $po) {
-                $jumlah= floor($po->detail->sum('jumlah_harga'));
-                return 'Rp.'.  number_format($jumlah, 0, ',', '.');
+            })
+            ->editColumn('diskon', function (Po $po) {
+                $diskon = floor($po->diskon);
+                return 'Rp.' .  number_format($diskon, 0, ',', '.');
+            })
+            ->addColumn('jumlah_harga', function (Po $po) {
+                $jumlah = floor($po->detail->sum('jumlah_harga') - $po->diskon);
+                return 'Rp.' .  number_format($jumlah, 0, ',', '.');
             })
             ->filterColumn('vendor_id',  function ($query, $keyword) {
                 $query->whereHas('vendor', function ($q) use ($keyword) {
@@ -124,6 +129,7 @@ class PurchaseOrderDataTable extends DataTable
             Column::make('tlp_vendor')->title('No Tlp'),
             Column::make('perihal'),
             Column::make('jumlah_item')->title('Jumlah Item'),
+            Column::make('diskon'),
             Column::make('jumlah_harga')->title('Total PO'),
             Column::computed('action')
                 ->exportable(false)
