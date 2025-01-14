@@ -63,7 +63,7 @@ class InvoiceDataTable extends DataTable
      */
     public function query(Invoice $model): QueryBuilder
     {
-        $filterYear = request('created_at'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
+        $filterYear = request('tgl_invoice'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
         $filterPtId = request('pt_id'); // Filter PT ID
 
         return $model->newQuery()

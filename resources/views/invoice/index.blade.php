@@ -1517,7 +1517,7 @@
                 let url = "{{ route('invoice') }}";
 
                 window.LaravelDataTables['invoice-table'].ajax.url(
-                        `${url}?created_at=${year}&pt_id=${pt}`)
+                        `${url}?tgl_invoice=${year}&pt_id=${pt}`)
                     .load();
             }
             $('#filterBtn').on('click', function() {
