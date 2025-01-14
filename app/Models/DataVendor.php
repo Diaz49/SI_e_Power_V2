@@ -17,6 +17,12 @@ class DataVendor extends Model
        'kota', 
        'no_tlp',
        'email',
-       'up', 
+       'up',
+       'pt_id', 
     ];
+
+    public function pt()
+    {
+        return $this->belongsTo(PT::class);
+    } 
 }

@@ -116,6 +116,7 @@ class DatabaseSeeder extends Seeder
                 'no_tlp' => "0812345678$index",
                 'email' => "vendor$index@example.com",
                 'up' => "UP Vendor $index",
+                'pt_id' => $pt ? $pt->id : null, // Jika ditemukan PT, gunakan ID PT tersebut
             ]);
         }
 

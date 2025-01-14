@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('up', 50);
             $table->timestamps();
+
+            $table->unsignedBigInteger('pt_id');
+            $table->foreign('pt_id')->references('id')->on('pt')->onDelete('cascade');
         });
     }
 

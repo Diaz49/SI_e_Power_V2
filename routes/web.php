@@ -70,6 +70,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('data-vendor/{id}', [DataVendorController::class, 'update'])->name('data-vendor.update');
     Route::delete('data-vendor/delete/{id}', [DataVendorController::class, 'delete'])->name('data-vendor.delete');
 
+    Route::get('/export-data-vendor', [DataVendorController::class, 'exportToExcel'])->name('data-vendor.export');
+
     Route::get('po', [PurchaseOrderController::class, 'index'])->name('po');
     Route::post('po', [PurchaseOrderController::class, 'store'])->name('po.store');
     Route::get('po/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('po.edit');
