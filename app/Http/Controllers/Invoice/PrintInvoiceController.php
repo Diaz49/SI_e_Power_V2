@@ -14,30 +14,74 @@ class PrintInvoiceController extends Controller
 
         return view('invoice.print')->with('invoice', $invoice);
     }
+    public function viewNon(string $id)
+    {
+        $invoice = Invoice::with('detail')->findOrFail($id);
 
-    public function angkaTerbilang($angka) {
+        return view('invoice.inv-non')->with('invoice', $invoice);
+    }
+    public function kwitansi(string $id)
+    {
+        $invoice = Invoice::with('detail')->findOrFail($id);
+
+        return view('invoice.kwt')->with('invoice', $invoice);
+    }
+    public function kwitansiNon(string $id)
+    {
+        $invoice = Invoice::with('detail')->findOrFail($id);
+
+        return view('invoice.kwt-non')->with('invoice', $invoice);
+    }
+
+    public function angkaTerbilang($angka)
+    {
         // Ambil hanya bagian integer tanpa desimal
         $integerPart = floor($angka); // Bagian integer
         // Konversi bagian integer menjadi terbilang
         $terbilangInteger = $this->angkaTerbilangInteger($integerPart);
-    
+
         // Kembalikan hanya bagian integer
-        return $terbilangInteger ;
+        return $terbilangInteger;
     }
-    
-    public function angkaTerbilangInteger($angka) {
+
+    public function angkaTerbilangInteger($angka)
+    {
         // Array angka terbilang
         $huruf = array(
-            0 => '', 1 => 'Satu', 2 => 'Dua', 3 => 'Tiga', 4 => 'Empat', 5 => 'Lima', 
-            6 => 'Enam', 7 => 'Tujuh', 8 => 'Delapan', 9 => 'Sembilan', 10 => 'Sepuluh', 
-            11 => 'Sebelas', 12 => 'Dua Belas', 13 => 'Tiga Belas', 14 => 'Empat Belas', 
-            15 => 'Lima Belas', 16 => 'Enam Belas', 17 => 'Tujuh Belas', 18 => 'Delapan Belas', 
-            19 => 'Sembilan Belas', 20 => 'Dua Puluh', 30 => 'Tiga Puluh', 40 => 'Empat Puluh', 
-            50 => 'Lima Puluh', 60 => 'Enam Puluh', 70 => 'Tujuh Puluh', 80 => 'Delapan Puluh', 
-            90 => 'Sembilan Puluh', 100 => 'Seratus', 1000 => 'Seribu', 1000000 => 'Satu Juta', 
+            0 => '',
+            1 => 'Satu',
+            2 => 'Dua',
+            3 => 'Tiga',
+            4 => 'Empat',
+            5 => 'Lima',
+            6 => 'Enam',
+            7 => 'Tujuh',
+            8 => 'Delapan',
+            9 => 'Sembilan',
+            10 => 'Sepuluh',
+            11 => 'Sebelas',
+            12 => 'Dua Belas',
+            13 => 'Tiga Belas',
+            14 => 'Empat Belas',
+            15 => 'Lima Belas',
+            16 => 'Enam Belas',
+            17 => 'Tujuh Belas',
+            18 => 'Delapan Belas',
+            19 => 'Sembilan Belas',
+            20 => 'Dua Puluh',
+            30 => 'Tiga Puluh',
+            40 => 'Empat Puluh',
+            50 => 'Lima Puluh',
+            60 => 'Enam Puluh',
+            70 => 'Tujuh Puluh',
+            80 => 'Delapan Puluh',
+            90 => 'Sembilan Puluh',
+            100 => 'Seratus',
+            1000 => 'Seribu',
+            1000000 => 'Satu Juta',
             1000000000 => 'Satu Miliar'
         );
-    
+
         // Menangani angka kecil terlebih dahulu
         if ($angka < 21) {
             return $huruf[$angka];
@@ -61,5 +105,4 @@ class PrintInvoiceController extends Controller
             return 'Angka terlalu besar';
         }
     }
-    
 }

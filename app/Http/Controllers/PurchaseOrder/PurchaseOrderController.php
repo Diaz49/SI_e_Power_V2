@@ -15,7 +15,12 @@ class PurchaseOrderController extends Controller
     public function index(PurchaseOrderDataTable $dataTable)
     {
         $vendor = DataVendor::all();
-        return $dataTable->render('po.index', compact('vendor'));
+        $years = Po::selectRaw('YEAR(tanggal_po) as year')
+        ->distinct()
+        ->orderBy('year', 'desc')
+        ->pluck('year'); // Mengambil nilai tahun unik
+        
+        return $dataTable->render('po.index', compact('vendor', 'years'));
     }
 
     public function store(Request $request)

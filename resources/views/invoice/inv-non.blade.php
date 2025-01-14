@@ -304,48 +304,19 @@
             <tbody>
                 <tr>
                     <td colspan="2" align="center" class="st_total">&nbsp;</td>
-                    <td width="215" align="right" class="st_total">JUMLAH</td>
+                    <td width="215" align="right" class="st_total">TOTAL HARGA</td>
                     <td width="154" align="right">
                         <div id="total" class="st_total" align="right">Rp.
                             {{ number_format(floor($jumlahHarga), 0, ',', '.') }}
                         </div>
                     </td>
                 </tr>
-
                 <tr>
                     @php
-                        $ppn = ($jumlahHarga * 11) / 100;
-                    @endphp
-                    <td colspan="2" align="center" class="st_total">&nbsp;</td>
-                    <td align="right" class="st_total">PPN 11%</td>
-                    <td width="154" align="right">
-                        <div id="total" class="st_total" align="right">Rp.
-                            {{ number_format(floor($ppn), 0, ',', '.') }}
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    @php
-                        $totalHarga = $jumlahHarga + $ppn;
                         $totalHargaTerbilang = app(
                             'App\Http\Controllers\Invoice\PrintInvoiceController',
-                        )->angkaTerbilang($totalHarga);
+                        )->angkaTerbilang($jumlahHarga);
                     @endphp
-                    <td width="383" align="right" class="st_total">&nbsp;</td>
-                    <td width="384" colspan="-2" align="center" class="st_total">&nbsp;</td>
-                    <td align="right" class="st_total">TOTAL HARGA</td>
-                    <td width="154" align="right">
-                        <div id="total" class="st_total" align="right">Rp.
-                            {{ number_format(floor($totalHarga), 0, ',', '.') }}
-
-
-                        </div>
-                    </td>
-                </tr>
-
-
-                <tr>
                     <td colspan="4" align="right" class="style9">
                         <br><i><b>Terbilang : </b>"{{ $totalHargaTerbilang }} Rupiah"</i>
                         <div id="total" class="st_total" align="right"></div>
@@ -424,7 +395,7 @@
                     </td>
                     <td colspan="3">
                         <div align="center" class="style9"><b>Surabaya,
-                                {{ \Carbon\Carbon::parse($invoice->tgl_invoice)->translatedFormat('d F Y') }}</b>
+                                {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</b>
                         </div>
                     </td>
                 </tr>
@@ -439,8 +410,8 @@
                                     <img src="{{ asset('img/ttddanstemp.png') }}" alt="" width="184"
                                         height="91" class="post-img" align="middle" img="disable">
                                 @else
-                                    <div  alt="" width="184"
-                                        height="91" class="post-img" align="middle"></div>
+                                    <div alt="" width="184" height="91" class="post-img"
+                                        align="middle"></div>
                                 @endif
 
                             </center>

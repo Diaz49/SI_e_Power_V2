@@ -13,7 +13,7 @@
                     </button>
                 </div>
                 <div class="col-12 d-flex justify-content-end">
-                    <button class="btn btn-outline-secondary btn-sm " onclick="return swal('Title', 'Text', 'success')"
+                    <button class="btn btn-outline-secondary btn-sm " data-bs-toggle="modal" data-bs-target="#modalFilter"
                         style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
                     <button class="btn btn-outline-secondary btn-sm ms-3 me-4" style="--bs-btn-bg:white;"><i
                             class="fas fa-download"></i> Export</button>
@@ -24,8 +24,9 @@
 
         <div class="card m-4">
             <div class="card-body">
+                <div id="active-filters" class="d-flex"></div>
                 <div class="table-responsive">
-                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
+                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive text-center']) !!}
 
                 </div>
             </div>
@@ -154,8 +155,8 @@
                         <th>Nama Barang</th>
                         <th>Qty</th>
                         <th>Satuan</th>
-                        <th>Harga Satuan</th>
-                        <th>Jumlah</th>
+                        <th>Harga Satuan (Rp)</th>
+                        <th>Jumlah (Rp)</th>
                         <th>Aksi</th>
                     </tr>
 
@@ -258,8 +259,8 @@
                                     <th>Nama Barang</th>
                                     <th>Qty</th>
                                     <th>Satuan</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Jumlah</th>
+                                    <th>Harga Satuan (Rp)</th>
+                                    <th>Jumlah (Rp)</th>
                                     <th>Aksi</th>
                                 </tr>
 
@@ -369,11 +370,40 @@
         </div>
     </form>
 
+    {{-- Modal Filter --}}
+    <div class="modal fade" id="modalFilter" tabindex="-1" aria-labelledby="modalFilterLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalFilterLabel">Select Year</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="fs-6">Pilih Tahun</p>
+                    <div class="ps-3 pe-3">
+                        <input type="radio" id="year_all" name="year" value="">
+                        <label class="fw-bold pb-2" for="year_all">All</label><br>
+                        @foreach ($years as $item)
+                            <input type="radio" id="year_{{ $item }}" name="year"
+                                value="{{ $item }}">
+                            <label class="fw-bold pb-2" for="year_{{ $item }}">{{ $item }}</label><br>
+                        @endforeach
+                    </div>
+                    <div class="w-100 d-flex justify-content-end mt-2">
+                        <button type="button" id="filterBtn" class="btn btn-primary">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
             let detailArray = [];
             let no = 1;
+            let selectedFilters = {};
+
 
             $(document).on('click', '#btnDeletePo', function() {
                 var url = $(this).data('url');
@@ -885,8 +915,8 @@
                         <td>${detail.nama_barang}</td>
                         <td>${detail.qty}</td>
                         <td>${detail.satuan}</td>
-                        <td>${detail.harga_satuan}</td>
-                        <td>${detail.jumlah_harga}</td>
+                        <td>${Math.floor(detail.harga_satuan)}</td>
+                        <td>${Math.floor(detail.jumlah_harga)}</td>
                     <td>
                         <div class="dropdown">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -1139,6 +1169,7 @@
 
             function updateTotalHarga() {
                 let total = 0;
+                let diskon = 
 
                 // Loop melalui semua baris tabel dan tambahkan nilai kolom jumlah_harga
                 $('#detailEditTable tbody tr').each(function() {
@@ -1150,6 +1181,69 @@
 
                 // Perbarui elemen total harga
                 $('#totalHarga').text(total.toLocaleString('id-ID'));
+            }
+            
+            function reloadDataTable() {
+                // Ambil nilai radio button Year yang dipilih
+                let year = $('input[name="year"]:checked').val();
+                let url = "{{ route('po') }}";
+
+                window.LaravelDataTables['purchaseorder-table'].ajax.url(
+                        `${url}?tanggal_po=${year}`)
+                    .load();
+            }
+            $('#filterBtn').on('click', function() {
+           
+                // Ambil filter Tahun yang dipilih
+                const yearValue = $('input[name="year"]:checked').val();
+                const yearLabel = $('input[name="year"]:checked').next('label').text();
+
+
+                // Simpan filter Tahun jika dipilih
+                if (yearValue !== "") {
+                    selectedFilters.year = {
+                        value: yearValue,
+                        label: yearLabel
+                    };
+                } else {
+                    delete selectedFilters.year; // Hapus jika tidak ada pilihan Tahun
+                }
+
+                // Render badge untuk filter yang aktif
+                renderBadges();
+                reloadDataTable();
+                $('#modalFilter').modal('hide');
+            });
+            // Fungsi untuk render badge filter aktif
+            function renderBadges() {
+                const container = $('#active-filters');
+                container.empty(); // Kosongkan badge sebelumnya
+
+                // Tambahkan badge untuk setiap filter aktif
+                for (const key in selectedFilters) {
+                    const filter = selectedFilters[key];
+                    container.append(`
+                    <span class=" bg-primary text-white rounded-pill py-1 ps-3 pe-2 d-flex align-items-center justify-content-center me-2 mb-3 fw-bold">
+                        ${filter.label}
+                        <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close" onclick="removeFilter('${key}')"></button>
+                    </span>
+                `);
+                }
+            }
+            // Fungsi untuk menghapus filter dari badge
+            function removeFilter(filterType) {
+                delete selectedFilters[filterType]; // Hapus filter dari daftar
+
+                // Hapus pilihan pada elemen input/filter
+                if (filterType === "year") {
+                    $('#year_all').prop('checked', true); // Reset pilihan select Tahun
+                }
+
+                // Render ulang badge
+                renderBadges();
+
+                // Update DataTable
+                reloadDataTable();
             }
         </script>
     @endpush

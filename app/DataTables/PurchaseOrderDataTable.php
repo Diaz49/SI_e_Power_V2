@@ -41,8 +41,14 @@ class PurchaseOrderDataTable extends DataTable
                 return $po->vendor->no_tlp;
             })->addColumn('jumlah_item', function (Po $po) {
                 return $po->detail->count();
-            })->addColumn('jumlah_harga', function (Po $po) {
-                return $po->detail->sum('jumlah_harga');
+            })
+            ->editColumn('diskon', function (Po $po) {
+                $diskon = floor($po->diskon);
+                return 'Rp.' .  number_format($diskon, 0, ',', '.');
+            })
+            ->addColumn('jumlah_harga', function (Po $po) {
+                $jumlah = floor($po->detail->sum('jumlah_harga') - $po->diskon);
+                return 'Rp.' .  number_format($jumlah, 0, ',', '.');
             })
             ->filterColumn('vendor_id',  function ($query, $keyword) {
                 $query->whereHas('vendor', function ($q) use ($keyword) {
@@ -67,12 +73,17 @@ class PurchaseOrderDataTable extends DataTable
      */
     public function query(Po $model): QueryBuilder
     {
+        $filterYear = request('tanggal_po'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
+
         return $model->newQuery()
             ->select([
                 'po.*', // Kolom utama dari tabel `po`
                 DB::raw('(SELECT COUNT(*) FROM po_detail WHERE po_detail.po_id = po.id) as jumlah_item'), // Subquery untuk jumlah item
                 DB::raw('(SELECT SUM(jumlah_harga) FROM po_detail WHERE po_detail.po_id = po.id) as jumlah_harga'), // Subquery untuk total harga
-            ]);
+            ])
+            ->when($filterYear, function ($query, $filterYear) {
+                return $query->whereYear('po.tanggal_po', $filterYear);
+            });
     }
 
     /**
@@ -118,6 +129,7 @@ class PurchaseOrderDataTable extends DataTable
             Column::make('tlp_vendor')->title('No Tlp'),
             Column::make('perihal'),
             Column::make('jumlah_item')->title('Jumlah Item'),
+            Column::make('diskon'),
             Column::make('jumlah_harga')->title('Total PO'),
             Column::computed('action')
                 ->exportable(false)
