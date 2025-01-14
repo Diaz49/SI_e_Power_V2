@@ -40,7 +40,7 @@ class InvoiceDataTable extends DataTable
             ->addColumn('jumlah_item', function (Invoice $invoice) {
                 return $invoice->detail->count();
             })->addColumn('jumlah_harga', function (Invoice $invoice) {
-                return $invoice->detail->sum('jumlah_harga');
+                return '<span class=""> Rp.'. number_format($invoice->detail->sum('jumlah_harga'), 0, ',', '.').'</span>';
             })
             ->filterColumn('client_id',  function ($query, $keyword) {
                 $query->whereHas('client', function ($q) use ($keyword) {
@@ -54,7 +54,7 @@ class InvoiceDataTable extends DataTable
                 $query->whereRaw('(SELECT SUM(jumlah_harga) FROM invoice_detail WHERE invoice_detail.invoice_id = invoice.id) LIKE ?', ["%$keyword%"]);
             })
             ->setRowId('id')
-            ->rawColumns(['status'])
+            ->rawColumns(['status', 'jumlah_harga'])
         ;
     }
 

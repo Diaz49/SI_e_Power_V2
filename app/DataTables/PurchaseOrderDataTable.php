@@ -43,7 +43,7 @@ class PurchaseOrderDataTable extends DataTable
                 return $po->detail->count();
             })->addColumn('jumlah_harga', function (Po $po) {
                 $jumlah= floor($po->detail->sum('jumlah_harga'));
-                return 'Rp.'. $jumlah ;
+                return 'Rp.'.  number_format($jumlah, 0, ',', '.');
             })
             ->filterColumn('vendor_id',  function ($query, $keyword) {
                 $query->whereHas('vendor', function ($q) use ($keyword) {

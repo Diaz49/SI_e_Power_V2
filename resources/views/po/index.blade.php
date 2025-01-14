@@ -154,8 +154,8 @@
                         <th>Nama Barang</th>
                         <th>Qty</th>
                         <th>Satuan</th>
-                        <th>Harga Satuan</th>
-                        <th>Jumlah</th>
+                        <th>Harga Satuan (Rp)</th>
+                        <th>Jumlah (Rp)</th>
                         <th>Aksi</th>
                     </tr>
 
