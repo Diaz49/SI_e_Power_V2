@@ -70,7 +70,15 @@ class SphDataTable extends DataTable
      */
     public function query(Sph $model): QueryBuilder
     {
-        return $model->newQuery();
+        $filterYear = request('tanggal'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
+
+        return $model->newQuery()
+            ->select([
+                'sph.*' // Kolom utama dari tabel `po`
+            ])
+            ->when($filterYear, function ($query, $filterYear) {
+                return $query->whereYear('sph.tanggal', $filterYear);
+            });
     }
 
     /**

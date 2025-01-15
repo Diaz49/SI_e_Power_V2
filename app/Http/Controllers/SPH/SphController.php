@@ -16,7 +16,12 @@ class SphController extends Controller
     public function index(SphDataTable $dataTable)
     {
         $dataclient = DataClient::all();
-        return $dataTable->render('sph.index', compact('dataclient'));
+        $years = Sph::selectRaw('YEAR(tanggal) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year'); // Mengambil nilai tahun unik
+
+        return $dataTable->render('sph.index', compact('dataclient', 'years'));
     }
 
     public function store(Request $request)
@@ -64,12 +69,11 @@ class SphController extends Controller
 
         try {
             $dataTerakhir = Sph::latest('id')->first();
-            $lastId = $dataTerakhir ? $dataTerakhir->kode : 0;
+            $lastId = $dataTerakhir ? $dataTerakhir->_sph : 0;
             $nextNumber = $lastId + 1;
             $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
             $sph = Sph::create([
                 'kode_sph' => $request->input('header.kode_sph'),
-                'kode' => $kode,
                 'tanggal' => $request->input('header.tanggal'),
                 'data_client_id' => $request->input('header.nama_client'),
                 'penawaran_harga' => $request->input('header.penawaran_harga'),
@@ -121,7 +125,7 @@ class SphController extends Controller
 
             'edit_penawaran_harga.required' => 'Perihal penawaran harga harus di isi.',
             'edit_penawaran_harga.string' => 'Perihal penawaran harga harus berupa huruf.',
-            
+
 
         ]);
 
@@ -140,5 +144,16 @@ class SphController extends Controller
         $sph = Sph::find($id);
         $sph->delete();
         return response()->json();
+    }
+
+    public function getKodeSph()
+    {
+        // Cari kode invoice terakhir untuk PT tertentu
+        $dataTerakhir = Sph::latest('id')->first();
+        $lastId = $dataTerakhir ? $dataTerakhir->kode_sph : 0;
+        $nextNumber = $lastId + 1;
+        $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+        return response()->json(['kode_sph' => $kode]);
     }
 }

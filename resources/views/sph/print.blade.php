@@ -150,7 +150,7 @@
                                     <td><span class="style9">No. SPH</span></td>
                                     <td>:</td>
                                     <td colspan="12" class="style9">
-                                        SPH{{ $sph->kode }}/Dir.01/MPA/II/{{ \Carbon\Carbon::parse($sph->tanggal)->translatedFormat('Y') }}
+                                        {{ $sph->kode_sph }}/Dir.01/MPA/II/{{ \Carbon\Carbon::parse($sph->tanggal)->translatedFormat('Y') }}
                                     </td>
                                     <td class="style9">
                                         <div align="center"></div>

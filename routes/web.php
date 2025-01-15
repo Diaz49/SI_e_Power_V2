@@ -119,6 +119,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('data-sph/{id}', [SphController::class, 'update'])->name('data-sph.update');
     Route::delete('data-sph/delete/{id}', [SphController::class, 'destroy'])->name('data-sph.delete');
     Route::get('print-sph/{id}', [PrintSphController::class, 'view'])->name('print-sph');
+    Route::get('/get-kode-sph', [SphController::class, 'getKodeSph']);
+
 
 
     Route::post('sph-item', [DetailSphController::class, 'store'])->name('sph-item.store');

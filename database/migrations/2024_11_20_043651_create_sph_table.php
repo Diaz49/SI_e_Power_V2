@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('sph', function (Blueprint $table) {
             $table->id();
             $table->string('kode_sph', 100); // Kode urut SPH
-            $table->string('kode', 100)->nullable(); // Kode urut SPH
             $table->date('tanggal');
             $table->unsignedBigInteger('data_client_id'); // Foreign Key ke tabel data_clients
             $table->string('penawaran_harga');

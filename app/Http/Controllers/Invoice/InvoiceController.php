@@ -57,13 +57,9 @@ class InvoiceController extends Controller
 
         try {
             // Simpan data header
-            $ptId = $request->input('header.nama_pt');
-            $dataTerakhir = Invoice::where('pt_id', $ptId)->latest('id')->first();
-            $lastId = $dataTerakhir ? $dataTerakhir->kd_invoice : 0;
-            $nextNumber = $lastId + 1;
-            $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+            
             $invoice = Invoice::create([
-                'kd_invoice' => $kode,
+                'kd_invoice' => $request->input('kode_invoice'),
                 'header_deskripsi' => $request->input('header.header_deskripsi'),
                 'tgl_invoice' => $request->input('header.tanggal'),
                 'client_id' => $request->input('header.nama_client'),
