@@ -12,6 +12,7 @@ class Po extends Model
     protected $table = 'po';
     protected $fillable = [
         'kode_po',
+        'kode',
         'tanggal_po',
         'vendor_id',
         'buyer',

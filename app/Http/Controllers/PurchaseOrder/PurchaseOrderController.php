@@ -81,8 +81,12 @@ class PurchaseOrderController extends Controller
         // Simpan data header
 
         try {
-
+            $dataTerakhir = Po::latest('id')->first();
+            $lastId = $dataTerakhir ? $dataTerakhir->kode : 0;
+            $nextNumber = $lastId + 1;
+            $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
             $po = Po::create([
+                'kode' => $kode,
                 'kode_po' => $request->input('header.kode_purchase_order'),
                 'tanggal_po' => $request->input('header.tanggal'),
                 'vendor_id' => $request->input('header.nama_vendor'),

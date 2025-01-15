@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('po', function (Blueprint $table) {
             $table->id(); // Primary key
             $table->string('kode_po', 100)->unique(); // Kode unik untuk setiap purchase order
+            $table->string('kode', 100); // Kode unik untuk setiap purchase order
             $table->date('tanggal_po'); // Tanggal purchase
             $table->unsignedBigInteger('vendor_id'); // Relasi ke tabel vendor
             $table->string('buyer', 50); // Kode unik untuk setiap purchase order
