@@ -8,8 +8,7 @@
             <div class="row ">
                 <div class="col-12 d-flex justify-content-end mb-3 ">
                     <button class="btn btn-outline-secondary btn-sm me-4" data-bs-target="#modalTambah" data-bs-toggle="modal"
-                        id="btn-tambah" style="--bs-btn-bg:white;"><i
-                            class="fas fa-plus"></i> Tambah Data SPH                    
+                        id="btn-tambah" style="--bs-btn-bg:white;"><i class="fas fa-plus"></i> Tambah Data SPH
                     </button>
                 </div>
                 <div class="col-12 d-flex justify-content-end">
@@ -24,96 +23,96 @@
         <div class="card m-4">
             <div class="card-body">
                 <div class="table-responsive">
-                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
-                    
+                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive text-center']) !!}
+
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- Modal Tambah -->
     <div id="form-section" style="display:none;" class="m-4 ">
         <div class=" d-md-flex justify-content-start">
             <p type="button" class="fw-bold" id="btn-cancel"><i class="fas fa-arrow-left"></i> Back</p>
         </div>
-            @csrf
-            <div class="row">
-                <form class="col-md-6" id="formTambahDetail">
-                    @csrf
-                    <div class="card p-4">
-                        <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white ">
+        @csrf
+        <div class="row">
+            <form class="col-md-6" id="formTambahDetail">
+                @csrf
+                <div class="card p-4">
+                    <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white ">
                             1
                         </span> Detail</h5>
 
-                        <input type="text" class="form-control" name="sph_id" id="sph_id" hidden>
+                    <input type="text" class="form-control" name="sph_id" id="sph_id" hidden>
 
-                        <div class="mb-1 mt-4 label">Project</div>
-                        <input type="text" class="form-control" name="nama_project" id="nama_project" value=""
-                            placeholder="Masukkan Project">
+                    <div class="mb-1 mt-4 label">Project</div>
+                    <input type="text" class="form-control" name="nama_project" id="nama_project" value=""
+                        placeholder="Masukkan Project">
 
-                        <div class="mb-1 mt-2 label">Qty</div>
-                        <input type="text" class="form-control" name="qty" id="qty" value=""
-                            placeholder="Masukkan Quantity">
+                    <div class="mb-1 mt-2 label">Qty</div>
+                    <input type="text" class="form-control" name="qty" id="qty" value=""
+                        placeholder="Masukkan Quantity">
 
-                        <div class="mb-1 mt-2 label">Satuan</div>
-                        <input type="text" class="form-control" name="satuan" id="satuan" value=""
-                            placeholder="Masukkan Satuan">
+                    <div class="mb-1 mt-2 label">Satuan</div>
+                    <input type="text" class="form-control" name="satuan" id="satuan" value=""
+                        placeholder="Masukkan Satuan">
 
-                        <div class="mb-1 mt-2 label">Harga Satuan / Price</div>
-                        <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value=""
-                            placeholder="Masukkan Harga Satuan">
-
-                        <div class="d-flex justify-content-end mt-3">
-                           <button type="submit" id="btn_detail" class="btn btn-primary">Add</button>
-                        </div>
-
-
-                    </div>
-                </form>
-                <form class="col-md-6" method="POST" id="formTambahHeader">
-                    @csrf
-                    <div class="card p-4">
-                        <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white fw-lighter">
-                            2
-                        </span> Header</h5>
-                        <div class="mb-1 mt-4 label">Kode SPH</div>
-                        <input type="text" class="form-control" name="kode_sph" id="kode_sph" value=""
-                            placeholder="Masukkan Kode SPH">
-
-                        <div class="mb-1 mt-2 label">Tanggal</div>
-                        <input type="date" class="form-control" name="tanggal" id="tanggal" value=""
-                            placeholder="Masukkan Tanggal">
-
-                        <div class="mb-1 mt-2 label">Nama Client</div>
-                        <select type="text" class="form-control js-example-basic-single" name="nama_client" id="nama_client"
-                            value="" placeholder="Masukkan Data Client">
-                            <option value="">Pilih Data Client</option>
-                            @foreach ($dataclient as $item)
-                                <option value="{{ $item->id }}" data-alamat="{{ $item->alamat }}"
-                                    data-up_sph="{{ $item->up_sph }}">{{ $item->nama_client }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <input type="text" class="form-control" name="alamat_client" disabled
-                            id="alamat_client" value="" placeholder="Alamat Data Client">
-                        <input type="text" class="form-control" name="up_sph_client" disabled
-                            id="up_sph_client" value="" placeholder="Up Sph Client">
-                      
-
-                        <div class="mb-1 mt-2 label">Perihal Penawaran Harga</div>
-                        <input type="text" class="form-control" name="penawaran_harga" id="penawaran_harga" value=""
-                            placeholder="Masukkan Penawaran Harga">
-
-                    </div>
+                    <div class="mb-1 mt-2 label">Harga Satuan / Price</div>
+                    <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value=""
+                        placeholder="Masukkan Harga Satuan">
 
                     <div class="d-flex justify-content-end mt-3">
-                        <button type="submit" id="btn_header" class="btn btn-primary"><i class="far fa-save"></i>
-                            Save</button>
+                        <button type="submit" id="btn_detail" class="btn btn-primary">Add</button>
                     </div>
 
-                </form>
-            </div>
-   
+
+                </div>
+            </form>
+            <form class="col-md-6" method="POST" id="formTambahHeader">
+                @csrf
+                <div class="card p-4">
+                    <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white fw-lighter">
+                            2
+                        </span> Header</h5>
+                    <div class="mb-1 mt-4 label">Kode SPH</div>
+                    <input type="text" class="form-control" name="kode_sph" id="kode_sph" value=""
+                        placeholder="Masukkan Kode SPH">
+
+                    <div class="mb-1 mt-2 label">Tanggal</div>
+                    <input type="date" class="form-control" name="tanggal" id="tanggal" value=""
+                        placeholder="Masukkan Tanggal">
+
+                    <div class="mb-1 mt-2 label">Nama Client</div>
+                    <select type="text" class="form-control js-example-basic-single" name="nama_client" id="nama_client"
+                        value="" placeholder="Masukkan Data Client">
+                        <option value="">Pilih Data Client</option>
+                        @foreach ($dataclient as $item)
+                            <option value="{{ $item->id }}" data-alamat="{{ $item->alamat }}"
+                                data-up_sph="{{ $item->up_sph }}">{{ $item->nama_client }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <input type="text" class="form-control" name="alamat_client" disabled id="alamat_client"
+                        value="" placeholder="Alamat Data Client">
+                    <input type="text" class="form-control" name="up_sph_client" disabled id="up_sph_client"
+                        value="" placeholder="Up Sph Client">
+
+
+                    <div class="mb-1 mt-2 label">Perihal Penawaran Harga</div>
+                    <input type="text" class="form-control" name="penawaran_harga" id="penawaran_harga"
+                        value="" placeholder="Masukkan Penawaran Harga">
+
+                </div>
+
+                <div class="d-flex justify-content-end mt-3">
+                    <button type="submit" id="btn_header" class="btn btn-primary"><i class="far fa-save"></i>
+                        Save</button>
+                </div>
+
+            </form>
+        </div>
+
         {{-- Table --}}
         <div class="mt-4">
             <table class="table table-bordered" id="detailTable">
@@ -148,17 +147,17 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-1 mt-4 label">Kode SPH</div>
-                        <input type="text" class="form-control" name="edit_kode_sph" id="edit_kode_sph" value=""
-                            placeholder="Masukkan Kode SPH">
+                        <div class="mb-1  label">Kode SPH</div>
+                        <input type="text" class="form-control" name="edit_kode_sph" id="edit_kode_sph"
+                            value="" placeholder="Masukkan Kode SPH">
 
                         <div class="mb-1 mt-2 label">Tanggal</div>
                         <input type="date" class="form-control" name="edit_tanggal" id="edit_tanggal" value=""
                             placeholder="Masukkan Tanggal">
 
                         <div class="mb-1 mt-2 label">Nama Client</div>
-                        <select type="text" class="form-control js-example-basic-single" name="edit_nama_client" id="edit_nama_client"
-                            value="" placeholder="Masukkan Data Client">
+                        <select type="text" class="form-control js-example-basic-single" name="edit_nama_client"
+                            id="edit_nama_client" value="" placeholder="Masukkan Data Client">
                             <option value="">Pilih Data Client</option>
                             @foreach ($dataclient as $item)
                                 <option value="{{ $item->id }}" data-alamat="{{ $item->alamat }}"
@@ -170,11 +169,16 @@
                             id="edit_alamat_client" value="" placeholder="Alamat Data Client">
                         <input type="text" class="form-control" name="edit_up_sph_client" disabled
                             id="edit_up_sph_client" value="" placeholder="Up Sph Client">
-                      
+
 
                         <div class="mb-1 mt-2 label">Perihal Penawaran Harga</div>
-                        <input type="text" class="form-control" name="edit_penawaran_harga" id="edit_penawaran_harga" value=""
-                            placeholder="Masukkan Penawaran Harga">
+                        <input type="text" class="form-control" name="edit_penawaran_harga" id="edit_penawaran_harga"
+                            value="" placeholder="Masukkan Penawaran Harga">
+
+                        <div class="mb-1 mt-2 label">Kode Admin</div>
+                        <input type="text" class="form-control" name="edit_kode_admin" id="edit_kode_admin"
+                            value="" placeholder="Masukkan Kode Admin">
+
 
                     </div>
                     <div class="modal-footer">
@@ -203,8 +207,8 @@
                                     <th>Deskripsi Project</th>
                                     <th>Qty</th>
                                     <th>Satuan</th>
-                                    <th>Harga Satuan</th>
-                                    <th>Jumlah</th>
+                                    <th>Harga Satuan (Rp)</th>
+                                    <th>Jumlah (Rp)</th>
                                     <th>Aksi</th>
                                 </tr>
 
@@ -213,6 +217,9 @@
                                 <!-- Data detail akan ditambahkan di sini -->
                             </tbody>
                         </table>
+                        <div class="mt-2">
+                            <strong>Total Keseluruhan: Rp <span id="totalHarga">0</span></strong>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -238,7 +245,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        
+
                         <input type="text" class="form-control" name="add_sph_id" id="add_sph_id" hidden>
 
                         <div class="mb-1 label">Deskripsi Project</div>
@@ -383,6 +390,7 @@
                     $('#edit_tanggal').val(data.tanggal);
                     $('#edit_nama_client').val(data.data_client_id).trigger('change');
                     $('#edit_penawaran_harga').val(data.penawaran_harga);
+                    $('#edit_kode_admin').val(data.kd_admin);
 
                     // Set URL action form pada modal
                     $('#formEditHeader').attr('action', updateUrl);
@@ -522,7 +530,7 @@
                     );
                     return;
                 }
-            
+
                 // Semua validasi lolos, lanjutkan menambah detail
                 detailArray.push({
                     no,
@@ -795,7 +803,7 @@
             $(document).on('click', '#btnEditDetail', function() {
                 let sphId = $(this).data('id'); // Ambil ID PO dari tombol
                 $('#btnTambahDetail').attr('data-add-sph-id', sphId);
-                
+
 
                 // AJAX request untuk mengambil data detail
                 $.ajax({
@@ -813,8 +821,8 @@
                         <td>${detailSph.nama_project}</td>
                         <td>${detailSph.qty}</td>
                         <td>${detailSph.satuan}</td>
-                        <td>${detailSph.harga_satuan}</td>
-                        <td>${detailSph.jumlah_harga}</td>
+                         <td>${Math.floor(detailSph.harga_satuan)}</td>
+                        <td>${Math.floor(detailSph.jumlah_harga)}</td>
                     <td>
                         <div class="dropdown">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -841,6 +849,7 @@
                     </tr>
                 `);
                         });
+                        updateTotalHarga();
 
                         // Tampilkan modal
                         $('#modalEditDetail1').modal('show');
@@ -887,6 +896,7 @@
                                     button: 'OK'
                                 }).then(() => {
                                     $('#row-' + itemId).remove(); // Hapus baris dari DOM
+                                    updateTotalHarga();
 
                                     // Update penomoran ulang
                                     $('#detailEditTable tbody tr').each(function(index) {
@@ -1064,6 +1074,21 @@
                 });
             });
 
+            function updateTotalHarga() {
+                let total = 0;
+                let diskon =
+
+                    // Loop melalui semua baris tabel dan tambahkan nilai kolom jumlah_harga
+                    $('#detailEditTable tbody tr').each(function() {
+                        let jumlahHarga = parseFloat($(this).find('td:nth-child(6)').text()); // Ambil kolom jumlah_harga
+                        if (!isNaN(jumlahHarga)) {
+                            total += jumlahHarga;
+                        }
+                    });
+
+                // Perbarui elemen total harga
+                $('#totalHarga').text(total.toLocaleString('id-ID'));
+            }
         </script>
     @endpush
 @endsection

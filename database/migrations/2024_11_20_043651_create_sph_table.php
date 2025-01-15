@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('sph', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_sph'); // Kode urut SPH
+            $table->string('kode_sph', 100); // Kode urut SPH
+            $table->string('kode', 100)->nullable(); // Kode urut SPH
             $table->date('tanggal');
             $table->unsignedBigInteger('data_client_id'); // Foreign Key ke tabel data_clients
-            $table->decimal('penawaran_harga', 10, 2);
+            $table->string('penawaran_harga');
+            $table->string('kd_admin', 50)->nullable();
             $table->timestamps();
-    
+
             // Menambahkan foreign key
             $table->foreign('data_client_id')->references('id')->on('client')->onDelete('cascade');
         });

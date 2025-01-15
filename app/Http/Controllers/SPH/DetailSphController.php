@@ -92,6 +92,8 @@ class DetailSphController extends Controller
             'qty' => $request->edit_qty,
             'satuan' => $request->edit_satuan,
             'harga_satuan' => $request->edit_harga_satuan,
+            'jumlah_harga'=> $request->edit_qty * $request->edit_harga_satuan,
+
         ];
 
         $detail->update($data);

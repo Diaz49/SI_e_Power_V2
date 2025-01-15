@@ -43,7 +43,7 @@ class PurchaseOrderDataTable extends DataTable
                 return $po->detail->count();
             })
             ->editColumn('diskon', function (Po $po) {
-                $diskon = floor($po->diskon);
+                $diskon = floor($po->diskon);   
                 return 'Rp.' .  number_format($diskon, 0, ',', '.');
             })
             ->addColumn('jumlah_harga', function (Po $po) {

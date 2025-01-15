@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{asset('assets/css/bootstrap.ori.css')}}" rel="stylesheet">
     <style>
         @media print {
             .no-print {
@@ -67,7 +67,7 @@
                         style="max-width: 184px;">
                 @elseif($invoice->pt->nama_pt === 'Rajata Wedding')
                     <img src="{{ asset('img/rajata.png') }}" alt="Company Logo" class="img-fluid mb-2"
-                        style="max-width: 184px;">
+                        style="max-width: 200px;">
                 @elseif($invoice->pt->nama_pt === 'Nainsmedia')
                     <img src="{{ asset('img/nainsmedia.png') }}" alt="Company Logo" class="img-fluid mb-2"
                         style="max-width: 184px;">
@@ -487,7 +487,7 @@
             <button onclick="window.print()" class="btn btn-primary">Cetak Invoice</button>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('assets/js/core/bootstrap.ori.js')}}"></script>
 </body>
 
 </html>

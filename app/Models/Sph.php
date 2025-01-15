@@ -15,7 +15,8 @@ class Sph extends Model
         'kode_sph', 
         'tanggal', 
         'data_client_id', 
-        'penawaran_harga'
+        'penawaran_harga',
+        'kd_admin'
     ];
 
     public function dataClient()

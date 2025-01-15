@@ -23,7 +23,7 @@ class SphDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->addColumn('action', function(Sph $sph) {
+            ->addColumn('action', function (Sph $sph) {
                 return view('sph.action', ['sph' => $sph]);
             })
             // ->addColumn('kode_sph', function (Sph $sph) {
@@ -42,8 +42,26 @@ class SphDataTable extends DataTable
                 return $sph->detailSph->count();
             })
             ->addColumn('jumlah_harga', function (Sph $sph) {
-                return $sph->detailSph->sum('jumlah_harga');
+                $jumlahHarga = floor($sph->detailSph->sum('jumlah_harga'));
+                return 'Rp.' .  number_format($jumlahHarga, 0, ',', '.');
             })
+            ->filterColumn('nama_client',  function ($query, $keyword) {
+                $query->whereHas('dataClient', function ($q) use ($keyword) {
+                    $q->where('nama_client', 'like', "%$keyword%");
+                });
+            })
+            ->filterColumn('up_sph',  function ($query, $keyword) {
+                $query->whereHas('dataClient', function ($q) use ($keyword) {
+                    $q->where('up_sph', 'like', "%$keyword%");
+                });
+            })
+            ->filterColumn('price', function ($query, $keyword) {
+                $query->whereRaw('(SELECT COUNT(*) FROM sph_detail WHERE sph_detail.sph_id = sph.id) LIKE ?', ["%$keyword%"]);
+            })
+            ->filterColumn('jumlah_harga', function ($query, $keyword) {
+                $query->whereRaw('(SELECT SUM(jumlah_harga) FROM sph_detail WHERE sph_detail.sph_id = sph.id) LIKE ?', ["%$keyword%"]);
+            })
+
             ->setRowId('id');
     }
 
@@ -61,20 +79,20 @@ class SphDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('sph-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('sph-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**

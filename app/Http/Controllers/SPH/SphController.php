@@ -25,24 +25,23 @@ class SphController extends Controller
             'header.kode_sph' => 'required|max:100|unique:po,kode_po',
             'header.tanggal' => 'required|date',
             'header.nama_client' => 'required',
-            'header.penawaran_harga' => 'nullable|numeric|min:0|max:9999999999.99',
+            'header.penawaran_harga' => 'required|string|',
             'details.*.nama_project' => 'required|string|max:255',
             'details.*.qty' => 'required|integer|min:1',
             'details.*.satuan' => 'required|string|max:50',
             'details.*.harga_satuan' => 'required|numeric|min:0',
         ], [
-            'header.kode_sph.required' => 'Kode purchase order wajib diisi.',
-            'header.kode_sph.max' => 'Kode purchase order maksimal 100 karakter.',
-            'header.kode_sph.unique' => 'Kode purchase order sudah terdaftar.',
+            'header.kode_sph.required' => 'Kode SPH wajib diisi.',
+            'header.kode_sph.max' => 'Kode SPH maksimal 100 karakter.',
+            'header.kode_sph.unique' => 'Kode SPH sudah terdaftar.',
 
             'header.tanggal.required' => 'Tanggal wajib diisi.',
             'header.tanggal.date' => 'Tanggal harus dalam format yang valid.',
 
             'header.nama_client.required' => 'Nama vendor wajib diisi.',
 
-            'header.penawaran_harga.numeric' => 'Diskon rupiah harus berupa angka.',
-            'header.penawaran_harga.min' => 'Diskon rupiah tidak boleh kurang dari 0.',
-            'header.penawaran_harga.max' => 'Diskon rupiah maksimal 9999999999.99.',
+            'header.penawaran_harga.required' => 'Perihal penawaran harga harus di isi.',
+            'header.penawaran_harga.string' => 'Perihal penawaran harga harus berupa string.',
 
             'details.*.nama_project.required' => 'Nama project pada detail wajib diisi.',
             'details.*.nama_project.string' => 'Nama project pada detail harus berupa teks.',
@@ -104,7 +103,8 @@ class SphController extends Controller
             'edit_kode_sph' => ['required', 'max:100',   Rule::unique('sph', 'kode_sph')->ignore($sph->id)],
             'edit_tanggal' => 'required|date',
             'edit_nama_client' => 'required',
-            'edit_penawaran_harga' => 'nullable|numeric|min:0|max:9999999999.99',
+            'edit_kode_admin' => 'nullable',
+            'edit_penawaran_harga' => 'required|string',
         ], [
             'edit_kode_sph.required' => 'Kode Surat Penawaran Harga wajib diisi.',
             'edit_kode_sph.max' => 'Kode Surat Penawaran Harga maksimal 100 karakter.',
@@ -115,9 +115,10 @@ class SphController extends Controller
 
             'edit_nama_client.required' => 'Nama vendor wajib diisi.',
 
-            'edit_penawaran_harga.numeric' => 'Diskon rupiah harus berupa angka.',
-            'edit_penawaran_harga.min' => 'Diskon rupiah tidak boleh kurang dari 0.',
-            'edit_penawaran_harga.max' => 'Diskon rupiah maksimal 9999999999.99.',
+            'edit_penawaran_harga.required' => 'Perihal penawaran harga harus di isi.',
+            'edit_penawaran_harga.string' => 'Perihal penawaran harga harus berupa huruf.',
+            
+
         ]);
 
         $sph->update([
@@ -125,6 +126,7 @@ class SphController extends Controller
             'tanggal' => $request->edit_tanggal,
             'data_client_id' => $request->edit_nama_client,
             'penawaran_harga' => $request->edit_penawaran_harga,
+            'kd_admin' => $request->edit_kode_admin,
         ]);
         return response()->json(['success' => 'Data header berhasil di edit!'], 200);
     }

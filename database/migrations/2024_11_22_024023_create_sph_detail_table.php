@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sph_detail', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sph_id')->nullabel();
-            $table->string('nama_project', 100);
+            $table->string('nama_project');
             $table->string('qty');
             $table->string('satuan', 50);
             $table->decimal('harga_satuan', 10, 2);
@@ -26,9 +26,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('sph_detail');
