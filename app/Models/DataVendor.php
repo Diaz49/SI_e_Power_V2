@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
 
-class DataVendor extends Model
-{
-    use HasFactory;
+    class DataVendor extends Model
+    {
+        use HasFactory;
 
-    protected $table = 'vendor';
+        protected $table = 'vendor';
 
     protected $fillable = [
        'nama_vendor',        
@@ -25,4 +25,8 @@ class DataVendor extends Model
     {
         return $this->belongsTo(PT::class);
     } 
+    public function po()
+    {
+        return $this->hasMany(Po::class, 'vendor_id', 'id');
+    }
 }

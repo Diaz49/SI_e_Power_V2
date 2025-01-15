@@ -15,6 +15,7 @@ use App\Http\Controllers\Invoice\DetailInvoiceController;
 use App\Http\Controllers\Invoice\InvoiceController;
 use App\Http\Controllers\Invoice\PrintInvoiceController;
 use App\Http\Controllers\PTController;
+use App\Http\Controllers\PurchaseOrder\PrintPoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,6 +78,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('po/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('po.edit');
     Route::put('po/{id}', [PurchaseOrderController::class, 'update'])->name('po.update');
     Route::delete('po/delete/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.delete');
+    Route::get('print-po/{id}', [PrintPoController::class, 'viewPo'])->name('po-print');
+
 
     Route::post('po-item', [DetailPoController::class, 'store'])->name('po-item.store');
     Route::get('po-detail/{id}/edit', [DetailPoController::class, 'table'])->name('po-detail.table');
