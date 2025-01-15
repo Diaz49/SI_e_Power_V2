@@ -12,7 +12,7 @@
             <div class="col-12 d-flex justify-content-end">
                 <button class="btn btn-outline-secondary btn-sm " data-bs-target="#modalFilter" data-bs-toggle="modal"
                         style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
-                <button class="btn btn-outline-secondary btn-sm ms-3 me-4" onclick="exportClients()">
+                <button class="btn btn-outline-secondary btn-sm ms-3 me-4" onclick="exportClients()" style="--bs-btn-bg:white;">
                         <i class="fas fa-download"></i> Export
                 </button>
             </div>
