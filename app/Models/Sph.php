@@ -13,7 +13,6 @@ class Sph extends Model
 
     protected $fillable = [ 
         'kode_sph', 
-        'kode',
         'tanggal', 
         'data_client_id', 
         'penawaran_harga',
