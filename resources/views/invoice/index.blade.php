@@ -76,11 +76,7 @@
                     <h5 class="card-title"><span class="badge rounded-circle bg-primary text-white fw-lighter">
                             2
                         </span> Header</h5>
-                    <div class="mb-1 mt-4 label">Kode Invoice</div>
-                    <input type="text" class="form-control" name="kode_invoice" id="kode_invoice" value=""
-                        placeholder="Masukkan Kode Invoice">
-
-                    <div class="mb-1 mt-2 label">PT</div>
+                    <div class="mb-1 mt-4 label">PT</div>
                     <select type="text" class="form-control js-example-basic-single" name="nama_pt" id="nama_pt"
                         value="" placeholder="Masukkan Nama PT">
                         <option value="">Pilih PT</option>
@@ -90,6 +86,10 @@
                             </option>
                         @endforeach
                     </select>
+                    <div class="mb-1 mt-2 label">Kode Invoice</div>
+                    <input type="text" class="form-control" name="kode_invoice" id="kode_invoice" value=""
+                        placeholder="Masukkan Kode Invoice">
+
                     <div class="mb-1 mt-2 label">Header Deskripsi</div>
                     <input type="text" class="form-control" name="header_deskripsi" id="header_deskripsi" value=""
                         placeholder="Masukkan Deskripsi">
