@@ -724,6 +724,7 @@
             });
 
             $(document).ready(function() {
+                $('#year_all').prop('checked', true);
                 $('#nama_vendor').select2();
                 $('#edit_nama_vendor').select2({
                     dropdownParent: $('#modalEditHeader'),

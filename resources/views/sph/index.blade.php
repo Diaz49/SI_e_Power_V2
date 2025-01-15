@@ -663,6 +663,7 @@
             })
 
             $(document).ready(function() {
+                $('#year_all').prop('checked', true);
                 $('#nama_client').select2();
                 $('#edit_nama_client').select2({
                     dropdownParent: $('#modalEditHeader'),
