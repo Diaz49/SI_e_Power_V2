@@ -29,7 +29,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'header.kode_invoice' => 'required|max:100|unique:invoice,kd_invoice',
+            'header.kode_invoice' => 'required|max:100',
             'header.header_deskripsi' => 'required',
             'header.tanggal' => 'required|date',
             'header.nama_client' => 'required|max:50',
@@ -59,12 +59,11 @@ class InvoiceController extends Controller
             // Simpan data header
             $ptId = $request->input('header.nama_pt');
             $dataTerakhir = Invoice::where('pt_id', $ptId)->latest('id')->first();
-            $lastId = $dataTerakhir ? $dataTerakhir->kode : 0;
+            $lastId = $dataTerakhir ? $dataTerakhir->kd_invoice : 0;
             $nextNumber = $lastId + 1;
             $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
             $invoice = Invoice::create([
-                'kd_invoice' => $request->input('header.kode_invoice'),
-                'kode' => $kode,
+                'kd_invoice' => $kode,
                 'header_deskripsi' => $request->input('header.header_deskripsi'),
                 'tgl_invoice' => $request->input('header.tanggal'),
                 'client_id' => $request->input('header.nama_client'),
@@ -220,5 +219,23 @@ class InvoiceController extends Controller
         $invoice = Invoice::findOrFail($id);
         $invoice->delete();
         return response()->json();
+    }
+
+    public function getKodeInvoice(Request $request)
+    {
+        $ptId = $request->input('pt_id');
+
+        // Validasi PT ID
+        if (!$ptId) {
+            return response()->json(['error' => 'PT ID tidak valid.'], 400);
+        }
+
+        // Cari kode invoice terakhir untuk PT tertentu
+        $dataTerakhir = Invoice::where('pt_id', $ptId)->latest('id')->first();
+        $lastId = $dataTerakhir ? $dataTerakhir->kd_invoice : 0;
+        $nextNumber = $lastId + 1;
+        $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+        return response()->json(['kode_invoice' => $kode]);
     }
 }

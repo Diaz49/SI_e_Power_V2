@@ -109,7 +109,7 @@
                     </td>
                     <td class="small">:</td>
                     <td class="small" colspan="2"><span
-                            class="style9">{{ $invoice->pt->kode_pt }}{{ $invoice->kode }}/Dir.01/INV/XII/{{ \Carbon\Carbon::parse($invoice->tgl_invoice)->translatedFormat('Y') }}</span>
+                            class="style9">{{ $invoice->kd_invoice }}/Dir.01/INV/XII/{{ \Carbon\Carbon::parse($invoice->tgl_invoice)->translatedFormat('Y') }}</span>
                     </td>
                     <td class="small">
                     </td>

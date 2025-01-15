@@ -103,6 +103,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('invoice-item/{id}/edit', [DetailInvoiceController::class, 'edit'])->name('invoice-item.edit');
     Route::put('invoice-item/{id}', [DetailInvoiceController::class, 'update'])->name('invoice-item.update');
     Route::delete('invoice-detail/delete/{id}', [DetailInvoiceController::class, 'destroy'])->name('invoice-detail.destroy');
+    Route::get('/get-kode-invoice', [InvoiceController::class, 'getKodeInvoice']);
+
 
     Route::get('pt', [PTController::class, 'index'])->name('pt');
     Route::post('pt', [PTController::class, 'store'])->name('pt.store');

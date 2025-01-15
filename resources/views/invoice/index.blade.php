@@ -1632,6 +1632,30 @@
                     });
                 });
             });
+
+
+            $(document).ready(function() {
+                $('#nama_pt').on('change', function() {
+                    let ptId = $(this).val();
+                    if (ptId) {
+                        $.ajax({
+                            url: '/get-kode-invoice', // URL endpoint di backend
+                            method: 'GET',
+                            data: {
+                                pt_id: ptId
+                            },
+                            success: function(response) {
+                                $('#kode_invoice').val(response.kode_invoice);
+                            },
+                            error: function() {
+                                alert('Terjadi kesalahan saat mengambil kode invoice.');
+                            }
+                        });
+                    } else {
+                        $('#kode_invoice').val(''); // Kosongkan jika tidak ada PT yang dipilih
+                    }
+                });
+            });
         </script>
     @endpush
 @endsection
