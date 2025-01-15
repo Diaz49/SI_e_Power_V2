@@ -68,10 +68,6 @@ class SphController extends Controller
         // Simpan data header
 
         try {
-            $dataTerakhir = Sph::latest('id')->first();
-            $lastId = $dataTerakhir ? $dataTerakhir->_sph : 0;
-            $nextNumber = $lastId + 1;
-            $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
             $sph = Sph::create([
                 'kode_sph' => $request->input('header.kode_sph'),
                 'tanggal' => $request->input('header.tanggal'),
