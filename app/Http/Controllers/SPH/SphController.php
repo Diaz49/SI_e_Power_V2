@@ -38,7 +38,7 @@ class SphController extends Controller
             'header.tanggal.required' => 'Tanggal wajib diisi.',
             'header.tanggal.date' => 'Tanggal harus dalam format yang valid.',
 
-            'header.nama_client.required' => 'Nama vendor wajib diisi.',
+            'header.nama_client.required' => 'Nama client wajib diisi.',
 
             'header.penawaran_harga.required' => 'Perihal penawaran harga harus di isi.',
             'header.penawaran_harga.string' => 'Perihal penawaran harga harus berupa string.',
@@ -63,9 +63,13 @@ class SphController extends Controller
         // Simpan data header
 
         try {
-
+            $dataTerakhir = Sph::latest('id')->first();
+            $lastId = $dataTerakhir ? $dataTerakhir->kode : 0;
+            $nextNumber = $lastId + 1;
+            $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
             $sph = Sph::create([
                 'kode_sph' => $request->input('header.kode_sph'),
+                'kode' => $kode,
                 'tanggal' => $request->input('header.tanggal'),
                 'data_client_id' => $request->input('header.nama_client'),
                 'penawaran_harga' => $request->input('header.penawaran_harga'),
@@ -113,7 +117,7 @@ class SphController extends Controller
             'edit_tanggal.required' => 'Tanggal wajib diisi.',
             'edit_tanggal.date' => 'Tanggal harus dalam format yang valid.',
 
-            'edit_nama_client.required' => 'Nama vendor wajib diisi.',
+            'edit_nama_client.required' => 'Nama client wajib diisi.',
 
             'edit_penawaran_harga.required' => 'Perihal penawaran harga harus di isi.',
             'edit_penawaran_harga.string' => 'Perihal penawaran harga harus berupa huruf.',

@@ -617,7 +617,7 @@
                 $('.error').remove();
                 $('#formTambahHeader')[0].reset();
                 $('#formTambahDetail')[0].reset();
-                $('#nama_vendor').val(null).trigger('change');
+                $('#nama_client').val(null).trigger('change');
 
                 // $('#formTambah')[0].reset();
             })
@@ -821,7 +821,7 @@
                         <td>${detailSph.nama_project}</td>
                         <td>${detailSph.qty}</td>
                         <td>${detailSph.satuan}</td>
-                         <td>${Math.floor(detailSph.harga_satuan)}</td>
+                        <td>${Math.floor(detailSph.harga_satuan)}</td>
                         <td>${Math.floor(detailSph.jumlah_harga)}</td>
                     <td>
                         <div class="dropdown">

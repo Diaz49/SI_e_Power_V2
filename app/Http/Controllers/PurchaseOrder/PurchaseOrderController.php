@@ -16,10 +16,10 @@ class PurchaseOrderController extends Controller
     {
         $vendor = DataVendor::all();
         $years = Po::selectRaw('YEAR(tanggal_po) as year')
-        ->distinct()
-        ->orderBy('year', 'desc')
-        ->pluck('year'); // Mengambil nilai tahun unik
-        
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year'); // Mengambil nilai tahun unik
+
         return $dataTable->render('po.index', compact('vendor', 'years'));
     }
 

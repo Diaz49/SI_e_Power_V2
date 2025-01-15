@@ -16,6 +16,7 @@ use App\Http\Controllers\Invoice\InvoiceController;
 use App\Http\Controllers\Invoice\PrintInvoiceController;
 use App\Http\Controllers\PTController;
 use App\Http\Controllers\PurchaseOrder\PrintPoController;
+use App\Http\Controllers\SPH\PrintSphController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -115,6 +116,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('data-sph/{id}/edit', [SphController::class, 'edit'])->name('data-sph.edit');
     Route::put('data-sph/{id}', [SphController::class, 'update'])->name('data-sph.update');
     Route::delete('data-sph/delete/{id}', [SphController::class, 'destroy'])->name('data-sph.delete');
+    Route::get('print-sph/{id}', [PrintSphController::class, 'view'])->name('print-sph');
+
 
     Route::post('sph-item', [DetailSphController::class, 'store'])->name('sph-item.store');
     Route::get('sph-detail/{id}/edit', [DetailSphController::class, 'table'])->name('sph-detail.table');
