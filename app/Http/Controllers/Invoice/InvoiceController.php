@@ -51,13 +51,40 @@ class InvoiceController extends Controller
             'details.*.qty' => 'required|integer|min:1',
             'details.*.satuan' => 'required|string|max:50',
             'details.*.harga_satuan' => 'required|numeric',
+        ], [
+            'header.kode_invoice.required' => 'Kode invoice harus diisi.',
+            'header.kode_invoice.max' => 'Kode invoice maksimal 100 karakter.',
+            'header.kode_invoice.unique' => 'Kode invoice sudah terdaftar.',
+            'header.header_deskripsi.required' => 'Deskripsi header harus diisi.',
+            'header.tanggal.required' => 'Tanggal harus diisi.',
+            'header.tanggal.date' => 'Tanggal harus berupa format tanggal yang valid.',
+            'header.nama_client.required' => 'Nama client harus diisi.',
+            'header.nama_client.max' => 'Nama client maksimal 50 karakter.',
+            'header.nama_pt.required' => 'Nama PT harus diisi.',
+            'header.nama_pt.max' => 'Nama PT maksimal 50 karakter.',
+            'header.no_bast_1.required' => 'Nomor BAST 1 harus diisi.',
+            'header.jenis_no.required' => 'Jenis nomor harus diisi.',
+            'header.due_date.required' => 'Tanggal jatuh tempo harus diisi.',
+            'header.due_date.date' => 'Tanggal jatuh tempo harus berupa format tanggal yang valid.',
+            'header.nama_bank.required' => 'Nama bank harus diisi.',
+            'header.no_1.required' => 'Nomor 1 harus diisi.',
+            'details.*.nama_barang.required' => 'Nama barang harus diisi.',
+            'details.*.nama_barang.string' => 'Nama barang harus berupa teks.',
+            'details.*.nama_barang.max' => 'Nama barang maksimal 255 karakter.',
+            'details.*.qty.required' => 'Kuantitas barang harus diisi.',
+            'details.*.qty.integer' => 'Kuantitas barang harus berupa angka.',
+            'details.*.qty.min' => 'Kuantitas barang minimal 1.',
+            'details.*.satuan.required' => 'Satuan barang harus diisi.',
+            'details.*.satuan.max' => 'Satuan barang maksimal 50 karakter.',
+            'details.*.harga_satuan.required' => 'Harga satuan harus diisi.',
+            'details.*.harga_satuan.numeric' => 'Harga satuan harus berupa angka.',
         ]);
         DB::beginTransaction();
 
 
         try {
             // Simpan data header
-            
+
             $invoice = Invoice::create([
                 'kd_invoice' => $request->input('kode_invoice'),
                 'header_deskripsi' => $request->input('header.header_deskripsi'),

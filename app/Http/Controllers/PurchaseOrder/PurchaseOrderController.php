@@ -171,14 +171,5 @@ class PurchaseOrderController extends Controller
         $po->delete();
         return response()->json();
     }
-    public function getKodePo()
-    {
-        // Cari kode invoice terakhir untuk PT tertentu
-        $dataTerakhir = Po::latest('id')->first();
-        $lastId = $dataTerakhir ? $dataTerakhir->kode_po : 0;
-        $nextNumber = $lastId + 1;
-        $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
-
-        return response()->json(['kode_po' => $kode]);
-    }
+  
 }

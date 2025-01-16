@@ -646,17 +646,6 @@
                 $('#formTambahDetail')[0].reset();
                 $('#nama_client').val(null).trigger('change');
 
-                $.ajax({
-                    url: '/get-kode-sph', // URL endpoint di backend
-                    method: 'GET',
-
-                    success: function(response) {
-                        $('#kode_sph').val(response.kode_sph);
-                    },
-                    error: function() {
-                        alert('Terjadi kesalahan saat mengambil kode SPH.');
-                    }
-                });
 
 
                 // $('#formTambah')[0].reset();

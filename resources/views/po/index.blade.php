@@ -719,17 +719,7 @@
                 $('#formTambahHeader')[0].reset();
                 $('#formTambahDetail')[0].reset();
                 $('#nama_vendor').val(null).trigger('change');
-                    $.ajax({
-                        url: '/get-kode-po', // URL endpoint di backend
-                        method: 'GET',
-                        success: function(response) {
-                            $('#kode_purchase_order').val(response.kode_po);
-                        },
-                        error: function() {
-                            alert('Terjadi kesalahan saat mengambil kode po.');
-                        }
-                    });
-            
+                 
                 // $('#formTambah')[0].reset();
             });
 

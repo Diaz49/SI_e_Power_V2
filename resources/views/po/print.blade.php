@@ -95,7 +95,7 @@
                     <td class="small">:</td>
                     <td colspan="4" class="small">
                         <span
-                            class="style9 w-100">{{ $po->kode }}/Dir.01/PO/III/{{ \Carbon\Carbon::parse($po->tanggal_po)->translatedFormat('Y') }}</span>
+                            class="style9 w-100">{{ $po->kode_po }}/Dir.01/PO/III/{{ \Carbon\Carbon::parse($po->tanggal_po)->translatedFormat('Y') }}</span>
                     </td>
                     <td colspan="5"></td>
                     <td class="small" colspan="2"><span class="style9"><strong>Buyer :

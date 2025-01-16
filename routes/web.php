@@ -78,7 +78,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('po/{id}', [PurchaseOrderController::class, 'update'])->name('po.update');
     Route::delete('po/delete/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.delete');
     Route::get('print-po/{id}', [PrintPoController::class, 'viewPo'])->name('po-print');
-    Route::get('/get-kode-po', [PurchaseOrderController::class, 'getKodePo']);
 
 
     Route::post('po-item', [DetailPoController::class, 'store'])->name('po-item.store');
@@ -120,7 +119,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('data-sph/{id}', [SphController::class, 'update'])->name('data-sph.update');
     Route::delete('data-sph/delete/{id}', [SphController::class, 'destroy'])->name('data-sph.delete');
     Route::get('print-sph/{id}', [PrintSphController::class, 'view'])->name('print-sph');
-    Route::get('/get-kode-sph', [SphController::class, 'getKodeSph']);
 
 
 

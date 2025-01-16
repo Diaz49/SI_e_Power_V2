@@ -142,14 +142,4 @@ class SphController extends Controller
         return response()->json();
     }
 
-    public function getKodeSph()
-    {
-        // Cari kode invoice terakhir untuk PT tertentu
-        $dataTerakhir = Sph::latest('id')->first();
-        $lastId = $dataTerakhir ? $dataTerakhir->kode_sph : 0;
-        $nextNumber = $lastId + 1;
-        $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
-
-        return response()->json(['kode_sph' => $kode]);
-    }
 }
