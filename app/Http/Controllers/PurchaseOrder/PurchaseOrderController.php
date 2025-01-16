@@ -81,12 +81,8 @@ class PurchaseOrderController extends Controller
         // Simpan data header
 
         try {
-            $dataTerakhir = Po::latest('id')->first();
-            $lastId = $dataTerakhir ? $dataTerakhir->kode : 0;
-            $nextNumber = $lastId + 1;
-            $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+    
             $po = Po::create([
-                'kode' => $kode,
                 'kode_po' => $request->input('header.kode_purchase_order'),
                 'tanggal_po' => $request->input('header.tanggal'),
                 'vendor_id' => $request->input('header.nama_vendor'),
@@ -174,5 +170,15 @@ class PurchaseOrderController extends Controller
         $po = Po::find($id);
         $po->delete();
         return response()->json();
+    }
+    public function getKodePo()
+    {
+        // Cari kode invoice terakhir untuk PT tertentu
+        $dataTerakhir = Po::latest('id')->first();
+        $lastId = $dataTerakhir ? $dataTerakhir->kode_po : 0;
+        $nextNumber = $lastId + 1;
+        $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
+        return response()->json(['kode_po' => $kode]);
     }
 }

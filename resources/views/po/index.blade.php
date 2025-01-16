@@ -719,7 +719,17 @@
                 $('#formTambahHeader')[0].reset();
                 $('#formTambahDetail')[0].reset();
                 $('#nama_vendor').val(null).trigger('change');
-
+                    $.ajax({
+                        url: '/get-kode-po', // URL endpoint di backend
+                        method: 'GET',
+                        success: function(response) {
+                            $('#kode_purchase_order').val(response.kode_po);
+                        },
+                        error: function() {
+                            alert('Terjadi kesalahan saat mengambil kode po.');
+                        }
+                    });
+            
                 // $('#formTambah')[0].reset();
             });
 
@@ -1170,20 +1180,20 @@
 
             function updateTotalHarga() {
                 let total = 0;
-                let diskon = 
+                let diskon =
 
-                // Loop melalui semua baris tabel dan tambahkan nilai kolom jumlah_harga
-                $('#detailEditTable tbody tr').each(function() {
-                    let jumlahHarga = parseFloat($(this).find('td:nth-child(6)').text()); // Ambil kolom jumlah_harga
-                    if (!isNaN(jumlahHarga)) {
-                        total += jumlahHarga;
-                    }
-                });
+                    // Loop melalui semua baris tabel dan tambahkan nilai kolom jumlah_harga
+                    $('#detailEditTable tbody tr').each(function() {
+                        let jumlahHarga = parseFloat($(this).find('td:nth-child(6)').text()); // Ambil kolom jumlah_harga
+                        if (!isNaN(jumlahHarga)) {
+                            total += jumlahHarga;
+                        }
+                    });
 
                 // Perbarui elemen total harga
                 $('#totalHarga').text(total.toLocaleString('id-ID'));
             }
-            
+
             function reloadDataTable() {
                 // Ambil nilai radio button Year yang dipilih
                 let year = $('input[name="year"]:checked').val();
@@ -1194,7 +1204,7 @@
                     .load();
             }
             $('#filterBtn').on('click', function() {
-           
+
                 // Ambil filter Tahun yang dipilih
                 const yearValue = $('input[name="year"]:checked').val();
                 const yearLabel = $('input[name="year"]:checked').next('label').text();

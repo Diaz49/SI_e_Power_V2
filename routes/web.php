@@ -78,6 +78,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('po/{id}', [PurchaseOrderController::class, 'update'])->name('po.update');
     Route::delete('po/delete/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.delete');
     Route::get('print-po/{id}', [PrintPoController::class, 'viewPo'])->name('po-print');
+    Route::get('/get-kode-po', [PurchaseOrderController::class, 'getKodePo']);
 
 
     Route::post('po-item', [DetailPoController::class, 'store'])->name('po-item.store');
