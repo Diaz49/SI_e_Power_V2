@@ -29,7 +29,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'header.kode_invoice' => 'required|max:100|unique:invoice,kd_invoice',
+            'header.kode_invoice' => 'required|max:100|numeric|unique:invoice,kd_invoice',
             'header.header_deskripsi' => 'required',
             'header.tanggal' => 'required|date',
             'header.nama_client' => 'required|max:50',
@@ -54,6 +54,7 @@ class InvoiceController extends Controller
         ], [
             'header.kode_invoice.required' => 'Kode invoice harus diisi.',
             'header.kode_invoice.max' => 'Kode invoice maksimal 100 karakter.',
+            'header.kode_invoice.numeric' => 'Kode invoice harus berupa angka.',
             'header.kode_invoice.unique' => 'Kode invoice sudah terdaftar.',
             'header.header_deskripsi.required' => 'Deskripsi header harus diisi.',
             'header.tanggal.required' => 'Tanggal harus diisi.',
