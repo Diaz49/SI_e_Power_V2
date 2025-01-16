@@ -13,7 +13,7 @@
                 <div class="col-12 d-flex justify-content-end">
                     <button class="btn btn-outline-secondary btn-sm " data-bs-target="#modalFilter" data-bs-toggle="modal"
                         style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
-                    <button class="btn btn-outline-secondary btn-sm ms-3 me-4" style="--bs-btn-bg:white;"><i
+                    <button class="btn btn-outline-secondary btn-sm ms-3 me-4" id="exportBtn" style="--bs-btn-bg:white;"><i
                             class="fas fa-download"></i> Export</button>
                 </div>
 
@@ -1655,6 +1655,15 @@
                         $('#kode_invoice').val(''); // Kosongkan jika tidak ada PT yang dipilih
                     }
                 });
+            });
+
+            $('#exportBtn').on('click', function() {
+                let pt = $('input[name="pt"]:checked').val(); // Ambil nilai PT
+                let year = $('input[name="year"]:checked').val(); // Ambil nilai Tahun
+
+                // Redirect ke route ekspor dengan parameter
+                let exportUrl = `{{ route('invoice.export') }}?pt_id=${pt || ''}&tgl_invoice=${year || ''}`;
+                window.location.href = exportUrl;
             });
         </script>
     @endpush

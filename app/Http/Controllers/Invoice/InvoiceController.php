@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Invoice;
 
 use App\DataTables\InvoiceDataTable;
+use App\Exports\InvoiceExport;
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\DataClient;
@@ -11,6 +12,7 @@ use App\Models\PT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
 {
@@ -29,7 +31,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'header.kode_invoice' => 'required|max:100|numeric|unique:invoice,kd_invoice',
+            'header.kode_invoice' => 'required|digits_between:1,100|numeric|unique:invoice,kd_invoice',
             'header.header_deskripsi' => 'required',
             'header.tanggal' => 'required|date',
             'header.nama_client' => 'required|max:50',
@@ -87,7 +89,7 @@ class InvoiceController extends Controller
             // Simpan data header
 
             $invoice = Invoice::create([
-                'kd_invoice' => $request->input('kode_invoice'),
+                'kd_invoice' => $request->input('header.kode_invoice'),
                 'header_deskripsi' => $request->input('header.header_deskripsi'),
                 'tgl_invoice' => $request->input('header.tanggal'),
                 'client_id' => $request->input('header.nama_client'),
@@ -262,4 +264,25 @@ class InvoiceController extends Controller
 
         return response()->json(['kode_invoice' => $kode]);
     }
+
+    public function export(Request $request)
+{
+    $ptId = $request->get('pt_id');
+    $year = $request->get('tgl_invoice');
+
+    // Query data berdasarkan filter
+    $invoices = Invoice::query();
+
+    if ($ptId) {
+        $invoices->where('pt_id', $ptId);
+    }
+    if ($year) {
+        $invoices->whereYear('tgl_invoice', $year);
+    }
+
+    $invoices = $invoices->get();
+
+    // Ekspor data menggunakan Excel
+    return Excel::download(new InvoiceExport($invoices), 'Invoice.xlsx');
+}
 }

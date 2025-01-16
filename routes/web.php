@@ -97,13 +97,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('kwitansi-non/{id}', [PrintInvoiceController::class, 'kwitansiNon'])->name('print.kwitansi-non');
     Route::get('invoice-ttd/{id}/edit', [InvoiceController::class, 'viewTtd'])->name('invoice-ttd.edit');
     Route::put('invoice-ttd/{id}', [InvoiceController::class, 'updateTtd'])->name('invoice-ttd.update');
+    Route::get('/get-kode-invoice', [InvoiceController::class, 'getKodeInvoice']);
+    Route::get('/invoice/export', [InvoiceController::class, 'export'])->name('invoice.export');
+
 
     Route::post('invoice-item', [DetailInvoiceController::class, 'store'])->name('invoice-item.store');
     Route::get('invoice-detail/{id}/edit', [DetailInvoiceController::class, 'table'])->name('invoice-detail.table');
     Route::get('invoice-item/{id}/edit', [DetailInvoiceController::class, 'edit'])->name('invoice-item.edit');
     Route::put('invoice-item/{id}', [DetailInvoiceController::class, 'update'])->name('invoice-item.update');
     Route::delete('invoice-detail/delete/{id}', [DetailInvoiceController::class, 'destroy'])->name('invoice-detail.destroy');
-    Route::get('/get-kode-invoice', [InvoiceController::class, 'getKodeInvoice']);
 
 
     Route::get('pt', [PTController::class, 'index'])->name('pt');

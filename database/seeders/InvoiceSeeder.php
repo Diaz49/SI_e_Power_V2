@@ -100,6 +100,7 @@ class InvoiceSeeder extends Seeder
             
 
             $invoice = Invoice::create([
+                
                 'kd_invoice' => 'INV-' . strtoupper(Str::random(8)),
                 'header_deskripsi' => 'Deskripsi header untuk invoice ' . $i,
                 'tgl_invoice' => Carbon::now()->subDays(rand(1, 30)),
