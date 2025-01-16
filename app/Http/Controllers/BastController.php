@@ -27,6 +27,12 @@ class BastController extends Controller
         return $dataTable->render('bast.index', compact('invoice','pt','years'));
     }
 
+    public function viewbast(string $id)
+    {
+        $bast = Bast::with('invoice')->findOrFail($id);
+        return view('bast.print')->with('bast', $bast);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -36,9 +42,11 @@ class BastController extends Controller
             'deskripsi' => 'required|string|max:255',
             'nama' => 'required|string|max:50',
             'jabatan' => 'required|string|max:50',
+            'satuan' => 'required|string|max:10',
             'jumlah_item' => 'required|numeric|max:10',
             'harga_satuan' => 'required|numeric',
             'total_invoice' => 'required|numeric',
+            'kode_kontrak' => 'required|string|max:100',
         ], [
             'tanggal.required' => 'Tanggal wajib diisi.',
             'tanggal.date' => 'Tanggal harus berupa format tanggal yang valid.',
@@ -56,25 +64,39 @@ class BastController extends Controller
             'jabatan.required' => 'Jabatan wajib diisi.',
             'jabatan.string' => 'Jabatan harus berupa teks.',
             'jabatan.max' => 'Jabatan tidak boleh lebih dari 50 karakter.',
+            'satuan.required' => 'Jumlah item wajib diisi.',
+            'satuan.string' => 'Jumlah item harus berupa teks.',
+            'satuan.max' => 'Jumlah item tidak boleh lebih dari 10 karakter.',
             'jumlah_item.required' => 'Jumlah item wajib diisi.',
-            'jumlah_item.string' => 'Jumlah item harus berupa angka.',
+            'jumlah_item.numeric' => 'Jumlah item harus berupa angka.',
             'jumlah_item.max' => 'Jumlah item tidak boleh lebih dari 10 karakter.',
             'harga_satuan.required' => 'Harga satuan wajib diisi.',
             'harga_satuan.numeric' => 'Harga satuan harus berupa angka.',
             'total_invoice.required' => 'Total invoice wajib diisi.',
             'total_invoice.numeric' => 'Total invoice harus berupa angka.',
+            'kode_kontrak.required' => 'Total invoice wajib diisi.',
+            'kode_kontrak.numeric' => 'Total invoice harus berupa teks.',
+            'kode_kontrak.numeric' => 'Total invoice harus berupa 100 karakter.',
         ]);
 
+        $totaldata = Bast::count();
+        // $lastId = $dataTerakhir ? $dataTerakhir->kode : 0;
+        $nextNumber = $totaldata + 1;
+        $kode = str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
         $data = [
+            'kode' => $kode,
             'nama' => $request->nama,
             'invoice_id' => $request->kd_invoice, 
             'pt_id' => $request->nama_pt, // Save invoice code
             'tanggal' => $request->tanggal,  // Save invoice date
             'deskripsi' => $request->deskripsi,  // Save description
             'jabatan' => $request->jabatan,  // Save job title
+            'satuan' => $request->satuan,  // Save item quantity
             'jumlah_item' => $request->jumlah_item,  // Save item quantity
             'harga_satuan' => $request->harga_satuan,  // Save unit price
             'total_invoice' => $request->total_invoice,  // Save total invoice amount
+            'kode_kontrak' => $request->kode_kontrak,
         ];
 
         Bast::create($data);
@@ -101,9 +123,11 @@ class BastController extends Controller
             'deskripsi_edit' => 'required|string|max:255',
             'nama_edit' => 'required|string|max:50',
             'jabatan_edit' => 'required|string|max:50',
+            'satuan_edit' => 'required|string|max:10',
             'jumlah_item_edit' => 'required|numeric|max:10',
             'harga_satuan_edit' => 'required|numeric',
             'total_invoice_edit' => 'required|numeric',
+            'kode_kontrak_edit' => 'required|string|max:100',
         ], [
             'tanggal_edit.required' => 'Tanggal wajib diisi.',
             'tanggal_edit.date' => 'Tanggal harus berupa format tanggal yang valid.',
@@ -121,13 +145,19 @@ class BastController extends Controller
             'jabatan_edit.required' => 'Jabatan wajib diisi.',
             'jabatan_edit.string' => 'Jabatan harus berupa teks.',
             'jabatan_edit.max' => 'Jabatan tidak boleh lebih dari 50 karakter.',
+            'satuan_edit.required' => 'Jumlah item wajib diisi.',
+            'satuan_edit.string' => 'Jumlah item harus berupa teks.',
+            'satuan_edit.max' => 'Jumlah item tidak boleh lebih dari 10 karakter.',
             'jumlah_item_edit.required' => 'Jumlah item wajib diisi.',
-            'jumlah_item_edit.string' => 'Jumlah item harus berupa angka.',
+            'jumlah_item_edit.numeric' => 'Jumlah item harus berupa angka.',
             'jumlah_item_edit.max' => 'Jumlah item tidak boleh lebih dari 10 karakter.',
             'harga_satuan_edit.required' => 'Harga satuan wajib diisi.',
             'harga_satuan_edit.numeric' => 'Harga satuan harus berupa angka.',
             'total_invoice_edit.required' => 'Total invoice wajib diisi.',
             'total_invoice_edit.numeric' => 'Total invoice harus berupa angka.',
+            'kode_kontrak_edit.required' => 'Total invoice wajib diisi.',
+            'kode_kontrak_edit.numeric' => 'Total invoice harus berupa teks.',
+            'kode_kontrak_edit.numeric' => 'Total invoice harus berupa 100 karakter.',
         ]);
 
         $bast->update([
@@ -137,9 +167,11 @@ class BastController extends Controller
             'tanggal' => $request->tanggal_edit,  // Save invoice date
             'deskripsi' => $request->deskripsi_edit,  // Save description
             'jabatan' => $request->jabatan_edit,
+            'satuan' => $request->satuan_edit,
             'jumlah_item' => $request->jumlah_item_edit,
             'harga_satuan' => $request->harga_satuan_edit,
             'total_invoice' => $request->total_invoice_edit,
+            'kode_kontrak' => $request->kode_kontrak_edit,
         ]);
 
         return response()->json([

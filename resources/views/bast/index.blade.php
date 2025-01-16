@@ -76,77 +76,93 @@
     <form action="{{ route('bast.store') }}" method="POST">
         @csrf
         <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Bast</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="mb-1 mt-2 label">Tanggal</div>
-                            <input type="date" class="form-control" name="tanggal" id="tanggal" value="{{ old('') }}"
-                                placeholder="Masukkan Tanggal">
-                            @error('tanggal')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                    <div class="modal-body ps-4 me-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                    <div class="mb-1 mt-2 label">Tanggal</div>
+                                    <input type="date" class="form-control" name="tanggal" id="tanggal" value="{{ old('') }}"
+                                        placeholder="Masukkan Tanggal">
+                                    @error('tanggal')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
 
-                            <div class="mb-1 mt-2 label">Kode Invoice</div>
-                            <select type="text" class="form-control js-example-basic-single" name="kd_invoice" id="kd_invoice"
-                                value="" placeholder="Pilih Kode Invoice">
-                                <option value="">Pilih Kode Invoice</option>
-                                @foreach ($invoice as $item)
-                                    <option value="{{ $item->id }}" >
-                                        {{ $item->kd_invoice }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="mb-1 mt-2 label">PT</div>
-                            <select type="text" class="form-control js-example-basic-single" name="nama_pt" id="nama_pt"
-                                value="" placeholder="Masukkan Nama PT">
-                                <option value="">Pilih PT</option>
-                                @foreach ($pt as $item)
-                                    <option value="{{ $item->id }}" >
-                                        {{ $item->nama_pt }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="mb-1 mt-2 label">Deskripsi</div>
-                            <input type="text" class="form-control" name="deskripsi" id="deskripsi" value="{{ old('') }}"
-                                placeholder="Masukkan Deskripsi">
-                            @error('deskripsi')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Nama</div>
-                            <input type="text" class="form-control" name="nama" id="nama" value="{{ old('') }}"
-                                placeholder="Masukkan Nama">
-                            @error('nama')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Jabatan</div>
-                            <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{ old('') }}"
-                                placeholder="Masukkan Jabatan">
-                            @error('jabatan')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Jumlah item</div>
-                            <input type="text" class="form-control" name="jumlah_item" id="jumlah_item" value="{{ old('') }}"
-                                placeholder="Masukkan Jumlah Item">
-                            @error('jumlah_item')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Harga satuan</div>
-                            <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value="{{ old('') }}"
-                                placeholder="Masukkan Harga Satuan">
-                            @error('harga_satuan')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Total invoice</div>
-                            <input type="text" class="form-control" name="total_invoice" id="total_invoice" value="{{ old('') }}"
-                                placeholder="Masukkan Total Invoice" readonly>
-                            @error('total_invoice')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="mb-1 mt-2 label">Kode Invoice</div>
+                                    <select type="text" class="form-control js-example-basic-single" name="kd_invoice" id="kd_invoice"
+                                        value="" placeholder="Pilih Kode Invoice">
+                                        <option value="">Pilih Kode Invoice</option>
+                                        @foreach ($invoice as $item)
+                                            <option value="{{ $item->id }}" >
+                                                {{ $item->kd_invoice }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="mb-1 mt-2 label">PT</div>
+                                    <select type="text" class="form-control js-example-basic-single" name="nama_pt" id="nama_pt"
+                                        value="" placeholder="Masukkan Nama PT">
+                                        <option value="">Pilih PT</option>
+                                        @foreach ($pt as $item)
+                                            <option value="{{ $item->id }}" >
+                                                {{ $item->nama_pt }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="mb-1 mt-2 label">Deskripsi</div>
+                                    <input type="text" class="form-control" name="deskripsi" id="deskripsi" value="{{ old('') }}"
+                                        placeholder="Masukkan Deskripsi">
+                                    @error('deskripsi')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <div class="mb-1 mt-2 label">Nama</div>
+                                    <input type="text" class="form-control" name="nama" id="nama" value="{{ old('') }}"
+                                        placeholder="Masukkan Nama">
+                                    @error('nama')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <div class="mb-1 mt-2 label">Jabatan</div>
+                                    <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{ old('') }}"
+                                        placeholder="Masukkan Jabatan">
+                                    @error('jabatan')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                            </div>
+                            <div class="col-md-6">
+                                    <div class="mb-1 mt-2 label">Satuan</div>
+                                    <input type="text" class="form-control" name="satuan" id="satuan" value="{{ old('') }}"
+                                        placeholder="Masukkan Satuan / Misal ls dll.">
+                                    @error('satuan')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <div class="mb-1 mt-2 label">Jumlah item / Qty</div>
+                                    <input type="text" class="form-control" name="jumlah_item" id="jumlah_item" value="{{ old('') }}"
+                                        placeholder="Masukkan Jumlah Item">
+                                    @error('jumlah_item')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <div class="mb-1 mt-2 label">Harga satuan</div>
+                                    <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value="{{ old('') }}"
+                                        placeholder="Masukkan Harga Satuan">
+                                    @error('harga_satuan')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <div class="mb-1 mt-2 label">Total invoice</div>
+                                    <input type="text" class="form-control" name="total_invoice" id="total_invoice" value="{{ old('') }}"
+                                        placeholder="Masukkan Total Invoice" readonly>
+                                    @error('total_invoice')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    <div class="mb-1 mt-2 label">Kode Kontrak</div>
+                                    <input type="text" class="form-control" name="kode_kontrak" id="kode_kontrak" value="{{ old('') }}"
+                                        placeholder="Masukkan Total Invoice">
+                                    @error('kode_kontrak')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -163,81 +179,95 @@
         @method('PUT')
         @csrf
         <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Bast</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body ps-4 me-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-1 mt-2 label">Tanggal</div>
+                                <input type="date" class="form-control" name="tanggal_edit" id="tanggal_edit" value="{{ old('') }}"
+                                    placeholder="Masukkan Tanggal">
+                                @error('tanggal_edit')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
 
-                        <div>
-                            <div class="mb-1 mt-2 label">Tanggal</div>
-                            <input type="date" class="form-control" name="tanggal_edit" id="tanggal_edit" value="{{ old('') }}"
-                                placeholder="Masukkan Tanggal">
-                            @error('tanggal_edit')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-
-                            <div class="mb-1 mt-2 label">Kode Invoice</div>
-                            <select type="text" class="form-control js-example-basic-single" name="kd_invoice_edit" id="kd_invoice_edit"
-                                value="" placeholder="Pilih Kode Invoice">
-                                <option value="">Pilih Kode Invoice</option>
-                                @foreach ($invoice as $item)
-                                    <option value="{{ $item->id }}" >
-                                        {{ $item->kd_invoice }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="mb-1 mt-2 label">PT</div>
-                                <select type="text" class="form-control js-example-basic-single"
-                                    name="nama_pt_edit" id="nama_pt_edit" value=""
-                                    placeholder="Masukkan Nama PT">
-                                    <option value="">Pilih PT</option>
-                                    @foreach ($pt as $item)
-                                        <option value="{{ $item->id }}">
-                                            {{ $item->nama_pt }}
+                                <div class="mb-1 mt-2 label">Kode Invoice</div>
+                                <select type="text" class="form-control js-example-basic-single" name="kd_invoice_edit" id="kd_invoice_edit"
+                                    value="" placeholder="Pilih Kode Invoice">
+                                    <option value="">Pilih Kode Invoice</option>
+                                    @foreach ($invoice as $item)
+                                        <option value="{{ $item->id }}" >
+                                            {{ $item->kd_invoice }}
                                         </option>
                                     @endforeach
                                 </select>
-                            <div class="mb-1 mt-2 label">Deskripsi</div>
-                            <input type="text" class="form-control" name="deskripsi_edit" id="deskripsi_edit" value="{{ old('') }}"
-                                placeholder="Masukkan Deskripsi">
-                            @error('deskripsi_edit')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Nama</div>
-                            <input type="text" class="form-control" name="nama_edit" id="nama_edit" value="{{ old('') }}"
-                                placeholder="Masukkan Nama">
-                            @error('nama_edit')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Jabatan</div>
-                            <input type="text" class="form-control" name="jabatan_edit" id="jabatan_edit" value="{{ old('') }}"
-                                placeholder="Masukkan Jabatan">
-                            @error('jabatan_edit')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Jumlah item</div>
-                            <input type="text" class="form-control" name="jumlah_item_edit" id="jumlah_item_edit" value="{{ old('') }}"
-                                placeholder="Masukkan Jumlah item">
-                            @error('jumlah_item_edit')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Harga satuan</div>
-                            <input type="text" class="form-control" name="harga_satuan_edit" id="harga_satuan_edit" value="{{ old('') }}"
-                                placeholder="Masukkan Harga satuan">
-                            @error('harga_satuan_edit')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="mb-1 mt-2 label">Total invoice</div>
-                            <input type="text" class="form-control" name="total_invoice_edit" id="total_invoice_edit" value="{{ old('') }}"
-                                placeholder="Masukkan Total Invoice" readonly>
-                            @error('total_invoice_edit')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                                <div class="mb-1 mt-2 label">PT</div>
+                                    <select type="text" class="form-control js-example-basic-single"
+                                        name="nama_pt_edit" id="nama_pt_edit" value=""
+                                        placeholder="Masukkan Nama PT">
+                                        <option value="">Pilih PT</option>
+                                        @foreach ($pt as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->nama_pt }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                <div class="mb-1 mt-2 label">Deskripsi</div>
+                                <input type="text" class="form-control" name="deskripsi_edit" id="deskripsi_edit" value="{{ old('') }}"
+                                    placeholder="Masukkan Deskripsi">
+                                @error('deskripsi_edit')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                <div class="mb-1 mt-2 label">Nama</div>
+                                <input type="text" class="form-control" name="nama_edit" id="nama_edit" value="{{ old('') }}"
+                                    placeholder="Masukkan Nama">
+                                @error('nama_edit')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                <div class="mb-1 mt-2 label">Jabatan</div>
+                                <input type="text" class="form-control" name="jabatan_edit" id="jabatan_edit" value="{{ old('') }}"
+                                    placeholder="Masukkan Jabatan">
+                                @error('jabatan_edit')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-1 mt-2 label">Satuan</div>
+                                <input type="text" class="form-control" name="satuan_edit" id="satuan_edit" value="{{ old('') }}"
+                                    placeholder="Masukkan Satuan / Misal ls dll.">
+                                @error('satuan_edit')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                <div class="mb-1 mt-2 label">Jumlah item / Qty</div>
+                                <input type="text" class="form-control" name="jumlah_item_edit" id="jumlah_item_edit" value="{{ old('') }}"
+                                    placeholder="Masukkan Jumlah item">
+                                @error('jumlah_item_edit')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                <div class="mb-1 mt-2 label">Harga satuan</div>
+                                <input type="text" class="form-control" name="harga_satuan_edit" id="harga_satuan_edit" value="{{ old('') }}"
+                                    placeholder="Masukkan Harga satuan">
+                                @error('harga_satuan_edit')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                <div class="mb-1 mt-2 label">Total invoice</div>
+                                <input type="text" class="form-control" name="total_invoice_edit" id="total_invoice_edit" value="{{ old('') }}"
+                                    placeholder="Masukkan Total Invoice" readonly>
+                                @error('total_invoice_edit')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                <div class="mb-1 mt-2 label">Kode Kontrak</div>
+                                <input type="text" class="form-control" name="kode_kontrak_edit" id="kode_kontrak_edit" value="{{ old('') }}"
+                                    placeholder="Masukkan Total Invoice">
+                                @error('kode_kontrak_edit')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -350,9 +380,11 @@
                     $('#deskripsi_edit').val(data.deskripsi);
                     $('#nama_edit').val(data.nama);
                     $('#jabatan_edit').val(data.jabatan);
+                    $('#satuan_edit').val(data.satuan);
                     $('#jumlah_item_edit').val(data.jumlah_item);
                     $('#harga_satuan_edit').val(data.harga_satuan);
                     $('#total_invoice_edit').val(data.total_invoice);
+                    $('#kode_kontrak_edit').val(data.kode_kontrak);
 
                     // Set URL action form pada modal
                     $('#formEdit').attr('action', updateUrl);
@@ -407,6 +439,12 @@
                                         0] +
                                     '</div>');
                             }
+                            if (errors.satuan_edit) {
+                                $('#satuan_edit').after('<div class="text-danger error">' + errors
+                                    .satuan_edit[
+                                        0] +
+                                    '</div>');
+                            }
                             if (errors.jumlah_item_edit) {
                                 $('#jumlah_item_edit').after('<div class="text-danger error">' + errors
                                     .jumlah_item_edit[
@@ -419,9 +457,9 @@
                                         0] +
                                     '</div>');
                             }
-                            if (errors.total_invoice_edit) {
-                                $('#total_invoice_edit').after('<div class="text-danger error">' + errors
-                                    .total_invoice_edit[
+                            if (errors.kode_kontrak_edit) {
+                                $('#kode_kontrak_edit').after('<div class="text-danger error">' + errors
+                                    .kode_kontrak_edit[
                                         0] +
                                     '</div>');
                             }
@@ -465,43 +503,55 @@
                             $('.error').remove(); // Hapus error sebelumnya
 
                             // Menampilkan pesan error untuk masing-masing field
-                            if (errors.tanggal_edit) {
-                                $('#tanggal_edit').after('<div class="text-danger error">' + errors
-                                    .tanggal_edit[
+                            if (errors.tanggal) {
+                                $('#tanggal').after('<div class="text-danger error">' + errors
+                                    .tanggal[
                                         0] + '</div>');
                             }
-                            if (errors.deskripsi_edit) {
-                                $('#deskripsi_edit').after('<div class="text-danger error">' + errors
-                                    .deskripsi_edit[
+                            if (errors.deskripsi) {
+                                $('#deskripsi').after('<div class="text-danger error">' + errors
+                                    .deskripsi[
                                         0] + '</div>');
                             }
-                            if (errors.nama_edit) {
-                                $('#nama_edit').after('<div class="text-danger error">' + errors
-                                    .nama_edit[
+                            if (errors.nama) {
+                                $('#nama').after('<div class="text-danger error">' + errors
+                                    .nama[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.jabatan_edit) {
-                                $('#jabatan_edit').after('<div class="text-danger error">' + errors
-                                    .jabatan_edit[
+                            if (errors.jabatan) {
+                                $('#jabatan').after('<div class="text-danger error">' + errors
+                                    .jabatan[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.jumlah_item_edit) {
-                                $('#jumlah_item_edit').after('<div class="text-danger error">' + errors
-                                    .jumlah_item_edit[
+                            if (errors.satuan) {
+                                $('#satuan').after('<div class="text-danger error">' + errors
+                                    .satuan[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.harga_satuan_edit) {
-                                $('#harga_satuan_edit').after('<div class="text-danger error">' + errors
-                                    .harga_satuan_edit[
+                            if (errors.jumlah_item) {
+                                $('#jumlah_item').after('<div class="text-danger error">' + errors
+                                    .jumlah_item[
                                         0] +
                                     '</div>');
                             }
-                            if (errors.total_invoice_edit) {
-                                $('#total_invoice_edit').after('<div class="text-danger error">' + errors
-                                    .total_invoice_edit[
+                            if (errors.harga_satuan) {
+                                $('#harga_satuan').after('<div class="text-danger error">' + errors
+                                    .harga_satuan[
+                                        0] +
+                                    '</div>');
+                            }
+                            if (errors.total_invoice) {
+                                $('#total_invoice').after('<div class="text-danger error">' + errors
+                                    .total_invoice[
+                                        0] +
+                                    '</div>');
+                            }
+                            if (errors.kode_kontrak) {
+                                $('#kode_kontrak').after('<div class="text-danger error">' + errors
+                                    .kode_kontrak[
                                         0] +
                                     '</div>');
                             }
@@ -524,6 +574,16 @@
                 // console.log('Inisialisasi berjalan');
                 $('#all').prop('checked', true);
                 $('#year_all').prop('checked', true);
+
+                $('#kd_invoice_edit').select2({
+                    dropdownParent: $('#modalEdit'),
+                    width: '100%'
+                });
+
+                $('#kd_invoice').select2({
+                    dropdownParent: $('#modalTambah'),
+                    width: '100%'
+                });
 
             });
 

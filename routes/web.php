@@ -130,6 +130,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('bast/{id}/edit', [BastController::class, 'edit'])->name('bast.edit');
     Route::put('bast/{id}', [BastController::class, 'update'])->name('bast.update');
     Route::delete('bast/delete/{id}', [BastController::class, 'destroy'])->name('bast.destroy');
+    Route::get('print-bast/{id}', [BastController::class, 'viewbast'])->name('bast-print');
 
     Route::get('/export-bast', [BastController::class, 'exportToExcel'])->name('bast.export');
 });
