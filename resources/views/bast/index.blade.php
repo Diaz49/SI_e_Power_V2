@@ -93,15 +93,21 @@
                                     @enderror
 
                                     <div class="mb-1 mt-2 label">Kode Invoice</div>
-                                    <select type="text" class="form-control js-example-basic-single" name="kd_invoice" id="kd_invoice"
-                                        value="" placeholder="Pilih Kode Invoice">
+                                    <select class="form-control js-example-basic-single" name="kd_invoice" id="kd_invoice">
                                         <option value="">Pilih Kode Invoice</option>
                                         @foreach ($invoice as $item)
-                                            <option value="{{ $item->id }}" >
+                                            <option value="{{ $item->id }}" 
+                                                    data-nama-client="{{ $item->client->nama_client }}" 
+                                                    data-deskripsi="{{ $item->header_deskripsi }}">
                                                 {{ $item->kd_invoice }}
                                             </option>
                                         @endforeach
                                     </select>
+                                    <!-- Input untuk menampilkan nama client -->
+                                    <input type="text" class="form-control mt-2" name="nama_client" disabled id="nama_client" value="" placeholder="Nama Client">
+                                    <!-- Input untuk menampilkan deskripsi -->
+                                    <input type="text" class="form-control mt-2" name="deskripsi_invoice" disabled id="deskripsi_invoice" value="" placeholder="Deskripsi">
+                                    
                                     <div class="mb-1 mt-2 label">PT</div>
                                     <select type="text" class="form-control js-example-basic-single" name="nama_pt" id="nama_pt"
                                         value="" placeholder="Masukkan Nama PT">
@@ -200,11 +206,18 @@
                                     value="" placeholder="Pilih Kode Invoice">
                                     <option value="">Pilih Kode Invoice</option>
                                     @foreach ($invoice as $item)
-                                        <option value="{{ $item->id }}" >
+                                    <option value="{{ $item->id }}" 
+                                        data-nama-client="{{ $item->client->nama_client }}" 
+                                        data-deskripsi="{{ $item->header_deskripsi }}">
                                             {{ $item->kd_invoice }}
                                         </option>
                                     @endforeach
                                 </select>
+                                <!-- Input untuk menampilkan nama client -->
+                                <input type="text" class="form-control mt-2" name="nama_client_edit" disabled id="nama_client_edit" value="" placeholder="Nama Client">
+                                <!-- Input untuk menampilkan deskripsi -->
+                                <input type="text" class="form-control mt-2" name="deskripsi_invoice_edit" disabled id="deskripsi_invoice_edit" value="" placeholder="Deskripsi">
+
                                 <div class="mb-1 mt-2 label">PT</div>
                                     <select type="text" class="form-control js-example-basic-single"
                                         name="nama_pt_edit" id="nama_pt_edit" value=""
@@ -583,6 +596,30 @@
                 $('#kd_invoice').select2({
                     dropdownParent: $('#modalTambah'),
                     width: '100%'
+                });
+
+                $('#kd_invoice').on('change', function() {
+                    var invoiceId = $(this).val(); // Ambil ID invoice
+                    var invoiceData = $('#kd_invoice option:selected').data(); // Ambil data dari opsi yang dipilih
+                                console.log(invoiceData);
+                    if (invoiceId) {
+                        $('#nama_client').val(invoiceData.namaClient); // Isi input nama_client
+                        $('#deskripsi_invoice').val(invoiceData.deskripsi);    // Isi input deskripsi
+                    } else {
+                        $('#nama_client, #deskripsi_invoice').val(''); // Kosongkan input
+                    }
+                });
+
+                $('#kd_invoice_edit').on('change', function() {
+                    var invoiceId = $(this).val(); // Ambil ID invoice
+                    var invoiceData = $('#kd_invoice_edit option:selected').data(); // Ambil data dari opsi yang dipilih
+                                console.log(invoiceData);
+                    if (invoiceId) {
+                        $('#nama_client_edit').val(invoiceData.namaClient); // Isi input nama_client_edit
+                        $('#deskripsi_invoice_edit').val(invoiceData.deskripsi);    // Isi input deskripsi
+                    } else {
+                        $('#nama_client_edit, #deskripsi_invoice_edit').val(''); // Kosongkan input
+                    }
                 });
 
             });
