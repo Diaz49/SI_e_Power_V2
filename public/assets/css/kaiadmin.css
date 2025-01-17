@@ -1225,7 +1225,7 @@ body[data-background-color="dark"] .border-top {
   color: #ffffff !important; }
 .logo-header[data-background-color] .more,
 .logo-header[data-background-color] .btn-toggle {
-  color: #ffffff !important; }
+  color: #0C6BFE !important; }
 .logo-header[data-background-color="white"] .navbar-toggler .navbar-toggler-icon,
 .logo-header[data-background-color="white"] .more,
 .logo-header[data-background-color="white"] .btn-toggle, .logo-header[data-background-color="grey"] .navbar-toggler .navbar-toggler-icon,
@@ -3913,12 +3913,12 @@ label.error {
     border-color: #1572E8 !important; }
 
 .btn-secondary {
-  background: #6861CE !important;
-  border-color: #6861CE !important; }
+  background: #6c757d;
+  border-color: #6c757d; }
   .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:disabled {
-    color: #ffffff !important;
-    background: #6861CE !important;
-    border-color: #6861CE !important; }
+    color: #ffffff;
+    background: #6c757d;
+    border-color: #6c757d; }
 
 .btn-info {
   background: #48ABF7 !important;
