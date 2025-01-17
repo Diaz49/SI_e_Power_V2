@@ -56,7 +56,7 @@ class VendorExport implements FromCollection, WithHeadings, WithMapping, WithCus
             $vendor->no_tlp,
             $vendor->email,
             $vendor->up,
-            $vendor->created_at ? $vendor->created_at->format('d-m-Y') : 'N/A',
+            $vendor->updated_at ? $vendor->updated_at->format('d-m-Y') : 'N/A',
             $vendor->pt->nama_pt ?? 'N/A',
         ];
     }

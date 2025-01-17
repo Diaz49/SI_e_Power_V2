@@ -57,7 +57,7 @@ class SphExport implements FromCollection, WithHeadings, WithMapping, WithCustom
             $sph->detailSph->sum('jumlah_harga'),
             $sph->penawaran_harga,
             $sph->kd_admin,
-            $sph->created_at ? $sph->created_at->format('d-m-Y') : 'N/A',
+            $sph->updated_at ? $sph->updated_at->format('d-m-Y') : 'N/A',
         ];
     }
 

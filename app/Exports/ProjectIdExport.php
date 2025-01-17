@@ -54,7 +54,7 @@ class ProjectIdExport implements FromCollection, WithHeadings, WithMapping, With
             $projectid->alamat,
             $projectid->hpp,
             $projectid->rab,
-            $projectid->created_at ? $projectid->created_at->format('d-m-Y') : 'N/A',
+            $projectid->updated_at ? $projectid->updated_at->format('d-m-Y') : 'N/A',
             $projectid->pt->nama_pt ?? 'N/A',
         ];
     }

@@ -57,7 +57,7 @@ class DataClientExport implements FromCollection, WithHeadings, WithMapping, Wit
             $dataClient->no_tlp,
             $dataClient->up_invoice,
             $dataClient->up_sph,
-            $dataClient->created_at ? $dataClient->created_at->format('d-m-Y') : 'N/A',
+            $dataClient->updated_at ? $dataClient->updated_at->format('d-m-Y') : 'N/A',
             $dataClient->pt->nama_pt ?? 'N/A',
         ];
     }

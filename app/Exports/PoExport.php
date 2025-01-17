@@ -73,7 +73,7 @@ class PoExport implements FromCollection, WithHeadings, WithMapping, WithCustomS
             $hasil_total,
             $ppn,
             $hasil_final,
-            $po->created_at ? $po->created_at->format('d-m-Y') : 'N/A',
+            $po->updated_at ? $po->updated_at->format('d-m-Y') : 'N/A',
         ];
     }
 
