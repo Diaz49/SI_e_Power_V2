@@ -20,7 +20,7 @@ class InvoiceController extends Controller
     {
         $client = DataClient::all();
         $pt = PT::all();
-        $bank = Bank::all();
+        $bank = Bank::where('status', 'use')->get();
         $years = Invoice::selectRaw('YEAR(tgl_invoice) as year')
             ->distinct()
             ->orderBy('year', 'desc')
