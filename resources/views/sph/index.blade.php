@@ -13,8 +13,9 @@
                 </div>
                 <div class="col-12 d-flex justify-content-end">
                     <button class="btn btn-outline-secondary btn-sm " data-bs-toggle="modal" data-bs-target="#modalFilter" style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
-                    <button class="btn btn-outline-secondary btn-sm ms-3 me-4" style="--bs-btn-bg:white;"><i
-                            class="fas fa-download"></i> Export</button>
+                    <button class="btn btn-outline-secondary btn-sm ms-3 me-4" onclick="exportClients()" style="--bs-btn-bg:white;">
+                        <i class="fas fa-download"></i> Export
+                    </button>
                 </div>
 
             </div>
@@ -1182,6 +1183,37 @@
 
                 // Update DataTable
                 reloadDataTable();
+            }
+            function exportClients() {
+                swal({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Data Sph (Surat Penawaran Harga) akan diunduh sebagai file Excel.',
+                    icon: 'warning',
+                    buttons: {
+                        cancel: {
+                            text: 'Tidak',
+                            value: null,
+                            visible: true,
+                            className: 'btn btn-danger',
+                            closeModal: true,
+                        },
+                        confirm: {
+                            text: 'Ya',
+                            value: true,
+                            visible: true,
+                            className: 'btn btn-success',
+                            closeModal: true,
+                        }
+                    }
+                }).then((willDownload) => {
+                    if (willDownload) {
+                        // Lanjutkan ke proses unduh
+                        window.location.href = '{{ route('data-sph.export') }}';
+                    } else {
+                        // Tampilkan pesan jika batal
+                        swal('Batal!', 'Proses unduhan dibatalkan.', 'info');
+                    }
+                });
             }
         </script>
     @endpush

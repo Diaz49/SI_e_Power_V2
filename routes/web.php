@@ -81,6 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('po/delete/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.delete');
     Route::get('print-po/{id}', [PrintPoController::class, 'viewPo'])->name('po-print');
 
+    Route::get('/export-po', [PurchaseOrderController::class, 'exportToExcel'])->name('po.export');
 
     Route::post('po-item', [DetailPoController::class, 'store'])->name('po-item.store');
     Route::get('po-detail/{id}/edit', [DetailPoController::class, 'table'])->name('po-detail.table');
@@ -125,7 +126,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('data-sph/delete/{id}', [SphController::class, 'destroy'])->name('data-sph.delete');
     Route::get('print-sph/{id}', [PrintSphController::class, 'view'])->name('print-sph');
 
-
+    Route::get('/export-data-sph', [SphController::class, 'exportToExcel'])->name('data-sph.export');
 
     Route::post('sph-item', [DetailSphController::class, 'store'])->name('sph-item.store');
     Route::get('sph-detail/{id}/edit', [DetailSphController::class, 'table'])->name('sph-detail.table');

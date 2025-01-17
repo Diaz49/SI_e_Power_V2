@@ -9,6 +9,8 @@ use App\Models\DataClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use App\Exports\SphExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SphController extends Controller
 {
@@ -140,6 +142,11 @@ class SphController extends Controller
         $sph = Sph::find($id);
         $sph->delete();
         return response()->json();
+    }
+
+    public function exportToExcel()
+    {
+        return Excel::download(new SphExport, 'Sph (Surat penawaran harga).xlsx');
     }
 
 }

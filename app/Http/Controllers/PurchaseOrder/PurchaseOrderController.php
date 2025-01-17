@@ -9,6 +9,8 @@ use App\Models\Po;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use App\Exports\PoExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PurchaseOrderController extends Controller
 {
@@ -170,6 +172,11 @@ class PurchaseOrderController extends Controller
         $po = Po::find($id);
         $po->delete();
         return response()->json();
+    }
+
+    public function exportToExcel()
+    {
+        return Excel::download(new PoExport, 'Purchase Order.xlsx');
     }
   
 }
