@@ -47,7 +47,7 @@
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="light">
                     <a class="logo d-flex align-items-center" style="text-decoration: none;">
-                        <img src="{{ asset('img/logo.png') }}" alt="navbar brand" class="navbar-brand" height="40" />
+                        <img src="{{ asset('img/logo2.png') }}" alt="navbar brand" class="navbar-brand" height="20" />
                         {{-- <img src="{{ asset('img/ep.png') }}" alt="navbar brand" class="navbar-brand" height="20" /> --}}
                     </a>
                     <div class="nav-toggle">
