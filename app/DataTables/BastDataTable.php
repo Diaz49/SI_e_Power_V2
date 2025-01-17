@@ -22,14 +22,28 @@ class BastDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addIndexColumn()
-        ->addColumn('action', function(Bast $bast) {
-            return view('bast.action', ['bast' => $bast]);
-        })
-        ->addColumn('invoice_id', function (Bast $bast) {
-            return $bast->invoice->kd_invoice;
-        })
-        ->setRowId('id');
+            ->addIndexColumn()
+            ->addColumn('action', function (Bast $bast) {
+                return view('bast.action', ['bast' => $bast]);
+            })
+            ->addColumn('invoice_id', function (Bast $bast) {
+                return $bast->invoice->kd_invoice;
+            })->addColumn('deskripsi', function (Bast $bast) {
+                return $bast->invoice->header_deskripsi;
+            })->addColumn('jumlah_item', function (Bast $bast) {
+                return $bast->invoice->detail->count();
+            })->addColumn('total_invoice', function (Bast $bast) {
+                return 'Rp.' . number_format($bast->invoice->detail->sum('jumlah_harga'), 0, ',', '.');
+            })
+            ->filterColumn('deskripsi',  function ($query, $keyword) {
+                $query->whereHas('invoice', function ($q) use ($keyword) {
+                    $q->where('header_deskripsi', 'like', "%$keyword%");
+                });
+            })
+            ->filterColumn('total_invoice', function ($query, $keyword) {
+                $query->whereRaw('(SELECT SUM(jumlah_harga) FROM invoice_detail WHERE invoice_detail.invoice_id = invoice.id) LIKE ?', ["%$keyword%"]);
+            })
+            ->setRowId('id');
     }
 
     /**
@@ -37,17 +51,16 @@ class BastDataTable extends DataTable
      */
     public function query(Bast $model): QueryBuilder
     {
-        $filterYear = request('created_at'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
-        $filterPtId = request('pt_id'); // Filter PT ID
+        $filterYear = request('tanggal'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
 
         return $model->newQuery()
-            ->select('bast.*') // Pastikan kolom yang dibutuhkan
+            ->join('invoice', 'bast.invoice_id', '=', 'invoice.id') // Join ke tabel invoice
+            ->select('bast.*', 'invoice.header_deskripsi') // Pilih kolom dari tabel invoice jika diperlukan
+
             ->when($filterYear, function ($query, $filterYear) {
-                return $query->whereYear('bast.created_at', $filterYear);
+                return $query->whereYear('bast.tanggal', $filterYear);
             })
-            ->when($filterPtId, function ($query, $filterPtId) {
-                return $query->where('bast.pt_id', $filterPtId);
-            });
+        ;
     }
 
     /**
@@ -56,20 +69,20 @@ class BastDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('bast-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('bast-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -86,7 +99,7 @@ class BastDataTable extends DataTable
                 ->addClass('text-center')
                 ->searchable(false),
             Column::make('tanggal')->titel('Tanggal Bast'),
-            Column::make('invoice_id')->titel('Nomer Invoice'),
+            Column::make('invoice_id')->title('Kode Invoice'),
             Column::make('deskripsi'),
             Column::make('nama'),
             Column::make('jabatan'),

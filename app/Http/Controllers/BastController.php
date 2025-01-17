@@ -20,7 +20,7 @@ class BastController extends Controller
     {
         $invoice = Invoice::all();
         $pt = PT::all();
-        $years = Bast::selectRaw('YEAR(created_at) as year')
+        $years = Bast::selectRaw('YEAR(tanggal) as year')
             ->distinct()
             ->orderBy('year', 'desc')
             ->pluck('year');
@@ -29,7 +29,7 @@ class BastController extends Controller
 
     public function viewbast(string $id)
     {
-        $bast = Bast::with('invoice')->findOrFail($id);
+        $bast = Bast::with('invoice.detail')->findOrFail($id);
         return view('bast.print')->with('bast', $bast);
     }
 
@@ -117,17 +117,11 @@ class BastController extends Controller
         $bast = Bast::findOrFail($id);
 
         $request->validate([
-            'tanggal_edit' => 'required|date|max:50',
-            'kd_invoice_edit' => 'required|string',
-            'nama_pt_edit' => 'required|string',
-            'deskripsi_edit' => 'required|string|max:255',
+            'tanggal_edit' => 'required|date|max:50',       
             'nama_edit' => 'required|string|max:50',
+            'kd_invoice_edit' => 'required|string|max:50',
             'jabatan_edit' => 'required|string|max:50',
-            'satuan_edit' => 'required|string|max:10',
-            'jumlah_item_edit' => 'required|numeric|max:10',
-            'harga_satuan_edit' => 'required|numeric',
-            'total_invoice_edit' => 'required|numeric',
-            'kode_kontrak_edit' => 'required|string|max:100',
+           
         ], [
             'tanggal_edit.required' => 'Tanggal wajib diisi.',
             'tanggal_edit.date' => 'Tanggal harus berupa format tanggal yang valid.',
@@ -163,15 +157,8 @@ class BastController extends Controller
         $bast->update([
             'nama' => $request->nama_edit,
             'invoice_id' => $request->kd_invoice_edit,
-            'pt_id' => $request->nama_pt_edit,  // Save invoice code
             'tanggal' => $request->tanggal_edit,  // Save invoice date
             'deskripsi' => $request->deskripsi_edit,  // Save description
-            'jabatan' => $request->jabatan_edit,
-            'satuan' => $request->satuan_edit,
-            'jumlah_item' => $request->jumlah_item_edit,
-            'harga_satuan' => $request->harga_satuan_edit,
-            'total_invoice' => $request->total_invoice_edit,
-            'kode_kontrak' => $request->kode_kontrak_edit,
         ]);
 
         return response()->json([
@@ -190,6 +177,7 @@ class BastController extends Controller
 
     public function exportToExcel()
     {
+        
         return Excel::download(new BastExport, 'Data Bast.xlsx');
     }
 }
