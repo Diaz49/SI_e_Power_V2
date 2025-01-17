@@ -6,17 +6,13 @@
     <div id="datatable-section">
         <div class="d-flex justify-content-end">
             <div class="row ">
-                <div class="col-12 d-flex justify-content-end mb-3 ">
-                    <button class="btn btn-outline-secondary btn-sm me-4" data-bs-target="#modalTambah" data-bs-toggle="modal"
-                        id="btn-tambah" style="--bs-btn-bg:white;"><i
-                            class="fas fa-plus"></i> Tambah Data BAST                    
-                    </button>
-                </div>
+
                 <div class="col-12 d-flex justify-content-end">
                     <button class="btn btn-outline-secondary btn-sm " data-bs-target="#modalFilter" data-bs-toggle="modal"
-                            style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
-                    <button class="btn btn-outline-secondary btn-sm ms-3 me-4" onclick="exportClients()" style="--bs-btn-bg:white;">
-                            <i class="fas fa-download"></i> Export
+                        style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
+                    <button class="btn btn-outline-secondary btn-sm ms-3 me-4" onclick="exportClients()"
+                        style="--bs-btn-bg:white;">
+                        <i class="fas fa-download"></i> Export
                     </button>
                 </div>
 
@@ -26,8 +22,8 @@
             <div class="card-body">
                 <div id="active-filters" class="d-flex"></div>
                 <div class="table-responsive">
-                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
-                    
+                    {!! $dataTable->table(['class' => 'display table table-hover table-responsive text-center ']) !!}
+
                 </div>
             </div>
         </div>
@@ -42,25 +38,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="fs-6">Pilihan PT</p>
-                    <div class="ps-3 pe-3">
-                        <input type="radio" id="all" name="pt" value="">
-                        <label class="fw-bold pb-2" for="all">All</label><br>
-                        @foreach ($pt as $item)
-                            <input type="radio" id="{{ $item->nama_pt }}" name="pt"
-                                value="{{ $item->id }}">
-                            <label class="fw-bold pb-2" for="{{ $item->nama_pt }}">{{ $item->nama_pt }}</label><br>
-                        @endforeach
 
-
-                    </div>
-                    <p class="fs-6 pt-4">Pilih Tahun</p>
+                    <p class="fs-6 ">Pilih Tahun</p>
                     <div class="ps-3 pe-3">
                         <input type="radio" id="year_all" name="year" value="">
                         <label class="fw-bold pb-2" for="year_all">All</label><br>
                         @foreach ($years as $item)
-                            <input type="radio" id="year_{{ $item }}" name="year"
-                                value="{{ $item }}">
+                            <input type="radio" id="year_{{ $item }}" name="year" value="{{ $item }}">
                             <label class="fw-bold pb-2" for="year_{{ $item }}">{{ $item }}</label><br>
                         @endforeach
                     </div>
@@ -72,218 +56,49 @@
         </div>
     </div>
 
-    <!-- Modal Tambah -->
-    <form action="{{ route('bast.store') }}" method="POST">
-        @csrf
-        <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Bast</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body ps-4 me-2">
-                        <div class="row">
-                            <div class="col-md-6">
-                                    <div class="mb-1 mt-2 label">Tanggal</div>
-                                    <input type="date" class="form-control" name="tanggal" id="tanggal" value="{{ old('') }}"
-                                        placeholder="Masukkan Tanggal">
-                                    @error('tanggal')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-
-                                    <div class="mb-1 mt-2 label">Kode Invoice</div>
-                                    <select class="form-control js-example-basic-single" name="kd_invoice" id="kd_invoice">
-                                        <option value="">Pilih Kode Invoice</option>
-                                        @foreach ($invoice as $item)
-                                            <option value="{{ $item->id }}" 
-                                                    data-nama-client="{{ $item->client->nama_client }}" 
-                                                    data-deskripsi="{{ $item->header_deskripsi }}">
-                                                {{ $item->kd_invoice }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <!-- Input untuk menampilkan nama client -->
-                                    <input type="text" class="form-control mt-2" name="nama_client" disabled id="nama_client" value="" placeholder="Nama Client">
-                                    <!-- Input untuk menampilkan deskripsi -->
-                                    <input type="text" class="form-control mt-2" name="deskripsi_invoice" disabled id="deskripsi_invoice" value="" placeholder="Deskripsi">
-                                    
-                                    <div class="mb-1 mt-2 label">PT</div>
-                                    <select type="text" class="form-control js-example-basic-single" name="nama_pt" id="nama_pt"
-                                        value="" placeholder="Masukkan Nama PT">
-                                        <option value="">Pilih PT</option>
-                                        @foreach ($pt as $item)
-                                            <option value="{{ $item->id }}" >
-                                                {{ $item->nama_pt }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <div class="mb-1 mt-2 label">Deskripsi</div>
-                                    <input type="text" class="form-control" name="deskripsi" id="deskripsi" value="{{ old('') }}"
-                                        placeholder="Masukkan Deskripsi">
-                                    @error('deskripsi')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                    <div class="mb-1 mt-2 label">Nama</div>
-                                    <input type="text" class="form-control" name="nama" id="nama" value="{{ old('') }}"
-                                        placeholder="Masukkan Nama">
-                                    @error('nama')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                    <div class="mb-1 mt-2 label">Jabatan</div>
-                                    <input type="text" class="form-control" name="jabatan" id="jabatan" value="{{ old('') }}"
-                                        placeholder="Masukkan Jabatan">
-                                    @error('jabatan')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                            </div>
-                            <div class="col-md-6">
-                                    <div class="mb-1 mt-2 label">Satuan</div>
-                                    <input type="text" class="form-control" name="satuan" id="satuan" value="{{ old('') }}"
-                                        placeholder="Masukkan Satuan / Misal ls dll.">
-                                    @error('satuan')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                    <div class="mb-1 mt-2 label">Jumlah item / Qty</div>
-                                    <input type="text" class="form-control" name="jumlah_item" id="jumlah_item" value="{{ old('') }}"
-                                        placeholder="Masukkan Jumlah Item">
-                                    @error('jumlah_item')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                    <div class="mb-1 mt-2 label">Harga satuan</div>
-                                    <input type="text" class="form-control" name="harga_satuan" id="harga_satuan" value="{{ old('') }}"
-                                        placeholder="Masukkan Harga Satuan">
-                                    @error('harga_satuan')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                    <div class="mb-1 mt-2 label">Total invoice</div>
-                                    <input type="text" class="form-control" name="total_invoice" id="total_invoice" value="{{ old('') }}"
-                                        placeholder="Masukkan Total Invoice" readonly>
-                                    @error('total_invoice')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                    <div class="mb-1 mt-2 label">Kode Kontrak</div>
-                                    <input type="text" class="form-control" name="kode_kontrak" id="kode_kontrak" value="{{ old('') }}"
-                                        placeholder="Masukkan Total Invoice">
-                                    @error('kode_kontrak')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Tambah Data</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    
     <!-- Modal Edit -->
     <form action="" method="POST" id="formEdit">
         @method('PUT')
         @csrf
         <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Bast</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body ps-4 me-2">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-1 mt-2 label">Tanggal</div>
-                                <input type="date" class="form-control" name="tanggal_edit" id="tanggal_edit" value="{{ old('') }}"
-                                    placeholder="Masukkan Tanggal">
-                                @error('tanggal_edit')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
 
-                                <div class="mb-1 mt-2 label">Kode Invoice</div>
-                                <select type="text" class="form-control js-example-basic-single" name="kd_invoice_edit" id="kd_invoice_edit"
-                                    value="" placeholder="Pilih Kode Invoice">
-                                    <option value="">Pilih Kode Invoice</option>
-                                    @foreach ($invoice as $item)
-                                    <option value="{{ $item->id }}" 
-                                        data-nama-client="{{ $item->client->nama_client }}" 
-                                        data-deskripsi="{{ $item->header_deskripsi }}">
-                                            {{ $item->kd_invoice }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <!-- Input untuk menampilkan nama client -->
-                                <input type="text" class="form-control mt-2" name="nama_client_edit" disabled id="nama_client_edit" value="" placeholder="Nama Client">
-                                <!-- Input untuk menampilkan deskripsi -->
-                                <input type="text" class="form-control mt-2" name="deskripsi_invoice_edit" disabled id="deskripsi_invoice_edit" value="" placeholder="Deskripsi">
+                        <div class="mb-1  label">Kode Invoice</div>
+                        <select class="form-control" name="kd_invoice_edit" id="kd_invoice_edit" disabled>
+                            <option value="">Pilih Kode Invoice</option>
+                            @foreach ($invoice as $item)
+                                <option value="{{ $item->id }}" data-nama-client="{{ $item->client->nama_client }}"
+                                    data-deskripsi="{{ $item->header_deskripsi }}">
+                                    {{ $item->kd_invoice }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <!-- Input untuk menampilkan nama client -->
+                        <input type="text" class="form-control mt-2" name="nama_client_edit" disabled
+                            id="nama_client_edit" value="" placeholder="Nama Client">
+                        <!-- Input untuk menampilkan deskripsi -->
+                        <input type="text" class="form-control mt-2" name="deskripsi_invoice_edit" disabled
+                            id="deskripsi_invoice_edit" value="" placeholder="Deskripsi">
+                        <div class="mb-1 mt-2 label">Tanggal</div>
+                        <input type="date" class="form-control" name="tanggal_edit" id="tanggal_edit"
+                            placeholder="Masukkan Tanggal">
 
-                                <div class="mb-1 mt-2 label">PT</div>
-                                    <select type="text" class="form-control js-example-basic-single"
-                                        name="nama_pt_edit" id="nama_pt_edit" value=""
-                                        placeholder="Masukkan Nama PT">
-                                        <option value="">Pilih PT</option>
-                                        @foreach ($pt as $item)
-                                            <option value="{{ $item->id }}">
-                                                {{ $item->nama_pt }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                <div class="mb-1 mt-2 label">Deskripsi</div>
-                                <input type="text" class="form-control" name="deskripsi_edit" id="deskripsi_edit" value="{{ old('') }}"
-                                    placeholder="Masukkan Deskripsi">
-                                @error('deskripsi_edit')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                                <div class="mb-1 mt-2 label">Nama</div>
-                                <input type="text" class="form-control" name="nama_edit" id="nama_edit" value="{{ old('') }}"
-                                    placeholder="Masukkan Nama">
-                                @error('nama_edit')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                                <div class="mb-1 mt-2 label">Jabatan</div>
-                                <input type="text" class="form-control" name="jabatan_edit" id="jabatan_edit" value="{{ old('') }}"
-                                    placeholder="Masukkan Jabatan">
-                                @error('jabatan_edit')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-1 mt-2 label">Satuan</div>
-                                <input type="text" class="form-control" name="satuan_edit" id="satuan_edit" value="{{ old('') }}"
-                                    placeholder="Masukkan Satuan / Misal ls dll.">
-                                @error('satuan_edit')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                                <div class="mb-1 mt-2 label">Jumlah item / Qty</div>
-                                <input type="text" class="form-control" name="jumlah_item_edit" id="jumlah_item_edit" value="{{ old('') }}"
-                                    placeholder="Masukkan Jumlah item">
-                                @error('jumlah_item_edit')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                                <div class="mb-1 mt-2 label">Harga satuan</div>
-                                <input type="text" class="form-control" name="harga_satuan_edit" id="harga_satuan_edit" value="{{ old('') }}"
-                                    placeholder="Masukkan Harga satuan">
-                                @error('harga_satuan_edit')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                                <div class="mb-1 mt-2 label">Total invoice</div>
-                                <input type="text" class="form-control" name="total_invoice_edit" id="total_invoice_edit" value="{{ old('') }}"
-                                    placeholder="Masukkan Total Invoice" readonly>
-                                @error('total_invoice_edit')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                                <div class="mb-1 mt-2 label">Kode Kontrak</div>
-                                <input type="text" class="form-control" name="kode_kontrak_edit" id="kode_kontrak_edit" value="{{ old('') }}"
-                                    placeholder="Masukkan Total Invoice">
-                                @error('kode_kontrak_edit')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
+                        <div class="mb-1 mt-2 label">Nama</div>
+                        <input type="text" class="form-control" name="nama_edit" id="nama_edit"
+                            placeholder="Masukkan Nama">
+
+
+                        <div class="mb-1 mt-2 label">Jabatan</div>
+                        <input type="text" class="form-control" name="jabatan_edit" id="jabatan_edit"
+                            placeholder="Masukkan Jabatan">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Edit Data</button>
                     </div>
                 </div>
@@ -376,28 +191,20 @@
             // Event listener untuk input pada modal tambah (jika ada input serupa)
             $(document).on('input', '#jumlah_item, #harga_satuan', updateTotalInvoiceTambah);
 
-            $(document).on('click', 'a[data-bs-toggle="modal"]', function() {
+            $(document).on('click', '#btnEdit', function() {
                 $('.error').remove(); // Hapus error sebelumnya
                 var bast = $(this).data('id'); // Ambil ID dari tombol edit
                 var url = '/bast/' + bast + '/edit'; // URL untuk ambil data
                 var updateUrl = '/bast/' + bast; // URL untuk update data
 
-                console.log('Client ID:', bast);
-
                 // Request AJAX untuk mendapatkan data bast berdasarkan ID
                 $.get(url, function(data) {
+
                     // Isi field modal dengan data yang didapat dari server
                     $('#tanggal_edit').val(data.tanggal);
                     $('#kd_invoice_edit').val(data.invoice_id).trigger('change');
-                    $('#nama_pt_edit').val(data.pt_id).trigger('change');
-                    $('#deskripsi_edit').val(data.deskripsi);
                     $('#nama_edit').val(data.nama);
                     $('#jabatan_edit').val(data.jabatan);
-                    $('#satuan_edit').val(data.satuan);
-                    $('#jumlah_item_edit').val(data.jumlah_item);
-                    $('#harga_satuan_edit').val(data.harga_satuan);
-                    $('#total_invoice_edit').val(data.total_invoice);
-                    $('#kode_kontrak_edit').val(data.kode_kontrak);
 
                     // Set URL action form pada modal
                     $('#formEdit').attr('action', updateUrl);
@@ -406,6 +213,7 @@
 
             $('#formEdit').on('submit', function(event) {
                 event.preventDefault();
+                $('#kd_invoice_edit').prop('disabled', false);
                 var updateUrl = $(this).attr('action');
                 console.log($(this).serialize()); // Debug data yang dikirim
                 $.ajax({
@@ -452,30 +260,7 @@
                                         0] +
                                     '</div>');
                             }
-                            if (errors.satuan_edit) {
-                                $('#satuan_edit').after('<div class="text-danger error">' + errors
-                                    .satuan_edit[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.jumlah_item_edit) {
-                                $('#jumlah_item_edit').after('<div class="text-danger error">' + errors
-                                    .jumlah_item_edit[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.harga_satuan_edit) {
-                                $('#harga_satuan_edit').after('<div class="text-danger error">' + errors
-                                    .harga_satuan_edit[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.kode_kontrak_edit) {
-                                $('#kode_kontrak_edit').after('<div class="text-danger error">' + errors
-                                    .kode_kontrak_edit[
-                                        0] +
-                                    '</div>');
-                            }
+
                         } else {
                             swal({
                                 title: 'Gagal!',
@@ -488,135 +273,28 @@
                 });
             });
 
-            $('#formTambah').on('submit', function(event) {
-                event.preventDefault();
-                // console.log('hai');
-                var createUrl = '/bast';
 
-                $.ajax({
-                    url: createUrl,
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function(result) {
-                        $('#bast-table').DataTable().ajax.reload();
-                        swal({
-                            title: 'Berhasil!',
-                            text: 'Data Bast berhasil di tambah',
-                            icon: 'success',
-                            button: 'OK'
-                        });
-                        $('#modalTambah').modal('hide');
-                        $('#formTambah')[0].reset();
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) { // Error validasi
-                            var errors = xhr.responseJSON.errors;
-                            console.log(errors);
-                            // Kosongkan pesan error lama sebelum menampilkan yang baru
-                            $('.error').remove(); // Hapus error sebelumnya
-
-                            // Menampilkan pesan error untuk masing-masing field
-                            if (errors.tanggal) {
-                                $('#tanggal').after('<div class="text-danger error">' + errors
-                                    .tanggal[
-                                        0] + '</div>');
-                            }
-                            if (errors.deskripsi) {
-                                $('#deskripsi').after('<div class="text-danger error">' + errors
-                                    .deskripsi[
-                                        0] + '</div>');
-                            }
-                            if (errors.nama) {
-                                $('#nama').after('<div class="text-danger error">' + errors
-                                    .nama[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.jabatan) {
-                                $('#jabatan').after('<div class="text-danger error">' + errors
-                                    .jabatan[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.satuan) {
-                                $('#satuan').after('<div class="text-danger error">' + errors
-                                    .satuan[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.jumlah_item) {
-                                $('#jumlah_item').after('<div class="text-danger error">' + errors
-                                    .jumlah_item[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.harga_satuan) {
-                                $('#harga_satuan').after('<div class="text-danger error">' + errors
-                                    .harga_satuan[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.total_invoice) {
-                                $('#total_invoice').after('<div class="text-danger error">' + errors
-                                    .total_invoice[
-                                        0] +
-                                    '</div>');
-                            }
-                            if (errors.kode_kontrak) {
-                                $('#kode_kontrak').after('<div class="text-danger error">' + errors
-                                    .kode_kontrak[
-                                        0] +
-                                    '</div>');
-                            }
-                        } else {
-                            swal({
-                                title: 'Gagal!',
-                                text: 'Gagal mengedit data bast',
-                                icon: 'error',
-                                button: 'OK'
-                            });
-                        }
-                    }
-                });
-            });
-            $('#btn-tambah').on('click', function() {
-                $('.error').remove();
-                // $('#formTambah')[0].reset();
-            })
             $(document).ready(function() {
                 // console.log('Inisialisasi berjalan');
                 $('#all').prop('checked', true);
                 $('#year_all').prop('checked', true);
 
-                $('#kd_invoice_edit').select2({
-                    dropdownParent: $('#modalEdit'),
-                    width: '100%'
-                });
+
 
                 $('#kd_invoice').select2({
                     dropdownParent: $('#modalTambah'),
                     width: '100%'
                 });
 
-                $('#kd_invoice').on('change', function() {
-                    var invoiceId = $(this).val(); // Ambil ID invoice
-                    var invoiceData = $('#kd_invoice option:selected').data(); // Ambil data dari opsi yang dipilih
-                                console.log(invoiceData);
-                    if (invoiceId) {
-                        $('#nama_client').val(invoiceData.namaClient); // Isi input nama_client
-                        $('#deskripsi_invoice').val(invoiceData.deskripsi);    // Isi input deskripsi
-                    } else {
-                        $('#nama_client, #deskripsi_invoice').val(''); // Kosongkan input
-                    }
-                });
 
                 $('#kd_invoice_edit').on('change', function() {
                     var invoiceId = $(this).val(); // Ambil ID invoice
-                    var invoiceData = $('#kd_invoice_edit option:selected').data(); // Ambil data dari opsi yang dipilih
-                                console.log(invoiceData);
+                    var invoiceData = $('#kd_invoice_edit option:selected')
+                        .data(); // Ambil data dari opsi yang dipilih
+                    console.log(invoiceData);
                     if (invoiceId) {
                         $('#nama_client_edit').val(invoiceData.namaClient); // Isi input nama_client_edit
-                        $('#deskripsi_invoice_edit').val(invoiceData.deskripsi);    // Isi input deskripsi
+                        $('#deskripsi_invoice_edit').val(invoiceData.deskripsi); // Isi input deskripsi
                     } else {
                         $('#nama_client_edit, #deskripsi_invoice_edit').val(''); // Kosongkan input
                     }
@@ -626,32 +304,20 @@
 
             function reloadDataTable() {
                 // Ambil nilai radio button PT yang dipilih
-                let pt = $('input[name="pt"]:checked').val();
                 // Ambil nilai radio button Year yang dipilih
                 let year = $('input[name="year"]:checked').val();
                 let url = "{{ route('bast') }}";
 
                 window.LaravelDataTables['bast-table'].ajax.url(
-                        `${url}?created_at=${year}&pt_id=${pt}`)
+                        `${url}?tanggal=${year}`)
                     .load();
             }
             $('#filterBtn').on('click', function() {
-                const ptValue = $('input[name="pt"]:checked').val();
-                const ptLabel = $('input[name="pt"]:checked').next('label').text();
 
                 // Ambil filter Tahun yang dipilih
                 const yearValue = $('input[name="year"]:checked').val();
                 const yearLabel = $('input[name="year"]:checked').next('label').text();
 
-                // Simpan filter PT jika dipilih
-                if (ptValue !== undefined && ptValue !== "") {
-                    selectedFilters.pt = {
-                        value: ptValue,
-                        label: ptLabel
-                    };
-                } else {
-                    delete selectedFilters.pt; // Hapus jika tidak ada pilihan PT
-                }
 
                 // Simpan filter Tahun jika dipilih
                 if (yearValue !== "") {
@@ -688,10 +354,7 @@
             function removeFilter(filterType) {
                 delete selectedFilters[filterType]; // Hapus filter dari daftar
 
-                // Hapus pilihan pada elemen input/filter
-                if (filterType === "pt") {
-                    $('#all').prop('checked', true); // Reset pilihan radio PT
-                } else if (filterType === "year") {
+                if (filterType === "year") {
                     $('#year_all').prop('checked', true); // Reset pilihan select Tahun
                 }
 
@@ -701,6 +364,7 @@
                 // Update DataTable
                 reloadDataTable();
             }
+
             function exportClients() {
                 swal({
                     title: 'Apakah Anda yakin?',
@@ -724,6 +388,7 @@
                     }
                 }).then((willDownload) => {
                     if (willDownload) {
+                        
                         // Lanjutkan ke proses unduh
                         window.location.href = '{{ route('bast.export') }}';
                     } else {
@@ -734,5 +399,4 @@
             }
         </script>
     @endpush
-
 @endsection

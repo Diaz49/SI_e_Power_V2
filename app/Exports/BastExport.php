@@ -11,9 +11,12 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Events\AfterSheet; // Pastikan ini adalah Events
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 
 class BastExport implements FromCollection, WithHeadings, WithMapping, WithCustomStartCell, WithStyles, WithEvents
 {
+    protected $no = 1;
+
     public function collection()
     {
         return Bast::with('pt')->get(); // Ambil data klien beserta relasi PT
@@ -33,6 +36,7 @@ class BastExport implements FromCollection, WithHeadings, WithMapping, WithCusto
     public function headings(): array
     {
         return [
+            'No.',
             'Tanggal',
             'Kode Invoice',
             'Deskripsi',
@@ -42,7 +46,6 @@ class BastExport implements FromCollection, WithHeadings, WithMapping, WithCusto
             'Harga Satuan',
             'Total Invoice',
             'Tanggal Dibuat',
-            'Nama PT',
         ];
     }
 
@@ -52,16 +55,16 @@ class BastExport implements FromCollection, WithHeadings, WithMapping, WithCusto
     public function map($bast): array
     {
         return [
+            $this->no ++,
             $bast->tanggal,
-            $bast->invoice->kd_invoice,
-            $bast->deskripsi,
+            $bast->invoice->kd_invoice ?? 'N/A',
+            $bast->invoice->header_deskripsi ?? 'N/A',
             $bast->nama,
             $bast->jabatan,
-            $bast->jumlah_item,
-            $bast->harga_satuan,
-            $bast->total_invoice,
+            $bast->invoice->detail->count(),
+            $bast->invoice->detail->first()?->harga_satuan ?? 'N/A', // Harga satuan dari item pertama
+            $bast->invoice->detail->sum('jumlah_harga') ?? 0, // Total harga dari detail
             $bast->created_at ? $bast->created_at->format('d-m-Y') : 'N/A',
-            $bast->pt->nama_pt ?? 'N/A',
         ];
     }
 
@@ -85,20 +88,26 @@ class BastExport implements FromCollection, WithHeadings, WithMapping, WithCusto
             AfterSheet::class => function (AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
 
-            // Menambahkan custom header
-            $sheet->setCellValue('A1', 'Laporan Data Bast');
+                // Menambahkan custom header
+                $sheet->setCellValue('A1', 'Laporan Data Bast');
 
-            // Merge cell dari A1 sampai G1
-            $sheet->mergeCells('A1:J1');
+                // Merge cell dari A1 sampai G1
+                $sheet->mergeCells('A1:J1');
 
-            // Mengatur teks agar berada di tengah (horizontal dan vertikal)
-            $sheet->getStyle('A1')->getAlignment()->setHorizontal('center');
-            $sheet->getStyle('A1')->getAlignment()->setVertical('center');
-
-            // Menambahkan tanggal laporan di bawah judul
-            $sheet->setCellValue('A2', 'Tanggal: ' . now()->format('d-m-Y'));
-            // $sheet->mergeCells('A2:G2');
-            // $sheet->getStyle('A2')->getAlignment()->setHorizontal('center');
+                // Mengatur teks agar berada di tengah (horizontal dan vertikal)
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal('center');
+                $sheet->getStyle('A1')->getAlignment()->setVertical('center');
+                $sheet->getStyle('A4:J' . ($sheet->getHighestRow()))->applyFromArray([
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => Border::BORDER_THIN,
+                        ],
+                    ],
+                ]);
+                // Menambahkan tanggal laporan di bawah judul
+                $sheet->setCellValue('A2', 'Tanggal: ' . now()->format('d-m-Y'));
+                // $sheet->mergeCells('A2:G2');
+                // $sheet->getStyle('A2')->getAlignment()->setHorizontal('center');
 
                 // Menyesuaikan ukuran kolom
                 foreach (range('A', 'J') as $column) {
