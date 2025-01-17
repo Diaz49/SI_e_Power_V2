@@ -32,7 +32,7 @@ class DataClientController extends Controller
             'alamat' => 'required|string|max:255',
             'no_tlp' => 'required|numeric|digits_between:10,14',
             'up_invoice' => 'required|string|min:0',
-            'up_sph' => 'required|numeric|min:0',
+            'up_sph' => 'required|string|min:0',
         ], [
             'nama_pt.required' => 'Nama PT wajib diisi.',
             'nama_pt.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
@@ -47,7 +47,7 @@ class DataClientController extends Controller
             'up_invoice.string' => 'Up Invoice harus berupa teks.',
             'up_invoice.min' => 'Up Invoice tidak boleh kurang dari 0.',
             'up_sph.required' => 'Up Sph harus diisi.',
-            'up_sph.numeric' => 'Up Sph harus berupa angka.',
+            'up_sph.string' => 'Up Sph harus berupa teks.',
             'up_sph.min' => 'Up sph tidak boleh kurang dari 0.',
         ]);
         $data = [
@@ -78,7 +78,7 @@ class DataClientController extends Controller
             'alamat_edit' => 'required|string|max:255',
             'no_tlp_edit' => 'required|numeric|digits_between:10,14',
             'up_invoice_edit' => 'required|string|min:0',
-            'up_sph_edit' => 'required|numeric|min:0',
+            'up_sph_edit' => 'required|string|min:0',
         ], [
             'nama_pt_edit.required' => 'Nama PT wajib diisi.',
             'nama_pt_edit.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
@@ -98,7 +98,7 @@ class DataClientController extends Controller
             'up_invoice_edit.min' => 'Up Invoice tidak boleh kurang dari 0.',
 
             'up_sph_edit.required' => 'Up Sph harus diisi.',
-            'up_sph_edit.numeric' => 'Up Sph harus berupa angka.',
+            'up_sph_edit.string' => 'Up Sph harus berupa angka.',
             'up_sph_edit.min' => 'Up Sph tidak boleh kurang dari 0.',
         ]);
 
