@@ -11,16 +11,22 @@
 
         protected $table = 'vendor';
 
-        protected $fillable = [
-            'nama_vendor',
-            'alamat_vendor',
-            'kota',
-            'no_tlp',
-            'email',
-            'up',
-        ];
-        public function po()
-        {
-            return $this->hasMany(Po::class, 'vendor_id', 'id');
-        }
+    protected $fillable = [
+       'nama_vendor',        
+       'alamat_vendor',
+       'kota', 
+       'no_tlp',
+       'email',
+       'up',
+       'pt_id', 
+    ];
+
+    public function pt()
+    {
+        return $this->belongsTo(PT::class);
+    } 
+    public function po()
+    {
+        return $this->hasMany(Po::class, 'vendor_id', 'id');
     }
+}

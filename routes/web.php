@@ -72,6 +72,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('data-vendor/{id}', [DataVendorController::class, 'update'])->name('data-vendor.update');
     Route::delete('data-vendor/delete/{id}', [DataVendorController::class, 'delete'])->name('data-vendor.delete');
 
+    Route::get('/export-data-vendor', [DataVendorController::class, 'exportToExcel'])->name('data-vendor.export');
+
     Route::get('po', [PurchaseOrderController::class, 'index'])->name('po');
     Route::post('po', [PurchaseOrderController::class, 'store'])->name('po.store');
     Route::get('po/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('po.edit');
@@ -137,4 +139,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('bast/{id}/edit', [BastController::class, 'edit'])->name('bast.edit');
     Route::put('bast/{id}', [BastController::class, 'update'])->name('bast.update');
     Route::delete('bast/delete/{id}', [BastController::class, 'destroy'])->name('bast.destroy');
+    Route::get('print-bast/{id}', [BastController::class, 'viewbast'])->name('bast-print');
+
+    Route::get('/export-bast', [BastController::class, 'exportToExcel'])->name('bast.export');
 });

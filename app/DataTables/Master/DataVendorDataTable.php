@@ -35,7 +35,17 @@ class DataVendorDataTable extends DataTable
      */
     public function query(DataVendor $model): QueryBuilder
     {
-        return $model->newQuery();
+        $filterYear = request('created_at'); // Filter tahun (berdasarkan created_at atau tgl_invoice)
+        $filterPtId = request('pt_id'); // Filter PT ID
+
+        return $model->newQuery()
+            ->select('vendor.*') // Pastikan kolom yang dibutuhkan
+            ->when($filterYear, function ($query, $filterYear) {
+                return $query->whereYear('vendor.created_at', $filterYear);
+            })
+            ->when($filterPtId, function ($query, $filterPtId) {
+                return $query->where('vendor.pt_id', $filterPtId);
+            });
     }
 
     /**

@@ -109,6 +109,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($vendors as $index => $vendor) {
+            $pt = PT::inRandomOrder()->first(); // Mengambil 1 data PT secara acak
             DataVendor::create([
                 'nama_vendor' => $vendor['nama_vendor'],
                 'alamat_vendor' => $vendor['alamat_vendor'],
@@ -116,22 +117,47 @@ class DatabaseSeeder extends Seeder
                 'no_tlp' => "0812345678$index",
                 'email' => "vendor$index@example.com",
                 'up' => "UP Vendor $index",
-            ]);
-        }
-
-        // Seeder for Projectid
-        foreach (range(1, 10) as $index) {
-            Projectid::create([
-                'project_id' => $index,
-                'nama_project' => "Project $index",
-                'nama_client' => "Client $index",
-                'alamat' => "Alamat Project $index",
-                'hpp' => rand(1000000, 5000000),
-                'rab' => rand(5000000, 10000000),
                 'pt_id' => $pt ? $pt->id : null, // Jika ditemukan PT, gunakan ID PT tersebut
             ]);
         }
 
+        // Fungsi untuk mengambil nama kota secara acak di Indonesia
+        function getRandomCity()
+        {
+            $cities = [
+                'Jakarta', 'Surabaya', 'Bandung', 'Medan', 'Yogyakarta', 'Bali', 'Makassar', 'Semarang', 'Palembang', 'Malang'
+            ];
 
+            return $cities[array_rand($cities)];
+        }
+
+        // Seeder for Projectid
+        $projects = [
+            'Pembangunan Sungai', 'Perbaikan Jalan', 'Pembangunan Jembatan', 'Rehabilitasi Gedung', 'Pembangunan Rumah Sakit',
+            'Pembangunan Bandara', 'Pembangunan Jalan Tol', 'Pembangunan Fasilitas Umum', 'Pembangunan Pelabuhan', 'Pembangunan Infrastruktur'
+        ];
+
+        $clients = [
+            'DN Idit', 'Kim Cil', 'Bang Rusli', 'Pak Sabar', 'Mbak Tati', 
+            'Mas Joyo', 'Bu Mina', 'Bapak Rahman', 'Uda Dirman', 'Nyai Sari'
+        ];
+
+        foreach (range(1, 10) as $index) {
+            $project_name = $projects[$index - 1];
+            $project_id = strtoupper(substr(str_replace(' ', '', $project_name), 0, 2)) . $index; // Membuat ID seperti PS1, PJ2, dll.
+            
+            $client_name = $clients[array_rand($clients)]; // Pilih nama klien secara acak dari daftar
+            $pt = PT::inRandomOrder()->first(); // Mengambil 1 data PT secara acak
+
+            Projectid::create([
+                'project_id' => $project_id,
+                'nama_project' => $project_name . " " . $index,
+                'nama_client' => $client_name, // Menggunakan nama klien yang acak
+                'alamat' => "Alamat " . $project_name . " di " . getRandomCity(),
+                'hpp' => rand(1000000, 5000000),
+                'rab' => rand(5000000, 10000000),
+                'pt_id' => $pt ? $pt->id : null, // Jika ditemukan PT, gunakan ID PT tersebut
+            ]);
+        }        
     }
 }

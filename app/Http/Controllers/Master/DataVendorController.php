@@ -6,17 +6,26 @@ use App\DataTables\Master\DataVendorDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\DataVendor;
 use Illuminate\Http\Request;
+use App\Models\PT;
+use App\Exports\VendorExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataVendorController extends Controller
 {
     public function index(DataVendorDataTable $dataTable)
     {
-        return $dataTable->render('master.data-vendor.index');
+        $pt = PT::all();
+        $years = DataVendor::selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+        return $dataTable->render('master.data-vendor.index', compact('pt','years'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'nama_pt' => 'required|max:50',
             'nama_vendor' => 'required|string|max:50',
             'alamat_vendor' => 'required|string',
             'kota' => 'required|string|max:40',
@@ -24,6 +33,8 @@ class DataVendorController extends Controller
             'email' => 'required|email',
             'up' => 'required|string',
         ], [
+            'nama_pt.required' => 'Nama PT wajib diisi.',
+            'nama_pt.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
             'nama_vendor.required' => 'Nama vendor wajib diisi.',
             'nama_vendor.string' => 'Nama vendor harus berupa teks.',
             'nama_vendor.max' => 'Nama vendor tidak boleh lebih dari 50 karakter.',
@@ -41,6 +52,7 @@ class DataVendorController extends Controller
         ]);
 
         $data = [
+            'pt_id' => $request->nama_pt,
             'nama_vendor'  => $request->nama_vendor,
             'alamat_vendor'  => $request->alamat_vendor,
             'kota'  => $request->kota,
@@ -62,6 +74,7 @@ class DataVendorController extends Controller
     {
         $vendor = DataVendor::findOrFail($id); // tambahkan fail jika id tidak ditemukan
         $request->validate([
+            'nama_pt_edit' => 'required|max:50',
             'nama_vendor_edit' => 'required|string|max:50',
             'alamat_vendor_edit' => 'required|string',
             'kota_edit' => 'required|string|max:40',
@@ -69,7 +82,9 @@ class DataVendorController extends Controller
             'email_edit' => 'required|email',
             'up_edit' => 'required|string',
         ], [
-           'nama_vendor_edit.required' => 'Nama vendor wajib diisi.',
+            'nama_pt_edit.required' => 'Nama PT wajib diisi.',
+            'nama_pt_edit.max' => 'Nama PT tidak boleh lebih dari 50 karakter.',
+            'nama_vendor_edit.required' => 'Nama vendor wajib diisi.',
             'nama_vendor_edit.string' => 'Nama vendor harus berupa teks.',
             'nama_vendor_edit.max' => 'Nama vendor tidak boleh lebih dari 50 karakter.',
             'alamat_vendor_edit.required' => 'Alamat vendor wajib diisi.',
@@ -88,6 +103,7 @@ class DataVendorController extends Controller
 
         // Update data dengan input yang sesuai
         $vendor->update([
+            'pt_id' => $request->nama_pt_edit,
             'nama_vendor'  => $request->nama_vendor_edit,
             'alamat_vendor'  => $request->alamat_vendor_edit,
             'kota'  => $request->kota_edit,
@@ -111,5 +127,10 @@ class DataVendorController extends Controller
         return response()->json([
             'success' => 'Data vendor berhasil dihapus!'
         ], 200);
+    }
+    
+    public function exportToExcel()
+    {
+        return Excel::download(new VendorExport, 'data vendor.xlsx');
     }
 }

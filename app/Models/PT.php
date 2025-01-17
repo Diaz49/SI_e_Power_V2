@@ -34,4 +34,8 @@ class PT extends Model
         return $this->hasMany(Projectid::class);
     }
 
+    public function vendor()
+    {
+        return $this->hasMany(DataVendor::class);
+    }
 }
