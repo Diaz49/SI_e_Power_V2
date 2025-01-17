@@ -1648,7 +1648,6 @@
                                 $('#kode_invoice').val(response.kode_invoice);
                             },
                             error: function() {
-                                alert('Terjadi kesalahan saat mengambil kode invoice.');
                             }
                         });
                     } else {

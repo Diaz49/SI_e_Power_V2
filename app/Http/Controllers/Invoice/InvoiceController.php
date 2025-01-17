@@ -31,7 +31,11 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'header.kode_invoice' => 'required|digits_between:1,100|numeric|unique:invoice,kd_invoice',
+            'header.kode_invoice' => [
+                'required',
+                Rule::unique('invoice', 'kd_invoice')
+                    ->where('pt_id', $request->input('header.nama_pt')), // Pastikan mengganti 'pt_id' sesuai nama kolom PT di tabel
+            ],
             'header.header_deskripsi' => 'required',
             'header.tanggal' => 'required|date',
             'header.nama_client' => 'required|max:50',
@@ -57,7 +61,7 @@ class InvoiceController extends Controller
             'header.kode_invoice.required' => 'Kode invoice harus diisi.',
             'header.kode_invoice.max' => 'Kode invoice maksimal 100 karakter.',
             'header.kode_invoice.numeric' => 'Kode invoice harus berupa angka.',
-            'header.kode_invoice.unique' => 'Kode invoice sudah terdaftar.',
+            'header.kode_invoice.unique' => 'Kode invoice sudah digunakan untuk PT ini.',
             'header.header_deskripsi.required' => 'Deskripsi header harus diisi.',
             'header.tanggal.required' => 'Tanggal harus diisi.',
             'header.tanggal.date' => 'Tanggal harus berupa format tanggal yang valid.',
@@ -139,7 +143,7 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($id);
         $request->validate([
-            'edit_kode_invoice' => ['required', 'max:100', Rule::unique('invoice', 'kd_invoice')->ignore($invoice->id)],
+            'edit_kode_invoice' => ['required',  Rule::unique('invoice', 'kd_invoice')->where('pt_id', $request->input('edit_nama_pt'))->ignore($invoice->id)],
             'edit_header_deskripsi' => 'required',
             'edit_tanggal' => 'required|date',
             'edit_nama_client' => 'required|max:50',
@@ -164,7 +168,7 @@ class InvoiceController extends Controller
         ], [
             'edit_kode_invoice.required' => 'Kode invoice wajib diisi.',
             'edit_kode_invoice.max' => 'Kode invoice tidak boleh lebih dari 100 karakter.',
-            'edit_kode_invoice.unique' => 'Kode invoice sudah digunakan.',
+            'edit_kode_invoice.unique' => 'Kode invoice sudah digunakan untuk PT ini.',
             'edit_header_deskripsi.required' => 'Deskripsi header wajib diisi.',
             'edit_tanggal.required' => 'Tanggal wajib diisi.',
             'edit_tanggal.date' => 'Format tanggal tidak valid.',
@@ -266,23 +270,23 @@ class InvoiceController extends Controller
     }
 
     public function export(Request $request)
-{
-    $ptId = $request->get('pt_id');
-    $year = $request->get('tgl_invoice');
+    {
+        $ptId = $request->get('pt_id');
+        $year = $request->get('tgl_invoice');
 
-    // Query data berdasarkan filter
-    $invoices = Invoice::query();
+        // Query data berdasarkan filter
+        $invoices = Invoice::query();
 
-    if ($ptId) {
-        $invoices->where('pt_id', $ptId);
+        if ($ptId) {
+            $invoices->where('pt_id', $ptId);
+        }
+        if ($year) {
+            $invoices->whereYear('tgl_invoice', $year);
+        }
+
+        $invoices = $invoices->get();
+
+        // Ekspor data menggunakan Excel
+        return Excel::download(new InvoiceExport($invoices), 'Invoice.xlsx');
     }
-    if ($year) {
-        $invoices->whereYear('tgl_invoice', $year);
-    }
-
-    $invoices = $invoices->get();
-
-    // Ekspor data menggunakan Excel
-    return Excel::download(new InvoiceExport($invoices), 'Invoice.xlsx');
-}
 }
