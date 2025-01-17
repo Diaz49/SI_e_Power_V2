@@ -12,9 +12,13 @@
                 class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
                 data-id="{{ $invoice->id }}" type="button" data-bs-toggle="modal"
                 data-bs-target="#modalEditDetail">Edit Detail<i class="ml-4 fas fa-pen"></i></a></li>
-        <li><a href="javascript:void(0)" id="btnEditDetail"
+        <li><a href="javascript:void(0)" id="btnTtd"
                 class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
                 data-id="{{ $invoice->id }}" type="button" data-bs-toggle="modal" data-bs-target="#modalEditTtd">TTD<i
+                    class="ml-4 fas fa-pen"></i></a></li>
+        <li><a href="javascript:void(0)" id="btnAddBast"
+                class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"
+                data-id="{{ $invoice->id }}" type="button" data-bs-toggle="modal" data-bs-target="#modalAddBast">Add Bast<i
                     class="ml-4 fas fa-pen"></i></a></li>
         <li><a href="{{ route('print.invoice', $invoice->id) }}"
                 class="dropdown-item text-info fw-bold d-flex justify-content-between py-2"

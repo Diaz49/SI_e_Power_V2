@@ -544,6 +544,53 @@
         </div>
     </form>
 
+    {{-- Modal Add Bast --}}
+    <form action="" method="POST" id="formAddBast">
+        @csrf
+        @method('POST')
+        <div class="modal fade" id="modalAddBast" tabindex="-1" aria-labelledby="exampleModalAddBast"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalAddBast">Tambah Bast Invoice</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="label">Kode Invoice</div>
+                            <input type="text" class="form-control" name="bast_kd_invoice" id="bast_kd_invoice"
+                                disabled>
+                            <div class="mt-2 label">Tanggal</div>
+                            <input type="date" class="form-control" name="bast_tanggal" id="bast_tanggal"
+                                placeholder="Masukkan Tanggal">
+
+
+
+                            <div class="mt-2 label">Nama</div>
+                            <input type="text" class="form-control" name="bast_nama" id="bast_nama"
+                                placeholder="Masukkan Nama">
+
+
+
+                            <div class="mt-2 label">Jabatan</div>
+                            <input type="text" class="form-control" name="bast_jabatan" id="bast_jabatan"
+                                placeholder="Masukkan Jabatan">
+
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Tambah Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
@@ -1647,8 +1694,7 @@
                             success: function(response) {
                                 $('#kode_invoice').val(response.kode_invoice);
                             },
-                            error: function() {
-                            }
+                            error: function() {}
                         });
                     } else {
                         $('#kode_invoice').val(''); // Kosongkan jika tidak ada PT yang dipilih
@@ -1663,6 +1709,83 @@
                 // Redirect ke route ekspor dengan parameter
                 let exportUrl = `{{ route('invoice.export') }}?pt_id=${pt || ''}&tgl_invoice=${year || ''}`;
                 window.location.href = exportUrl;
+            });
+
+            $(document).on('click', '#btnAddBast', function() {
+
+                $('.error').remove(); // Hapus error sebelumnya
+                var itemId = $(this).data('id'); // Ambil ID dari tombol edit
+                var addUrl = '/add-bast/' + itemId; // URL untuk update data
+                var url = '/invoice/' + itemId + '/edit'; // URL untuk ambil data
+
+                $.get(url, function(data) {
+                    // Isi field modal dengan data yang didapat dari server
+
+                    $('#bast_kd_invoice').val(data.kd_invoice);
+
+
+                    $('#formAddBast').attr('action', addUrl);
+                });
+
+                // Request AJAX untuk mendapatkan data Vendor berdasarkan ID
+
+            });
+
+            $('#formAddBast').on('submit', function(event) {
+                event.preventDefault();
+                var addUrl = $(this).attr('action');
+
+                $.ajax({
+                    url: addUrl,
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        swal({
+                            title: 'Berhasil!',
+                            text: 'Bast Berhasil di Tambah silahkan cek di menu Bast',
+                            icon: 'success',
+                            button: 'OK'
+                        });
+                        $('#modalAddBast').modal('hide');
+                        $('#formAddBast')[0].reset();
+
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // Error validasi
+                            var errors = xhr.responseJSON.errors;
+
+                            // Kosongkan pesan error lama sebelum menampilkan yang baru
+                            $('.error').remove(); // Hapus error sebelumnya
+
+                            // Menampilkan pesan error untuk masing-masing field
+                            if (errors.bast_tanggal) {
+                                $('#bast_tanggal').after('<div class="text-danger error">' +
+                                    errors
+                                    .bast_tanggal[0] + '</div>');
+                            }
+
+                            if (errors.bast_nama) {
+                                $('#bast_nama').after('<div class="text-danger error">' + errors
+                                    .bast_nama[
+                                        0] + '</div>');
+                            }
+                            if (errors.bast_jabatan) {
+                                $('#bast_jabatan').after('<div class="text-danger error">' + errors
+                                    .bast_jabatan[
+                                        0] +
+                                    '</div>');
+                            }
+
+                        } else {
+                            swal({
+                                title: 'Gagal!',
+                                text: 'Gagal menambah Bast',
+                                icon: 'error',
+                                button: 'OK'
+                            });
+                        }
+                    }
+                });
             });
         </script>
     @endpush

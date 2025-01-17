@@ -99,6 +99,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('invoice-ttd/{id}', [InvoiceController::class, 'updateTtd'])->name('invoice-ttd.update');
     Route::get('/get-kode-invoice', [InvoiceController::class, 'getKodeInvoice']);
     Route::get('/invoice/export', [InvoiceController::class, 'export'])->name('invoice.export');
+    Route::post('add-bast/{id}', [InvoiceController::class, 'addBast'])->name('add.bast');
 
 
     Route::post('invoice-item', [DetailInvoiceController::class, 'store'])->name('invoice-item.store');

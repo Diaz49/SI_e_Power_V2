@@ -14,13 +14,9 @@ class Bast extends Model
     protected $fillable = [
         'tanggal',
         'invoice_id',
-        'pt_id',
-        'deskripsi',
         'nama',
         'jabatan',
-        'jumlah_item',
-        'harga_satuan',
-        'total_invoice',
+  
     ];
 
     public function invoice(){

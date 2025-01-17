@@ -6,6 +6,7 @@ use App\DataTables\InvoiceDataTable;
 use App\Exports\InvoiceExport;
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
+use App\Models\Bast;
 use App\Models\DataClient;
 use App\Models\Invoice;
 use App\Models\PT;
@@ -289,4 +290,39 @@ class InvoiceController extends Controller
         // Ekspor data menggunakan Excel
         return Excel::download(new InvoiceExport($invoices), 'Invoice.xlsx');
     }
+
+    public function addBast(Request $request, string $id)
+    {
+        $request->validate([
+            'bast_tanggal' => 'required|date|max:50',
+            'bast_nama' => 'required|string|max:50',
+            'bast_jabatan' => 'required|string|max:50',
+        ], [
+            'bast_tanggal.required' => 'Tanggal wajib diisi.',
+            'bast_tanggal.date' => 'Tanggal harus berupa format tanggal yang valid.',
+            'bast_tanggal.max' => 'Tanggal tidak boleh lebih dari 50 karakter.',
+            'bast_nama.required' => 'Nama wajib diisi.',
+            'bast_nama.string' => 'Nama harus berupa teks.',
+            'bast_nama.max' => 'Nama tidak boleh lebih dari 50 karakter.',
+            'bast_jabatan.required' => 'Jabatan wajib diisi.',
+            'bast_jabatan.string' => 'Jabatan harus berupa teks.',
+            'bast_jabatan.max' => 'Jabatan tidak boleh lebih dari 50 karakter.',
+        ]);
+    
+        $data = [
+            'nama' => $request->bast_nama,
+            'invoice_id' => $id,
+            'tanggal' => $request->bast_tanggal, // Save invoice date
+            'jabatan' => $request->bast_jabatan, // Save job title
+        ];
+    
+        $bast = Bast::create($data);
+    
+        if ($bast) {
+            return response()->json(['message' => 'Data BAST berhasil ditambahkan'], 201);
+        } else {
+            return response()->json(['message' => 'Gagal menambahkan data BAST'], 500);
+        }
+    }
+    
 }
