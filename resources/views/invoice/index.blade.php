@@ -1705,10 +1705,38 @@
             $('#exportBtn').on('click', function() {
                 let pt = $('input[name="pt"]:checked').val(); // Ambil nilai PT
                 let year = $('input[name="year"]:checked').val(); // Ambil nilai Tahun
-
+                let exportUrl =
+                    `{{ route('invoice.export') }}?pt_id=${pt || ''}&tgl_invoice=${year || ''}`;
+                swal({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Data Invoice akan diunduh sebagai file Excel.',
+                    icon: 'warning',
+                    buttons: {
+                        cancel: {
+                            text: 'Tidak',
+                            value: null,
+                            visible: true,
+                            className: 'btn btn-danger',
+                            closeModal: true,
+                        },
+                        confirm: {
+                            text: 'Ya',
+                            value: true,
+                            visible: true,
+                            className: 'btn btn-success',
+                            closeModal: true,
+                        }
+                    }
+                }).then((willDownload) => {
+                    if (willDownload) {
+                        window.location.href = exportUrl;
+                    } else {
+                        // Tampilkan pesan jika batal
+                        swal('Batal!', 'Proses unduhan dibatalkan.', 'info');
+                    }
+                })
                 // Redirect ke route ekspor dengan parameter
-                let exportUrl = `{{ route('invoice.export') }}?pt_id=${pt || ''}&tgl_invoice=${year || ''}`;
-                window.location.href = exportUrl;
+
             });
 
             $(document).on('click', '#btnAddBast', function() {
