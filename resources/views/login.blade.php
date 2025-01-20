@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoInvoice - Login</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.ori.css') }}" />
     <!-- Fonts and icons -->
     <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
     <script>
@@ -27,17 +28,20 @@
         });
     </script>
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to bottom, #004AAD , #007BFF 90%);
+            background: linear-gradient(to bottom, #004AAD, #007BFF 90%);
         }
+
         .container-fluid {
             display: flex;
             height: 100%;
             overflow: hidden;
         }
+
         .left-section {
             flex: 2;
             color: #fff;
@@ -48,18 +52,21 @@
             align-items: flex-start;
             position: relative;
         }
+
         .left-section h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
             z-index: 2;
             font-weight: 700;
         }
+
         .left-section p {
             font-size: 1.2rem;
             margin-bottom: 30px;
             line-height: 1.8;
             z-index: 2;
         }
+
         .left-section a {
             background: #fff;
             color: #004AAD;
@@ -71,21 +78,26 @@
             transition: transform 0.3s ease;
             z-index: 2;
         }
+
         .left-section a:hover {
             transform: scale(1.1);
         }
+
         .circle {
             position: absolute;
             border-radius: 50%;
             z-index: 1;
         }
+
         .circle-outline {
             border: 4px solid rgba(255, 255, 255, 0.3);
             background: transparent;
         }
+
         .circle-filled {
             background: rgba(255, 255, 255, 0.2);
         }
+
         /* Lingkaran Outline */
         .circle-1 {
             width: 300px;
@@ -94,6 +106,7 @@
             left: -50px;
             transform: rotate(45deg);
         }
+
         .circle-2 {
             width: 450px;
             height: 450px;
@@ -101,6 +114,7 @@
             left: -250px;
             transform: rotate(-30deg);
         }
+
         /* Lingkaran Penuh */
         .circle-3 {
             width: 300px;
@@ -108,12 +122,14 @@
             top: -120px;
             right: -170px;
         }
+
         .circle-4 {
             width: 400px;
             height: 400px;
             top: -210px;
             right: -40px;
         }
+
         .right-section {
             flex: 1;
             display: flex;
@@ -125,16 +141,19 @@
             padding: 2rem;
             text-align: center;
         }
+
         .right-section h2 {
             font-size: 2rem;
             color: #333;
             margin-bottom: 0.5rem;
         }
+
         .right-section p {
             font-size: 1rem;
             color: #555;
             margin-bottom: 2rem;
         }
+
         .right-section form {
             width: 100%;
             max-width: 400px;
@@ -142,13 +161,10 @@
             flex-direction: column;
             gap: 1rem;
         }
+
         .input-group {
-            position: relative;
-            width: 100%;
-            display: flex;
-            align-items: center;
+
             border-radius: 8px;
-            overflow: hidden;
         }
 
         .input-icon {
@@ -158,16 +174,18 @@
             transform: translateY(-50%);
             color: #737f8b;
             font-size: 1.2rem;
-            z-index: 2; /* Menjaga ikon di atas input */
+            z-index: 2;
+            /* Menjaga ikon di atas input */
         }
 
         .form-control {
             border-radius: 8px;
             font-size: 1rem;
             height: 45px;
-            padding-left: 40px; /* Memberi ruang untuk ikon */
+            /* Memberi ruang untuk ikon */
             width: 100%;
-            z-index: 1; /* Input di bawah ikon */
+            z-index: 1;
+            /* Input di bawah ikon */
             border: 1px solid #ced4da;
         }
 
@@ -186,27 +204,33 @@
             font-weight: bold;
             transition: background 0.3s;
         }
+
         .btn-primary:hover {
             background: #0056b3;
         }
+
         .additional-info {
             font-size: 0.9rem;
             color: #888;
             margin-top: 1.5rem;
             text-align: center;
         }
+
         .additional-info a {
             color: #3d4045;
             text-decoration: none;
             font-weight: italic;
             transition: color 0.3s ease;
         }
+
         .additional-info a:hover {
             color: #3d4045;
         }
+
         @media (max-width: 768px) {
             .left-section {
-                display: none; /* Menyembunyikan bagian kiri di layar kecil */
+                display: none;
+                /* Menyembunyikan bagian kiri di layar kecil */
             }
 
             .right-section {
@@ -214,7 +238,8 @@
                 padding: 2rem;
                 background: #ffffff;
                 box-shadow: none;
-                height: 100vh; /* Memastikan tinggi penuh untuk tampilan mobile */
+                height: 100vh;
+                /* Memastikan tinggi penuh untuk tampilan mobile */
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -239,7 +264,8 @@
             .form-control {
                 font-size: 1.2rem;
                 height: 50px;
-                padding-left: 45px; /* Memberi lebih banyak ruang untuk ikon */
+                padding-left: 45px;
+                /* Memberi lebih banyak ruang untuk ikon */
             }
 
             .btn-primary {
@@ -258,6 +284,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container-fluid">
         <!-- Left Section -->
@@ -271,7 +298,8 @@
             <div class="circle circle-filled circle-4"></div>
 
             <h1>Go-Invoice</h1>
-            <p>"Log in to the MPA Group app to manage invoices effortlessly and monitor financial graphs with a smart and interactive interface."</p>
+            <p>"Log in to the MPA Group app to manage invoices effortlessly and monitor financial graphs with a smart
+                and interactive interface."</p>
             <a href="#" data-bs-toggle="modal" data-bs-target="#readMoreModal">Read More</a>
         </div>
 
@@ -281,17 +309,21 @@
             <p>Welcome Back</p>
             <form action="{{ route('login.authenticate') }}" method="POST">
                 @csrf
+
+
                 <div class="input-group mb-3">
-                    <div class="input-icon">
-                        <i class="fas fa-user"></i>
-                    </div>
+                    <span class="input-group-text" id="basic-addon1"> <i class="fas fa-user"></i>
+                    </span>
+
                     <input type="text" name="username" placeholder="Username" class="form-control" required>
                 </div>
-                
+
                 <div class="input-group mb-3">
-                    <div class="input-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
+                    <span class="input-group-text" id="basic-addon1"> <i class="fas fa-lock"></i>
+
+                    </span>
+
+
                     <input type="password" name="password" placeholder="Password" class="form-control" required>
                 </div>
 
@@ -301,7 +333,7 @@
 
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
-            
+
             <div class="additional-info">
                 <p>
                     <a href="#">Forget Password ?</a>
@@ -321,8 +353,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Go-Invoice is your smart solution for managing invoices and tracking financial insights. With an interactive interface, you can access graphs, monitor trends, and simplify your workflow in just a few clicks. Explore the power of automation with GoInvoice today!</h6>
-                    
+                    <h6>Go-Invoice is your smart solution for managing invoices and tracking financial insights. With an
+                        interactive interface, you can access graphs, monitor trends, and simplify your workflow in just
+                        a few clicks. Explore the power of automation with GoInvoice today!</h6>
+
                     <hr>
 
                     <h5>Project Information</h5>
@@ -340,4 +374,5 @@
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
 </body>
+
 </html>

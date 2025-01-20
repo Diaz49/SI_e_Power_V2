@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>@yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
@@ -33,7 +34,7 @@
     <link rel="stylesheet" href="{{ asset('select2/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }} " />
-    <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }} " />
+    <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.css') }} " />
 
     @stack('styles')
 
@@ -47,7 +48,8 @@
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="light">
                     <a class="logo d-flex align-items-center" style="text-decoration: none;">
-                        <img src="{{ asset('img/logo2.png') }}" alt="navbar brand" class="navbar-brand" height="20" />
+                        <img src="{{ asset('img/logo2.png') }}" alt="navbar brand" class="navbar-brand"
+                            height="20" />
                         {{-- <img src="{{ asset('img/ep.png') }}" alt="navbar brand" class="navbar-brand" height="20" /> --}}
                     </a>
                     <div class="nav-toggle">
@@ -141,7 +143,7 @@
                     <div class="sidebar-footer mt-auto">
                         <ul class="nav nav-secondary flex-grow-1">
                             <li class="nav-item {{ Route::is('logout') ? 'active' : '' }}">
-                                <a href="{{ route('logout') }}" class="collapsed" id="logoutBtn">
+                                <a class="collapsed" id="logoutBtn" onclick="confirmLogout()">
                                     <i class="fas fa-sign-out-alt"></i>
                                     <p>Logout</p>
                                 </a>
@@ -157,7 +159,7 @@
             <div class="main-header">
                 <div class="main-header-logo">
                     <!-- Logo Header -->
-                    <div class="logo-header" >
+                    <div class="logo-header">
                         <a class="logo d-flex align-items-center" style="text-decoration: none;">
                             <img src="{{ asset('img/logo.png') }}" alt="navbar brand" class="navbar-brand"
                                 height="20" />
@@ -180,8 +182,7 @@
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
 
                             <li class="nav-item topbar-user dropdown hidden-caret">
-                                <a class="dropdown-toggle profile-pic" 
-                                    aria-expanded="false">
+                                <a class="dropdown-toggle profile-pic" aria-expanded="false">
                                     {{-- <div class="avatar-sm">
                                         <img src="assets/img/" alt="..."
                                             class="avatar-img rounded-circle" />
@@ -279,6 +280,38 @@
             fillColor: "rgba(255, 165, 52, .14)",
         });
     </script>
+    <script>
+        function confirmLogout() {
+            swal({
+                title: 'Apakah Anda yakin ingin logout?',
+                text: 'Anda akan keluar dari sesi ini',
+                icon: 'warning',
+                buttons: {
+                    cancel: {
+                        text: 'Tidak',
+                        value: null,
+                        visible: true,
+                        className: 'btn btn-danger',
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: 'Ya',
+                        value: true,
+                        visible: true,
+                        className: 'btn btn-success',
+                        closeModal: true,
+                    }
+                }
+            }).then((willDownload) => {
+                if (willDownload) {
+                    window.location.href = "{{route('logout')}}";
+                } 
+            });
+        }
+        // Tambahkan event listener ke tombol logout
+       
+    </script>
+
 </body>
 
 </html>

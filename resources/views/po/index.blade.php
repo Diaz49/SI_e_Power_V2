@@ -797,16 +797,7 @@
                 });
             });
 
-            document.addEventListener('DOMContentLoaded', function() {
-                const input1 = document.getElementById('id');
-                const input2 = document.getElementById('detail_kode_po');
-
-                // Event untuk mendeteksi perubahan pada Input 1
-                input1.addEventListener('input', function() {
-                    input2.value = input1.value; // Set nilai Input 2 sama dengan Input 1
-                });
-            });
-
+       
             $(document).on('click', '.btn-delete-detail', function() {
                 const index = $(this).data('index');
                 detailArray.splice(index, 1); // Hapus dari array
