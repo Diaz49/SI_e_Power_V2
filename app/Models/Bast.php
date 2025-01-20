@@ -13,8 +13,6 @@ class Bast extends Model
 
     protected $fillable = [
         'tanggal',
-        'kode',
-        'kode_kontrak',
         'invoice_id',
         'nama',
         'jabatan',
