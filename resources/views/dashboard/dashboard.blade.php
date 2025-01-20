@@ -528,10 +528,10 @@
       const datasets = chartData.map(data => ({
           label: data.nama_pt,
           data: data.monthlyData,
-          borderColor: getRandomColor(),
-          backgroundColor: getRandomColor(0.2),
+          // borderColor: getRandomColor(),
+          backgroundColor: getRandomColor(),
           // backgroundColor: getRandomColor(0.7), //setting untuk bar
-          borderWidth: 2,
+          // borderWidth: 2,
       }));
   
       function getRandomColor(opacity = 1) {
@@ -543,7 +543,7 @@
   
       const ctx = document.getElementById('ptChart').getContext('2d');
       new Chart(ctx, {
-          type: 'line', // Bisa diganti 'bar', 'radar', dll.
+          type: 'bar', // Bisa diganti 'bar', 'radar', dll.
           data: {
               labels: labels,
               datasets: datasets
