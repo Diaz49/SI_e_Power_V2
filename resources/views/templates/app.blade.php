@@ -207,8 +207,8 @@
                 </ul>
                 </nav>
                 <div class="copyright">
-                    2025, made with <i class="fa fa-heart heart text-danger"></i> by
-                    <a>Mahasiswa Magang Polije</a>
+                    This was made by <i class="fa fa-heart heart text-danger"></i> with
+                    <a>Mahasiswa Magang Polije 2024</a>
                 </div>
         </div>
         </footer>
