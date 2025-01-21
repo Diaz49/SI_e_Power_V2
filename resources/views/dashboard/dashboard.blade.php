@@ -438,134 +438,76 @@
 
     {{-- <!-- Chart Circle -->
     <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script> --}}
-    
-    {{-- <script>
-      // Data untuk grafik
-      const invoiceData = {
-        labels: [
-          'January', 'February', 'March', 'April', 'May', 'June', 
-          'July', 'August', 'September', 'October', 'November', 'December'
-        ],
-        datasets: [
-          {
-            label: 'MPA',
-            data: [5, 10, 8, 6, 9, 15, 12, 11, 13, 10, 14], // Data MPA
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Dataset 1',
-            data: [7, 11, 9, 5, 6, 12, 10, 15, 9, 7, 11, 13], // Dataset tambahan
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Dataset 2',
-            data: [6, 8, 7, 12, 10, 8, 9, 11, 14, 13, 10, 12], // Dataset tambahan
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Dataset 3',
-            data: [9, 7, 11, 10, 8, 6, 5, 14, 13, 12, 9, 8], // Dataset tambahan
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-            borderColor: 'rgba(153, 102, 255, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Dataset 4',
-            data: [12, 15, 10, 8, 6, 7, 9, 10, 11, 13, 14, 15], // Dataset tambahan
-            backgroundColor: 'rgba(255, 206, 86, 0.2)',
-            borderColor: 'rgba(255, 206, 86, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Dataset 5',
-            data: [10, 9, 12, 15, 14, 13, 11, 7, 6, 5, 8, 9], // Dataset tambahan
-            backgroundColor: 'rgba(201, 203, 207, 0.2)',
-            borderColor: 'rgba(201, 203, 207, 1)',
-            borderWidth: 1
-          },
-        ]
-      };
-    
-      // Konfigurasi grafik
-      const config = {
-        type: 'line', // Jenis grafik: 'line', 'bar', 'pie', dll.
-        data: invoiceData,
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: true,
-              text: 'Invoice Statistics - 1 Year'
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      };
-    
-      // Inisialisasi grafik
-      const ctx = document.getElementById('invoiceChart').getContext('2d');
-      new Chart(ctx, config);
-    </script>     --}}
+  <script>
+    const chartData = @json($chartData);
 
-    <script>
-      const chartData = @json($chartData);
-  
-      const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  
-      const datasets = chartData.map(data => ({
-          label: data.nama_pt,
-          data: data.monthlyData,
-          // borderColor: getRandomColor(),
-          backgroundColor: getRandomColor(),
-          // backgroundColor: getRandomColor(0.7), //setting untuk bar
-          // borderWidth: 2,
-      }));
-  
-      function getRandomColor(opacity = 1) {
-          const r = Math.floor(Math.random() * 255);
-          const g = Math.floor(Math.random() * 255);
-          const b = Math.floor(Math.random() * 255);
-          return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-      }
-  
-      const ctx = document.getElementById('ptChart').getContext('2d');
-      new Chart(ctx, {
-          type: 'bar', // Bisa diganti 'bar', 'radar', dll.
-          data: {
-              labels: labels,
-              datasets: datasets
-          },
-          options: {
-              responsive: true,
-              plugins: {
-                  legend: {
-                      position: 'top'
-                  },
-                  title: {
-                      display: true,
-                      text: 'Grafik Jumlah Harga Per Bulan Berdasarkan PT'
-                  }
-              },
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
-          }
-      });
-  </script>
+    const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const datasets = chartData.map((data, index) => ({
+        label: data.nama_pt,
+        data: data.monthlyData,
+        backgroundColor: getGradientColors(
+            `rgba(${255 - index * 20}, 0, 0, 1)`, // Warna awal menyesuaikan tiap PT (lebih gelap untuk index lebih tinggi)
+            `rgba(${50 + index * 10}, 50, 50, 1)`, // Warna akhir menyesuaikan tiap PT
+            data.monthlyData.length
+        ),
+        borderColor: `rgba(${255 - index * 20}, 0, 0, 1)`, // Warna border sama dengan warna awal gradien
+        borderWidth: 1, // Tebal border
+    }));
+
+    function getGradientColors(startColor, endColor, steps) {
+        const start = parseColor(startColor);
+        const end = parseColor(endColor);
+
+        const gradientColors = [];
+        for (let i = 0; i < steps; i++) {
+            const r = Math.round(start.r + ((end.r - start.r) * i) / (steps - 1));
+            const g = Math.round(start.g + ((end.g - start.g) * i) / (steps - 1));
+            const b = Math.round(start.b + ((end.b - start.b) * i) / (steps - 1));
+            const a = (start.a + ((end.a - start.a) * i) / (steps - 1)).toFixed(2);
+
+            gradientColors.push(`rgba(${r}, ${g}, ${b}, ${a})`);
+        }
+        return gradientColors;
+    }
+
+    function parseColor(color) {
+        const rgba = color.match(/\d+(\.\d+)?/g).map(Number);
+        return {
+            r: rgba[0],
+            g: rgba[1],
+            b: rgba[2],
+            a: rgba[3] !== undefined ? rgba[3] : 1
+        };
+    }
+
+    const ctx = document.getElementById('ptChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar', // Bisa diganti 'line', 'radar', dll.
+        data: {
+            labels: labels,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                title: {
+                    display: true,
+                    text: 'Grafik Jumlah Harga Per Bulan Berdasarkan PT'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
 
 @endsection
