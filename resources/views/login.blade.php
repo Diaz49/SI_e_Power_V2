@@ -355,7 +355,7 @@
                 <div class="modal-body">
                     <h6>E-Power is your smart solution for managing invoices and tracking financial insights. With an
                         interactive interface, you can access graphs, monitor trends, and simplify your workflow in just
-                        a few clicks. Explore the power of automation with GoInvoice today!</h6>
+                        a few clicks. Explore the power of automation with E-Power today!</h6>
 
                     <hr>
 
