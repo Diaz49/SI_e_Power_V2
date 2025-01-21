@@ -297,7 +297,7 @@
             <div class="circle circle-filled circle-3"></div>
             <div class="circle circle-filled circle-4"></div>
 
-            <h1>Go-Invoice</h1>
+            <h1>E-Power</h1>
             <p>"Log in to the MPA Group app to manage invoices effortlessly and monitor financial graphs with a smart
                 and interactive interface."</p>
             <a href="#" data-bs-toggle="modal" data-bs-target="#readMoreModal">Read More</a>
@@ -349,11 +349,11 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="readMoreModalLabel">About Go-Invoice</h5>
+                    <h5 class="modal-title" id="readMoreModalLabel">About E-Power</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Go-Invoice is your smart solution for managing invoices and tracking financial insights. With an
+                    <h6>E-Power is your smart solution for managing invoices and tracking financial insights. With an
                         interactive interface, you can access graphs, monitor trends, and simplify your workflow in just
                         a few clicks. Explore the power of automation with GoInvoice today!</h6>
 
