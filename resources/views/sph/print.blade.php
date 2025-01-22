@@ -333,7 +333,7 @@
 
                                 <tr>
                                     <td colspan="14">
-                                        <div align="justify"><span class="style9">Bermaksud memberikan
+                                        <div align="justify"><span class="style9">Bermaksud memberikan Penawaran Harga
                                                 {{ $sph->penawaran_harga }}. Sebesar, <b>Rp. {{ $jumlahHarga }},-&nbsp;
                                                     (Terbilang : {{$totalHargaTerbilang}} Rupiah)</b>, sudah termasuk PPh belum termasuk PPN 10%,
                                                 dengan detail sebagai berikut : </span></div>

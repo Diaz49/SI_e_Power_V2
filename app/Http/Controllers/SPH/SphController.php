@@ -29,7 +29,7 @@ class SphController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'header.kode_sph' => 'required|max:100|unique:po,kode_po',
+            'header.kode_sph' => 'required|max:100|unique:sph,kode_sph',
             'header.tanggal' => 'required|date',
             'header.nama_client' => 'required',
             'header.penawaran_harga' => 'required|string|',
