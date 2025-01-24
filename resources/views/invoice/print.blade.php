@@ -85,7 +85,8 @@
             </div>
             <div class="col-6 d-flex justify-content-end align-items-center">
                 <p><a href="#"
-                        class="fs-2 fw-bolder text-dark link-underline-dark link-underlinelink-offset-2 link-underline-opacity-100 ">INVOICE</a>
+                        class="fs-2 fst-italic fw-bolder text-dark link-underline-dark link-underlinelink-offset-2 link-underline-opacity-100 "
+                        >INVOICE</a>
                 </p>
             </div>
 

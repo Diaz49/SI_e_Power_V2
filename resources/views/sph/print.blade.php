@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <link href="{{asset('assets/css/bootstrap.ori.css')}}" rel="stylesheet">
     <style type="text/css">
         .st_total {
             font-size: 10pt;
@@ -335,7 +336,7 @@
                                     <td colspan="14">
                                         <div align="justify"><span class="style9">Bermaksud memberikan Penawaran Harga
                                                 {{ $sph->penawaran_harga }}. Sebesar, <b>Rp. {{ $jumlahHarga }},-&nbsp;
-                                                    (Terbilang : {{$totalHargaTerbilang}} Rupiah)</b>, sudah termasuk PPh belum termasuk PPN 10%,
+                                                    (Terbilang : {{$totalHargaTerbilang}} Rupiah)</b>, sudah termasuk PPh belum termasuk PPN 11%,
                                                 dengan detail sebagai berikut : </span></div>
                                     </td>
                                     <td class="style9">
@@ -528,8 +529,9 @@
         </tbody>
     </table>
 
-    <div class="cetak no-print"><a href="" onclick="print();"><b>(Cetak)</b></a>
+    <div class="text-center mt-5 mb-5 no-print">
+        <button onclick="window.print()" class="btn btn-primary">Cetak po</button>
     </div>
 </body>
-
+<script src="{{asset('assets/js/core/bootstrap.ori.js')}}"></script>
 </html>
