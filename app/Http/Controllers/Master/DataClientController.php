@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\DataTables\Master\DataClientDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\DataClient;
+use App\Models\PT;
 use Illuminate\Http\Request;
 
 use function Termwind\render;
@@ -16,7 +17,12 @@ class DataClientController extends Controller
      */
     public function index(DataClientDataTable $dataTable)
     {
-        return $dataTable->render('master.data-client.index');
+        $pt = PT::all();
+        $years = DataClient::selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+        return $dataTable->render('master.data-client.index', compact('pt','years'));
     }
 
     /**

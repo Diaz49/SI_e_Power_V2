@@ -32,19 +32,17 @@
                         class="fas fa-plus"></i> Tambah Data Client</button>
             </div>
             <div class="col-12 d-flex justify-content-end">
-                <button class="btn btn-outline-secondary btn-sm " data-bs-target="#modalFilter" data-bs-toggle="modal"><i
-                        class="fas fa-filter"></i> Filter</button>
+                <button class="btn btn-outline-secondary btn-sm " data-bs-target="#modalFilter" data-bs-toggle="modal"
+                        style="--bs-btn-bg:white;"><i class="fas fa-filter"></i> Filter</button>
                 <button class="btn btn-outline-secondary btn-sm ms-3 me-4"><i class="fas fa-download"></i> Export</button>
             </div>
 
         </div>
     </div>
     <div class="card m-4">
-        <!-- Filter Container -->
-        <div id="filterInfo" class="filter-container " style="width: 100px; height: 30px; margin-top: 20px; margin-left: 20px">
-            {{-- <p>Filtered by: <span id="selectedPT">None</span> | Date: <span id="selectedYear">All</span></p> --}}
-        </div>
         <div class="card-body">
+            <!-- Filter Container -->
+            <div id="active-filters" class="d-flex"></div>
             <div class="table-responsive">
                 {!! $dataTable->table(['class' => 'display table table-hover table-responsive ']) !!}
 
@@ -52,18 +50,40 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalFilter">
-        <div class="modal-dialog modal-dialog-centered">
+    {{-- Modal Filter --}}
+    <div class="modal fade" id="modalFilter" tabindex="-1" aria-labelledby="modalFilterLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 me-2" id="exampleModalLabel">Filter Data</h1>
+                    <h1 class="modal-title fs-5" id="modalFilterLabel">Select PT & Year</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h2> PT </h2>
+                    <p class="fs-6">Pilihan PT</p>
+                    <div class="ps-3 pe-3">
+                        <input type="radio" id="all" name="pt" value="">
+                        <label class="fw-bold pb-2" for="all">All</label><br>
+                        @foreach ($pt as $item)
+                            <input type="radio" id="{{ $item->nama_pt }}" name="pt"
+                                value="{{ $item->id }}">
+                            <label class="fw-bold pb-2" for="{{ $item->nama_pt }}">{{ $item->nama_pt }}</label><br>
+                        @endforeach
 
-                    <h2> Tahun </h2>
-                    
+
+                    </div>
+                    <p class="fs-6 pt-4">Pilih Tahun</p>
+                    <div class="ps-3 pe-3">
+                        <input type="radio" id="year_all" name="year" value="">
+                        <label class="fw-bold pb-2" for="year_all">All</label><br>
+                        @foreach ($years as $item)
+                            <input type="radio" id="year_{{ $item }}" name="year"
+                                value="{{ $item }}">
+                            <label class="fw-bold pb-2" for="year_{{ $item }}">{{ $item }}</label><br>
+                        @endforeach
+                    </div>
+                    <div class="w-100 d-flex justify-content-end mt-2">
+                        <button type="button" id="filterBtn" class="btn btn-primary">OK</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -172,6 +192,7 @@
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
+            let selectedFilters = {};
             document.addEventListener('DOMContentLoaded', function() {
                 @if (session('success'))
                     swal('Berhasil!', '{{ session('success') }}', 'success');
@@ -374,6 +395,83 @@
                 $('.error').remove();
                 // $('#formTambah')[0].reset();
             })
+            function reloadDataTable() {
+                // Ambil nilai radio button PT yang dipilih
+                let pt = $('input[name="pt"]:checked').val();
+                // Ambil nilai radio button Year yang dipilih
+                let year = $('input[name="year"]:checked').val();
+                let url = "{{ route('data-client') }}";
+
+                window.LaravelDataTables['dataclient-table'].ajax.url(
+                        `${url}?created_at=${year}&pt_id=${pt}`)
+                    .load();
+            }
+            $('#filterBtn').on('click', function() {
+                const ptValue = $('input[name="pt"]:checked').val();
+                const ptLabel = $('input[name="pt"]:checked').next('label').text();
+
+                // Ambil filter Tahun yang dipilih
+                const yearValue = $('input[name="year"]:checked').val();
+                const yearLabel = $('input[name="year"]:checked').next('label').text();
+
+                // Simpan filter PT jika dipilih
+                if (ptValue !== undefined && ptValue !== "") {
+                    selectedFilters.pt = {
+                        value: ptValue,
+                        label: ptLabel
+                    };
+                } else {
+                    delete selectedFilters.pt; // Hapus jika tidak ada pilihan PT
+                }
+
+                // Simpan filter Tahun jika dipilih
+                if (yearValue !== "") {
+                    selectedFilters.year = {
+                        value: yearValue,
+                        label: yearLabel
+                    };
+                } else {
+                    delete selectedFilters.year; // Hapus jika tidak ada pilihan Tahun
+                }
+
+                // Render badge untuk filter yang aktif
+                renderBadges();
+                reloadDataTable();
+                $('#modalFilter').modal('hide');
+            });
+            // Fungsi untuk render badge filter aktif
+            function renderBadges() {
+                const container = $('#active-filters');
+                container.empty(); // Kosongkan badge sebelumnya
+
+                // Tambahkan badge untuk setiap filter aktif
+                for (const key in selectedFilters) {
+                    const filter = selectedFilters[key];
+                    container.append(`
+                    <span class=" bg-primary text-white rounded-pill py-1 ps-3 pe-2 d-flex align-items-center justify-content-center me-2 mb-3 fw-bold">
+                        ${filter.label}
+                        <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close" onclick="removeFilter('${key}')"></button>
+                    </span>
+                `);
+                }
+            }
+            // Fungsi untuk menghapus filter dari badge
+            function removeFilter(filterType) {
+                delete selectedFilters[filterType]; // Hapus filter dari daftar
+
+                // Hapus pilihan pada elemen input/filter
+                if (filterType === "pt") {
+                    $('#all').prop('checked', true); // Reset pilihan radio PT
+                } else if (filterType === "year") {
+                    $('#year_all').prop('checked', true); // Reset pilihan select Tahun
+                }
+
+                // Render ulang badge
+                renderBadges();
+
+                // Update DataTable
+                reloadDataTable();
+            }
         </script>
     @endpush
 @endsection
