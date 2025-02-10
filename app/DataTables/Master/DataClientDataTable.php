@@ -85,6 +85,7 @@ class DataClientDataTable extends DataTable
                 ->searchable(false),
             Column::make('nama_client'),
             Column::make('alamat'),
+            Column::make('no_tlp')->title('No Telpon'),
             Column::make('up_invoice'),
             Column::make('up_sph'),
             Column::computed('action')

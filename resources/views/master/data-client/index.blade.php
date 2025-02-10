@@ -114,6 +114,13 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
 
+                        <div class="mb-1 mt-2 label">No Telpon</div>
+                        <input type="text" class="form-control" name="no_tlp" id="no_tlp" value="{{ old('no_tlp') }}"
+                            placeholder="Masukkan Alamat">
+                        @error('no_tlp')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+
                         <div class="mb-1 mt-2 label">Invoice</div>
                         <input type="text" class="form-control" name="up_invoice" id="up_invoice" value="{{ old('') }}"
                             placeholder="Masukkan Invoice">
@@ -162,6 +169,13 @@
                         <textarea type="text" class="form-control" name="alamat_edit" id="alamat_edit" value=""
                             placeholder="Masukkan Alamat"></textarea>
                         @error('alamat_edit')
+                            <div class="text-danger error ">{{ $message }}</div>
+                        @enderror
+
+                        <div class="mb-1 mt-2 label">No Telpon</div>
+                        <textarea type="text" class="form-control" name="no_tlp_edit" id="no_tlp_edit" value=""
+                            placeholder="Masukkan Alamat"></textarea>
+                        @error('no_tlp_edit')
                             <div class="text-danger error ">{{ $message }}</div>
                         @enderror
 
@@ -264,6 +278,7 @@
                     // Isi field modal dengan data yang didapat dari server
                     $('#nama_client_edit').val(data.nama_client);
                     $('#alamat_edit').val(data.alamat);
+                    $('#no_tlp_edit').val(data.no_tlp);
                     $('#up_invoice_edit').val(data.up_invoice);
                     $('#up_sph_edit').val(data.up_sph);
 
@@ -306,6 +321,12 @@
                             if (errors.alamat_edit) {
                                 $('#alamat_edit').after('<div class="text-danger error">' + errors
                                     .alamat_edit[
+                                        0] +
+                                    '</div>');
+                            }
+                            if (errors.no_tlp_edit) {
+                                $('#no_tlp_edit').after('<div class="text-danger error">' + errors
+                                    .no_tlp_edit[
                                         0] +
                                     '</div>');
                             }
@@ -367,6 +388,12 @@
                             if (errors.alamat) {
                                 $('#alamat').after('<div class="text-danger error">' + errors
                                     .alamat[
+                                        0] +
+                                    '</div>');
+                            }
+                            if (errors.no_tlp) {
+                                $('#no_tlp').after('<div class="text-danger error">' + errors
+                                    .no_tlp[
                                         0] +
                                     '</div>');
                             }
